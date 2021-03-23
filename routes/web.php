@@ -1,7 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\InfoController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\PhotoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,9 +16,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [InfoController::class, 'home'])->name('home');
+Route::get('/info/create', [InfoController::class, 'create'])->name('info.create');
+Route::post('/info/create', [InfoController::class, 'store'])->name('info.store');
+Route::get('/info/{hashid}/edit', [InfoController::class, 'edit'])->name('info.edit');
+Route::post('/info/{hashid}/edit', [InfoController::class, 'update'])->name('info.update');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

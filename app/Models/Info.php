@@ -16,4 +16,8 @@ class Info extends Model
         'title',
         'content'
     ];
+
+    public function getHashidAttribute() {
+        return encodeId($this->id);
+    }
 }
