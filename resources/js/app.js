@@ -1,9 +1,13 @@
 require('./bootstrap');
+require('alpinejs');
 const Theme = require('./theme');
 
-require('alpinejs');
-
-
+window.nav = function(callback) {
+    document.body.classList.remove('loaded');
+    setTimeout(function() {
+        callback();
+    }, 250);
+}
 /*let themeColors = {
     dark: {
         '--w1': {r:250, g:250, b:250},
@@ -79,7 +83,7 @@ const themeColors = {
 
 document.addEventListener('DOMContentLoaded', function() {
 
-    const appTheme = new Theme(themeColors, {
+    window.appTheme = new Theme(themeColors, {
         transitionDuration: 200
     });
     appTheme.load();
@@ -91,29 +95,29 @@ document.addEventListener('DOMContentLoaded', function() {
             appTheme.set('dark', 500)
         }
     })
-})
 
 
-document.querySelectorAll('a').forEach(link=>{
-    console.log(link.getAttribute("href"));
-    if(link.getAttribute("href").charAt(0) =='#') {
-        link.onclick = function(e) {
-            e.preventDefault();
-            document.querySelector(this.getAttribute("href")).scrollIntoView({
-                behavior: "smooth"
-            });
+    document.querySelectorAll('a').forEach(link=>{
+        console.log(link.getAttribute("href"));
+        if(link.getAttribute("href").charAt(0) =='#') {
+            link.onclick = function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute("href")).scrollIntoView({
+                    behavior: "smooth"
+                });
+            }
+        } else {
+            link.onclick = function(e) {
+                e.preventDefault();
+                document.body.classList.remove('loaded');
+                // document.getElementById('maskLeave').classList.add('active');
+                setTimeout(function() {
+                    console.log(link);
+                    document.location = link.href;
+                }, 250);
+                // Cancel the event as stated by the standard.
+            }
         }
-    } else {
-        link.onclick = function(e) {
-            e.preventDefault();
-            document.body.classList.remove('loaded');
-            // document.getElementById('maskLeave').classList.add('active');
-            setTimeout(function() {
-                console.log(link);
-                document.location = link.href;
-            }, 250);
-            // Cancel the event as stated by the standard.
-        }
-    }
-
+    
+    })    
 })

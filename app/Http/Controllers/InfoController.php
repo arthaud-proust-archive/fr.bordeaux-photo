@@ -32,7 +32,7 @@ class InfoController extends Controller
             'title' => request('title'),
             'content' => request('content'),
         ]);
-        return redirect()->route('home')->with('status', 'success')->with('content', 'Gallerie ajoutée');
+        return redirect()->route('home')->with('status', 'success')->with('content', 'Info ajoutée');
     }
 
 
@@ -57,6 +57,13 @@ class InfoController extends Controller
         $info->content = request('content');
         $info->save();
 
-        return redirect()->route('home')->with('status', 'success')->with('content', 'Gallerie ajoutée');
+        return redirect()->route('home')->with('status', 'success')->with('content', 'Info modifiée');
+    }
+
+
+    public function delete(Request $request, $hashid) {
+        $info = info::whereId(decodeId($hashid))->firstOrFail();
+        $info->delete();
+        return redirect()->route('home')->with('status', 'success')->with('content', 'Info supprimée');
     }
 }

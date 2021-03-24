@@ -17,10 +17,20 @@ use App\Http\Controllers\PhotoController;
 */
 
 Route::get('/', [InfoController::class, 'home'])->name('home');
+
 Route::get('/info/create', [InfoController::class, 'create'])->name('info.create');
 Route::post('/info/create', [InfoController::class, 'store'])->name('info.store');
 Route::get('/info/{hashid}/edit', [InfoController::class, 'edit'])->name('info.edit');
 Route::post('/info/{hashid}/edit', [InfoController::class, 'update'])->name('info.update');
+Route::post('/info/{hashid}/delete', [InfoController::class, 'delete'])->name('info.delete');
+
+Route::get('/events', [EventController::class, 'index'])->name('event.index');
+Route::get('/event/create', [EventController::class, 'create'])->name('event.create');
+Route::post('/event/create', [EventController::class, 'store'])->name('event.store');
+Route::get('/event/{hashid}/edit', [EventController::class, 'edit'])->name('event.edit');
+Route::post('/event/{hashid}/edit', [EventController::class, 'update'])->name('event.update');
+Route::post('/event/{hashid}/delete', [EventController::class, 'delete'])->name('event.delete');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

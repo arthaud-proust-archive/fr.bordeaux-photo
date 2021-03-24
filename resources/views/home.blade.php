@@ -14,7 +14,7 @@
     @foreach($infos as $info) 
     <x-view.section :title="$info->title">
         <x-view.link :href="route('info.edit', $info->hashid)" text="Éditer" />
-        {{ $info->content }}
+        <p class="mt-2">{{ $info->content }}</p>
     </x-view.section>
     @endforeach
 </x-app-layout>

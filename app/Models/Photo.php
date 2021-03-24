@@ -2,14 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModel;
 
-class Photo extends Model
+class Photo extends BaseModel
 {
-    use HasFactory;
-    public $timestamps = false;
-
     protected $table = 'photos';
 
     protected $fillable = [

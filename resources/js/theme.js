@@ -17,7 +17,8 @@ module.exports = class {
     }
 
     fadeFunc(el, attr=false, property, start, end, duration) {
-
+        var target = document.querySelector(el);
+        if(!target) return;
         var interval = 10;
         var steps = duration/interval;
         var step_u = 1.0/steps;
@@ -34,9 +35,9 @@ module.exports = class {
             var colorname = 'rgb('+r+','+g+','+b+')';
             // el.style.setProperty(property, colorname);
             if(attr) {
-                document.querySelector(el).setAttribute(property, colorname);
+                target.setAttribute(property, colorname);
             } else {
-                document.querySelector(el).style.setProperty(property, colorname);
+                target.style.setProperty(property, colorname);
             }
             u += step_u;
         }, interval);
@@ -46,6 +47,9 @@ module.exports = class {
         for(const [key, value] of Object.entries(this.colors[theme])) {
             this.fadeFunc(this.element, false, key, this.colors[theme=='dark'?'light':'dark'][key], value, this.transitionDuration);
         }
+        // for(const [key, value] of Object.entries(this.colors[theme=='dark'?'light':'dark'])) {
+        //     this.fadeFunc(this.element+' .invert-theme', false, key, this.colors[theme=='dark'?'dark':'light'][key], value, this.transitionDuration);
+        // }
         document.querySelector('html').setAttribute('data-theme',theme);
     }
 

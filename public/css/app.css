@@ -31438,10 +31438,6 @@ body {
   background: var(--w1) !important;
 }
 
-#themeToggler {
-  /* color: var(--w3) !important; */
-}
-
 /* html[data-theme="dark"]:root {
     --p1: rgb(250,250,250);
     --p2: rgb(226,226,226);

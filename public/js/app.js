@@ -3800,9 +3800,16 @@ module.exports = {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+__webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/alpine.js");
+
 var Theme = __webpack_require__(/*! ./theme */ "./resources/js/theme.js");
 
-__webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/alpine.js");
+window.nav = function (callback) {
+  document.body.classList.remove('loaded');
+  setTimeout(function () {
+    callback();
+  }, 250);
+};
 /*let themeColors = {
     dark: {
         '--w1': {r:250, g:250, b:250},
@@ -3876,7 +3883,7 @@ var themeColors = {
 // console.log(e);
 
 document.addEventListener('DOMContentLoaded', function () {
-  var appTheme = new Theme(themeColors, {
+  window.appTheme = new Theme(themeColors, {
     transitionDuration: 200
   });
   appTheme.load();
@@ -3887,28 +3894,28 @@ document.addEventListener('DOMContentLoaded', function () {
       appTheme.set('dark', 500);
     }
   });
-});
-document.querySelectorAll('a').forEach(function (link) {
-  console.log(link.getAttribute("href"));
+  document.querySelectorAll('a').forEach(function (link) {
+    console.log(link.getAttribute("href"));
 
-  if (link.getAttribute("href").charAt(0) == '#') {
-    link.onclick = function (e) {
-      e.preventDefault();
-      document.querySelector(this.getAttribute("href")).scrollIntoView({
-        behavior: "smooth"
-      });
-    };
-  } else {
-    link.onclick = function (e) {
-      e.preventDefault();
-      document.body.classList.remove('loaded'); // document.getElementById('maskLeave').classList.add('active');
+    if (link.getAttribute("href").charAt(0) == '#') {
+      link.onclick = function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute("href")).scrollIntoView({
+          behavior: "smooth"
+        });
+      };
+    } else {
+      link.onclick = function (e) {
+        e.preventDefault();
+        document.body.classList.remove('loaded'); // document.getElementById('maskLeave').classList.add('active');
 
-      setTimeout(function () {
-        console.log(link);
-        document.location = link.href;
-      }, 250); // Cancel the event as stated by the standard.
-    };
-  }
+        setTimeout(function () {
+          console.log(link);
+          document.location = link.href;
+        }, 250); // Cancel the event as stated by the standard.
+      };
+    }
+  });
 });
 
 /***/ }),
@@ -4003,6 +4010,8 @@ module.exports = /*#__PURE__*/function () {
       var start = arguments.length > 3 ? arguments[3] : undefined;
       var end = arguments.length > 4 ? arguments[4] : undefined;
       var duration = arguments.length > 5 ? arguments[5] : undefined;
+      var target = document.querySelector(el);
+      if (!target) return;
       var interval = 10;
       var steps = duration / interval;
       var step_u = 1.0 / steps;
@@ -4020,9 +4029,9 @@ module.exports = /*#__PURE__*/function () {
         var colorname = 'rgb(' + r + ',' + g + ',' + b + ')'; // el.style.setProperty(property, colorname);
 
         if (attr) {
-          document.querySelector(el).setAttribute(property, colorname);
+          target.setAttribute(property, colorname);
         } else {
-          document.querySelector(el).style.setProperty(property, colorname);
+          target.style.setProperty(property, colorname);
         }
 
         u += step_u;
@@ -4037,7 +4046,10 @@ module.exports = /*#__PURE__*/function () {
             value = _Object$entries$_i[1];
 
         this.fadeFunc(this.element, false, key, this.colors[theme == 'dark' ? 'light' : 'dark'][key], value, this.transitionDuration);
-      }
+      } // for(const [key, value] of Object.entries(this.colors[theme=='dark'?'light':'dark'])) {
+      //     this.fadeFunc(this.element+' .invert-theme', false, key, this.colors[theme=='dark'?'dark':'light'][key], value, this.transitionDuration);
+      // }
+
 
       document.querySelector('html').setAttribute('data-theme', theme);
     }

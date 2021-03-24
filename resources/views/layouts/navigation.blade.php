@@ -2,7 +2,7 @@
 
 $displayableRoutes = [
     'Accueil' => 'home',
-    'Évènements' => 'dashboard'
+    'Évènements' => 'event.index'
 ]
 
 @endphp
