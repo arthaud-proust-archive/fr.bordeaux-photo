@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Event;
+use App\Models\Photo;
 use Validator;
 use Response;
 
@@ -12,6 +13,26 @@ class EventController extends Controller
     public function index() {
         return view('event.index', [
             'events' => event::all()
+        ]);
+    }
+
+    public function show(Request $request, $hashid) {
+        return view('event.show', [
+            'event' => event::whereId(decodeId($hashid))->firstOrFail(),
+        ])->with('status', 'success')->with('content', 'Vous avez déjà ajouté une photo, modifiez-la');
+    }
+
+    public function results(Request $request, $hashid) {
+        return view('event.results', [
+            'event' => event::whereId(decodeId($hashid))->firstOrFail(),
+            'results' => photo::where('event', $hashid)->where('note')->orderBy('note')
+        ]);
+    }
+
+    public function photos(Request $request, $hashid) {
+        return view('event.photos', [
+            'event' => event::whereId(decodeId($hashid))->firstOrFail(),
+            'photos' => photo::where('event', $hashid)->get()
         ]);
     }
 

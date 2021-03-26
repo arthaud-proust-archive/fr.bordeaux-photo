@@ -31465,6 +31465,31 @@ html[data-theme="light"]:root {
     --t0: rgb(230,84,84);
 } */
 
+.fade-out {
+  -webkit-animation: fadeOut forwards 0.5s;
+          animation: fadeOut forwards 0.5s;
+}
+
+@-webkit-keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;

@@ -9,9 +9,9 @@ class Photo extends BaseModel
     protected $table = 'photos';
 
     protected $fillable = [
-        'gallery', // id not hashid
-        'path',
-        'name',
+        'event', // hashid
+        'photo',
+        'title',
         'author'
     ];
 }

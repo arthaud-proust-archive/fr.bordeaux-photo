@@ -15,10 +15,12 @@ class CreatePhotosTable extends Migration
     {
         Schema::create('photos', function (Blueprint $table) {
             $table->id();
-            $table->string('gallery');
-            $table->text('path');
-            $table->string('name')->nullable();
-            $table->string('author')->nullable();
+            $table->string('event');
+            $table->text('photo');
+            $table->string('title')->nullable();
+            $table->string('author');
+            $table->text('notes')->default('{}');
+            $table->tinyInteger('note')->nullable();
         });
     }
 

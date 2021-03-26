@@ -18,12 +18,14 @@ class CreateEventsTable extends Migration
             $table->string('title');
             $table->string('type')->index(); // slug du blog 
             
+            // $table->boolean('open')->default(false);
             $table->integer('date_start')->nullable();
             $table->integer('date_end')->nullable(); 
             
             $table->text('description')->nullable();
 
-            $table->mediumText('participants')->default('[]');
+            $table->text('participants')->default('[]');
+            $table->text('jury')->default('[]');
         });
     }
 

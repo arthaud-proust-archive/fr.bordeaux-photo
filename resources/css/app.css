@@ -33,3 +33,17 @@ html[data-theme="light"]:root {
     --t2: rgb(126,17,228);
     --t0: rgb(230,84,84);
 } */
+
+
+.fade-out {
+    animation: fadeOut forwards 0.5s;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}

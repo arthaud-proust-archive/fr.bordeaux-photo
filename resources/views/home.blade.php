@@ -5,11 +5,11 @@
         </h2>
     </x-slot>
 
-    @auth
+    @authRole('admin')
     <x-view.section title="Administration">
         <x-view.link :href="route('info.create')" text="Ajouter une info à la une" />
     </x-view.section>
-    @endauth
+    @endauthRole
 
     @foreach($infos as $info) 
     <x-view.section :title="$info->title">

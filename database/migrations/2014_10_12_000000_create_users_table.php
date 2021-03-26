@@ -15,11 +15,11 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->tinyInteger('level')->default(0); // niveau de perm
+            $table->string('role')->default('user'); // niveau de perm
             $table->string('name')->unique(); // nom et prénom
             $table->string('img')->default('/assets/profiles/user.png'); // lien de la photo de profil
             $table->string('email')->unique();
-            $table->mediumText('bio')->nullable(true);
+            $table->text('bio')->nullable(true);
             $table->string('password');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();

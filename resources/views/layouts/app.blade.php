@@ -49,6 +49,7 @@
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-s1">
+            @include('components.view.alert')
             @include('layouts.navigation')
 
             <!-- Page Heading -->

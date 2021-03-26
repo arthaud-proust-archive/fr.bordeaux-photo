@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InfoController;
 use App\Http\Controllers\EventController;
-use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PhotoController;
 /*
 |--------------------------------------------------------------------------
@@ -27,9 +26,18 @@ Route::post('/info/{hashid}/delete', [InfoController::class, 'delete'])->name('i
 Route::get('/events', [EventController::class, 'index'])->name('event.index');
 Route::get('/event/create', [EventController::class, 'create'])->name('event.create');
 Route::post('/event/create', [EventController::class, 'store'])->name('event.store');
+Route::get('/event/{hashid}', [EventController::class, 'show'])->name('event.show');
+Route::get('/event/{hashid}/photos', [EventController::class, 'photos'])->name('event.photos');
+Route::get('/event/{hashid}/results', [EventController::class, 'results'])->name('event.results');
 Route::get('/event/{hashid}/edit', [EventController::class, 'edit'])->name('event.edit');
 Route::post('/event/{hashid}/edit', [EventController::class, 'update'])->name('event.update');
 Route::post('/event/{hashid}/delete', [EventController::class, 'delete'])->name('event.delete');
+
+Route::post('/photo/create', [PhotoController::class, 'store'])->name('photo.store');
+Route::get('/photo/create/{event_hashid?}', [PhotoController::class, 'create'])->name('photo.create');
+Route::get('/photo/{hashid}/edit', [PhotoController::class, 'edit'])->name('photo.edit');
+Route::post('/photo/{hashid}/edit', [PhotoController::class, 'update'])->name('photo.update');
+Route::post('/photo/{hashid}/delete', [PhotoController::class, 'delete'])->name('photo.delete');
 
 
 Route::get('/dashboard', function () {
