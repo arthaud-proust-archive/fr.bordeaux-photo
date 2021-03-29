@@ -22,6 +22,7 @@ class PhotoSeeder extends Seeder
             'author_name' => 'Arthaud Proust',
             'event' => 'ejRe',
             'photo' => '/assets/photos/ejRe/ejRe/full.jpg',
+            'notes' => '{}'
         ]);
 
         DB::table('photos')->insert([
@@ -30,6 +31,7 @@ class PhotoSeeder extends Seeder
             'author_name' => 'Arthaud Proust',
             'event' => 'ejRe',
             'photo' => '/assets/photos/ejRe/bk5e/full.jpg',
+            'notes' => '{}'
         ]);
 
         DB::table('photos')->insert([
@@ -38,6 +40,7 @@ class PhotoSeeder extends Seeder
             'author_name' => 'Arthaud Proust',
             'event' => 'ejRe',
             'photo' => '/assets/photos/ejRe/el5a/full.jpg',
+            'notes' => '{}'
         ]);
 
         DB::table('photos')->insert([
@@ -46,6 +49,7 @@ class PhotoSeeder extends Seeder
             'author_name' => 'Arthaud Proust',
             'event' => 'ejRe',
             'photo' => '/assets/photos/ejRe/bmOe/full.jpg',
+            'notes' => '{}'
         ]);
     }
 }

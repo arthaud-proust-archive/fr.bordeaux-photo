@@ -61,7 +61,8 @@ class EventController extends Controller
             'date_start' => request('date_start'),
             'date_end' => request('date_end'),
             'description' => request('description'),
-            'jury' => json_encode(User::jury()->active()->get()->pluck('hashid')->toArray())
+            'jury' => json_encode(User::jury()->active()->get()->pluck('hashid')->toArray()),
+            'participants' => '[]'
         ]);
         return redirect()->route('event.index')->with('status', 'success')->with('content', 'Évènement ajouté');
     }
