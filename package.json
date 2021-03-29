@@ -21,6 +21,10 @@
         "tailwindcss": "^2.0.2"
     },
     "dependencies": {
+        "@editorjs/editorjs": "^2.19.3",
+        "@editorjs/header": "^2.6.1",
+        "@editorjs/link": "^2.3.1",
+        "@editorjs/list": "^1.6.2",
         "lazysizes": "^5.3.0"
     }
 }

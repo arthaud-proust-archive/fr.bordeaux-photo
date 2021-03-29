@@ -19,6 +19,7 @@ class CreatePhotosTable extends Migration
             $table->text('photo');
             $table->string('title')->nullable();
             $table->string('author');
+            $table->string('author_name');
             $table->text('notes')->default('{}');
             $table->tinyInteger('note')->nullable();
         });

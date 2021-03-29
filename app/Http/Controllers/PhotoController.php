@@ -21,7 +21,7 @@ class PhotoController extends Controller
         } 
         return view('photo.create', [
             'event' => $event_hashid,
-            'events' => event::select('id','title')->get()->append('hashid')->toArray()
+            'events' => event::select('id','title')->open()->get()->append('hashid')->toArray()
             // 'events' => event::open()->append('hashid')->pluck('id')->toArray()
         ]);
 
@@ -52,6 +52,7 @@ class PhotoController extends Controller
             'photo' => '',
             'title' => request('title'),
             'author' => Auth::user()->hashid,
+            'author_name' => Auth::user()->name,
             // 'extension' => request('photo')->getClientOriginalExtension()
         ]);
 

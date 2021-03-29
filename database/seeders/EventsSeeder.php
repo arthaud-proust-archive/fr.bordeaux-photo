@@ -22,7 +22,7 @@ class EventsSeeder extends Seeder
             'description' => 'Lorem ipsum',
             'date_start' => Carbon::now()->addDays(30)->timestamp,
             'date_end' => Carbon::now()->addDays(31)->timestamp,
-            'jury' => json_encode(User::where('role', 'jury')->get()->toArray())
+            'jury' => json_encode(User::jury()->active()->get()->pluck('hashid')->toArray())
         ]);
 
         DB::table('events')->insert([
@@ -31,7 +31,7 @@ class EventsSeeder extends Seeder
             'description' => 'Lorem ipsum',
             'date_start' => Carbon::now()->addDays(44)->timestamp,
             'date_end' => Carbon::now()->addDays(44)->timestamp,
-            'jury' => json_encode(User::where('role', 'jury')->get()->toArray())
+            'jury' => json_encode(User::jury()->active()->get()->pluck('hashid')->toArray())
         ]);
 
         DB::table('events')->insert([
@@ -40,7 +40,7 @@ class EventsSeeder extends Seeder
             'description' => 'Lorem ipsum',
             'date_start' => Carbon::now()->timestamp,
             'date_end' => Carbon::now()->addDays(100)->timestamp,
-            'jury' => json_encode(User::where('role', 'jury')->get()->toArray())
+            'jury' => json_encode(User::jury()->active()->get()->pluck('hashid')->toArray())
         ]);
     }
 }

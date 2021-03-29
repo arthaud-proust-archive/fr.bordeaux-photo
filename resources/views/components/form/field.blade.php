@@ -1,4 +1,4 @@
-@props(['type', 'label', 'name', 'value', 'placeholder', 'disabled', 'choices', 'mimes', 'sizemax', 'rows', 'bind', 'options'])
+@props(['type', 'label', 'name', 'value', 'placeholder', 'disabled', 'choices', 'mimes', 'sizemax', 'rows', 'bind', 'options', 'optionsNumber'])
 
 @php
 if(isset($bind)) {
@@ -15,7 +15,6 @@ if(isset($mimes)) {
 }
 $id = strtolower(preg_replace('/\W/', '_', $name));
 @endphp
-
 <div  @if($disabled ?? '') class="opacity-50" disabled @endif>
 @switch($type)
     @case('input')
@@ -75,7 +74,7 @@ $id = strtolower(preg_replace('/\W/', '_', $name));
         <div class="col-span-6 sm:col-span-3">
             <label for="country" class="block text-sm font-medium text-p1">{{ $label ?? $name }}</label>
             <select id="{{ $id }}" name="{{ $id }}" autocomplete="false" class="mt-1 block w-full py-2 border border-s3 px-3 bg-si rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                @if(count(array_filter(array_keys($options), 'is_string')) > 0)
+                @if(count(array_filter(array_keys($options), 'is_string')) > 0 || $optionsNumber??null)
                     @foreach($options as $_value => $_name)    
                         <option value="{{ $_value }}" @if($_value == ($value ?? '')) selected @endif>{{ $_name }}</option>
                     @endforeach

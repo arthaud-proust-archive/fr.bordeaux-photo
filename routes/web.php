@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InfoController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\VoteController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,7 +17,9 @@ use App\Http\Controllers\PhotoController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('maintenance', function () {
+    return view('maintenance');
+})->name('maintenance');
 Route::get('/', [InfoController::class, 'home'])->name('home');
 
 Route::get('/info/create', [InfoController::class, 'create'])->name('info.create');
@@ -32,12 +37,19 @@ Route::get('/event/{hashid}/results', [EventController::class, 'results'])->name
 Route::get('/event/{hashid}/edit', [EventController::class, 'edit'])->name('event.edit');
 Route::post('/event/{hashid}/edit', [EventController::class, 'update'])->name('event.update');
 Route::post('/event/{hashid}/delete', [EventController::class, 'delete'])->name('event.delete');
+Route::get('/event/{hashid}/vote', [VoteController::class, 'show'])->name('vote.show');
+Route::post('/event/{hashid}/vote', [VoteController::class, 'note'])->name('vote.note');
+Route::get('/event/{hashid}/end', [VoteController::class, 'displayNotes'])->name('vote.display');
 
 Route::post('/photo/create', [PhotoController::class, 'store'])->name('photo.store');
 Route::get('/photo/create/{event_hashid?}', [PhotoController::class, 'create'])->name('photo.create');
 Route::get('/photo/{hashid}/edit', [PhotoController::class, 'edit'])->name('photo.edit');
 Route::post('/photo/{hashid}/edit', [PhotoController::class, 'update'])->name('photo.update');
 Route::post('/photo/{hashid}/delete', [PhotoController::class, 'delete'])->name('photo.delete');
+
+
+Route::get('/user/{hashid}', [UserController::class, 'show'])->name('user.show');
+
 
 
 Route::get('/dashboard', function () {

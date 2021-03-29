@@ -48,4 +48,11 @@ class User extends Authenticatable
     public function getHashidAttribute() {
         return encodeId($this->id);
     }
+
+    public function scopeJury($query) {
+        return $query->where('role', 'jury');
+    }
+    public function scopeActive($query) {
+        return $query->where('active', true);
+    }
 }

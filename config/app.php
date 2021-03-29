@@ -15,6 +15,9 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'maintenance' => env('APP_MAINTENANCE', false),
+    'maintenance_token' => env('APP_MAINTENANCE_TOKEN'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

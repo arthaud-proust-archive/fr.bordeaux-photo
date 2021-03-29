@@ -48,7 +48,7 @@ $displayableRoutes = [
                                 @auth
                                 {{ Auth::user()->name }}
                                 @else
-                                Compte
+                                Mon compte
                                 @endauth
                             </div>
 

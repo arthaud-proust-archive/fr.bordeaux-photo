@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\Photo;
+use App\Models\User;
 use Validator;
 use Response;
 
@@ -25,7 +26,8 @@ class EventController extends Controller
     public function results(Request $request, $hashid) {
         return view('event.results', [
             'event' => event::whereId(decodeId($hashid))->firstOrFail(),
-            'results' => photo::where('event', $hashid)->where('note')->orderBy('note')
+            'podium' => photo::where('event', $hashid)->hasNote()->orderBy('note')->take(3)->get(),
+            'results' => photo::where('event', $hashid)->hasNote()->orderBy('note')->paginate(1)
         ]);
     }
 
@@ -35,6 +37,7 @@ class EventController extends Controller
             'photos' => photo::where('event', $hashid)->get()
         ]);
     }
+    
 
     public function create() {
         return view('event.create');
@@ -58,6 +61,7 @@ class EventController extends Controller
             'date_start' => request('date_start'),
             'date_end' => request('date_end'),
             'description' => request('description'),
+            'jury' => json_encode(User::jury()->active()->get()->pluck('hashid')->toArray())
         ]);
         return redirect()->route('event.index')->with('status', 'success')->with('content', 'Évènement ajouté');
     }

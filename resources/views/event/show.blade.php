@@ -8,13 +8,18 @@
     @auth
     <x-view.section title="Liens">
         @authRole('admin') <x-view.link :href="route('event.edit', $event->hashid)" text="Éditer l'évènement" /> @endauthRole
-        <x-view.link :href="route('event.photos', $event->hashid)" text="Voir les photos" />
-        <x-view.link :href="route('event.results', $event->hashid)" text="Voir les résultats" />
-        @if($event->userPhotoSent)
-        <x-view.link :href="route('photo.edit', $event->userPhotoSent->hashid)" text="Modifier ma photo" />
-        @else
-        <x-view.link :href="route('photo.create', $event->hashid)" text="Envoyer ma photo" />
-        @endif
+        @authRole('jury')
+            <x-view.link :href="route('event.photos', $event->hashid)" text="Voir les photos" />
+            <x-view.link :href="route('vote.show', $event->hashid)" text="Voter" />
+        @endauthRole
+        @authRole('user')
+            <x-view.link :href="route('event.results', $event->hashid)" text="Voir les résultats" />
+            @if($event->userPhotoSent)
+            <x-view.link :href="route('photo.edit', $event->userPhotoSent->hashid)" text="Modifier ma photo" />
+            @else
+            <x-view.link :href="route('photo.create', $event->hashid)" text="Envoyer ma photo" />
+            @endif
+        @endauthRole
     </x-view.section>
     @endauth
 
