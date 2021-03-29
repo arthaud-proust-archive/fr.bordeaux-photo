@@ -24,8 +24,8 @@ class CreateEventsTable extends Migration
             
             $table->text('description')->nullable();
 
-            $table->text('participants')->default('[]');
-            $table->text('jury')->default('[]');
+            $table->text('participants');
+            $table->text('jury');
         });
     }
 
