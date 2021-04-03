@@ -4,9 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class Maintenance
+class MaintenanceCheck
 {
     /**
      * Handle an incoming request.
@@ -18,20 +17,14 @@ class Maintenance
     public function handle(Request $request, Closure $next)
     {
         // dd(Auth::user());
-        if(config('app.maintenance')) {
-            if(
+        if(
+            !config('app.maintenance') ||
             Auth::check() || 
-            $request->routeIs('maintenance') || 
-            $request->routeIs('login') ||
-            $request->method() == "POST" ||
             $request->query->get('token') == config('app.maintenance_token') 
-            ) {
-                return $next($request);
-            } else {
-                return redirect()->route('maintenance');
-            }
-        } else {
+        ) {
             return $next($request);
+        } else {
+            return redirect()->route('maintenance');
         }
     }
 }

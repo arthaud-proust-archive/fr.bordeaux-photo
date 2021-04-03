@@ -1,33 +1,25 @@
 require('./bootstrap');
 require('alpinejs');
 require('lazysizes');
-import EditorJS from '@editorjs/editorjs';
-import Header from '@editorjs/header'; 
-import List from '@editorjs/list'; 
-
 const Theme = require('./theme');
-const editor = new EditorJS({ 
-    /** 
-     * Id of Element that should contain the Editor 
-     */ 
-    holder: 'editorjs', 
-    
-    /** 
-     * Available Tools list. 
-     * Pass Tool's class or Settings object for each Tool you want to use 
-     */ 
-    tools: { 
-      header: Header, 
-      list: List 
-    }, 
-})
+const Quill = require('quill');
 
-window.nav = function(callback) {
-    document.body.classList.remove('loaded');
-    setTimeout(function() {
-        callback();
-    }, 250);
+
+var container = document.getElementById('editor');
+if(container) {
+    const editor = new Quill(container, {
+        modules: {
+          toolbar: [
+            [{ header: [1, 2, false] }],
+            ['bold', 'italic', 'underline'],
+            ['image', 'code-block']
+          ]
+        },
+        placeholder: 'Compose an epic...',
+        theme: 'snow'  // or 'bubble'
+      });
 }
+
 /*let themeColors = {
     dark: {
         '--w1': {r:250, g:250, b:250},
