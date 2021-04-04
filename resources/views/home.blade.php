@@ -15,7 +15,9 @@
     <x-view.section>
         <x-slot name="title">
             {{ $info->title}}
+            @authRole('admin')
             <x-view.link muted :href="route('info.edit', $info->hashid)" text="Éditer" />
+            @endauthRole
         </x-slot>
         <div class="mt-2 quillContent">
             {{ $info->content }}

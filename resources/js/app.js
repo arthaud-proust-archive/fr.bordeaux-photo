@@ -13,7 +13,6 @@ const Quill = require('quill');
 
 
 
-
 window.nav = function(callback) {
     document.body.classList.remove('loaded');
     setTimeout(function() {
