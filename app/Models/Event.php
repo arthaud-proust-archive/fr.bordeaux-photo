@@ -29,6 +29,10 @@ class Event extends BaseModel
             ->where('date_end', '>', Carbon::now()->timestamp);
     }
 
+    public function getDatesAttribute() {
+        return timestampToDate($this->date_start).'  à  '.timestampToDate($this->date_end);
+    }
+
     public function getUserPhotoSentAttribute() {
         return photo::where('event', $this->hashid)->where('author', Auth::user()->hashid)->first();
     }

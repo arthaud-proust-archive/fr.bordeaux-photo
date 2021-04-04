@@ -5,6 +5,8 @@ if(isset($bind)) {
     $value = old($name) ?? $bind[$name];
 } else if(isset($value)) {
     $value = old($name) ?? $value;
+} else {
+    $value = old($name) ?? '';
 }
 if(isset($mimes)) {
     $types = [];
@@ -20,7 +22,13 @@ $id = strtolower(preg_replace('/\W/', '_', $name));
     @case('input')
         <div class="col-span-6">
             <label for="{{ $id }}" class="block text-sm font-medium text-p1">{{ $label ?? $name }}</label>
-            <input type="text" value="{{ $value ?? '' }}" placeholder="{{ $placeholder ?? '' }}" name="{{ $id }}" id="{{ $id }}" autocomplete="false" class="bg-si mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm @error($id) border-red-500 @else border-si @enderror rounded-md">
+            <input type="text" value="{{ $value ?? '' }}" placeholder="{{ $placeholder ?? '' }}" name="{{ $id }}" id="{{ $id }}" autocomplete="off" class="bg-si mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm @error($id) border-red-500 @else border-si @enderror rounded-md">
+        </div>
+    @break
+    @case('date')
+        <div class="col-span-6">
+            <label for="{{ $id }}" class="block text-sm font-medium text-p1">{{ $label ?? $name }}</label>
+            <input data-type="date" type="text" value="{{ $value ?? '' }}" placeholder="{{ $placeholder ?? '' }}" name="{{ $id }}" id="{{ $id }}" autocomplete="off" class="bg-si mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm @error($id) border-red-500 @else border-si @enderror rounded-md">
         </div>
     @break
     @case('textarea')
@@ -73,8 +81,8 @@ $id = strtolower(preg_replace('/\W/', '_', $name));
     @case('select')
         <div class="col-span-6 sm:col-span-3">
             <label for="country" class="block text-sm font-medium text-p1">{{ $label ?? $name }}</label>
-            <select id="{{ $id }}" name="{{ $id }}" autocomplete="false" class="mt-1 block w-full py-2 border border-s3 px-3 bg-si rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                @if(count(array_filter(array_keys($options), 'is_string')) > 0 || $optionsNumber??null)
+            <select id="{{ $id }}" name="{{ $id }}" autocomplete="off" class="mt-1 block w-full py-2 border border-s3 px-3 bg-si rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                @if(count(array_filter(array_keys($options), 'is_string')) > 0 || ($optionsNumber??null) )
                     @foreach($options as $_value => $_name)    
                         <option value="{{ $_value }}" @if($_value == ($value ?? '')) selected @endif>{{ $_name }}</option>
                     @endforeach
@@ -86,8 +94,19 @@ $id = strtolower(preg_replace('/\W/', '_', $name));
             </select>
         </div>
     @break
+    @case('quill')
+        <div>
+            <label for="{{ $id }}" class="block text-sm font-medium text-p1">
+                {{ $label ?? $name }}
+            </label>
+            <div class="mt-1">
+                <input type="hidden" class="quillHidden" id="{{ $id }}" name="{{ $id }}" value="{{ $value ?? '' }}">
+                <div class="quillContainer bg-si mt-1 border-si py-2 rounded-md @error($id) border-red-500 @else border-si @enderror" data-placeholder="{{ $placeholder ?? '' }}"></div>
+            </div>
+        </div>
+    @break
     @case('hidden')
-    <input type="hidden" value="{{ $value ?? '' }}" name="{{ $id }}" id="{{ $id }}" autocomplete="false">
+    <input type="hidden" value="{{ $value ?? '' }}" name="{{ $id }}" id="{{ $id }}" autocomplete="off">
     @break
 @endswitch
     @error($id)

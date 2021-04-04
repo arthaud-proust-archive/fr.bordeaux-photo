@@ -2,6 +2,7 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 /* @import './customVar.css'; */
+/* @import './quill.css'; */
 
 body {
     background: var(--w1) !important;
@@ -46,4 +47,8 @@ html[data-theme="light"]:root {
     to {
         opacity: 0;
     }
+}
+
+.ql-disabled {
+    border: none !important;
 }

@@ -17,11 +17,14 @@
                     {{$event->title}}
                     <x-event.typeicon :type="$event->type" />
                 </a>
+                @authRole('admin')
+                <x-view.link muted :href="route('event.edit', $event->hashid)" text="Éditer" />
+                @endauthRole
             </x-slot>
-            @authRole('admin')
-            <x-view.link :href="route('event.edit', $event->hashid)" text="Éditer" />
-            @endauthRole
-            <p class="mt-2">{{ $event->description }}</p>
+            <div class="mt-2 quillContent">
+                {{ $event->description }}
+                {{-- @quillContent($event->description) --}}
+            </div>
         </x-view.section>
     @endforeach
 </x-app-layout>

@@ -47,19 +47,24 @@ class EventController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
             'type' => 'required',
-            'date_start' => 'required',
-            'date_end' => 'required',
+            'dates' => ['required', 'regex:/[0-3][0-9]-[0-1][0-9]-[0-9][0-9][0-9][0-9]  à  [0-3][0-9]-[0-1][0-9]-[0-9][0-9][0-9][0-9]/i'],
+            // 'date_start' => 'required',
+            // 'date_end' => 'required',
             'description' => 'nullable',
         ]);
         if ($validator->fails()) {
             return back()->withInput()->withErrors($validator);
         }
 
+        $dates = explode('  à  ', request('dates'));
+        $date_start = dateToTimestamp($dates[0]);
+        $date_end = dateToTimestamp($dates[1]);
+
         $event = event::create([
             'title' => request('title'),
             'type' => request('type'),
-            'date_start' => request('date_start'),
-            'date_end' => request('date_end'),
+            'date_start' => $date_start,
+            'date_end' => $date_end,
             'description' => request('description'),
             'jury' => json_encode(User::jury()->active()->get()->pluck('hashid')->toArray()),
             'participants' => '[]'
@@ -80,18 +85,24 @@ class EventController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
             'type' => 'required',
-            'date_start' => 'required',
-            'date_end' => 'required',
+            'dates' => ['required', 'regex:/[0-3][0-9]-[0-1][0-9]-[0-9][0-9][0-9][0-9]  à  [0-3][0-9]-[0-1][0-9]-[0-9][0-9][0-9][0-9]/i'],
+            // 'date_start' => 'required',
+            // 'date_end' => 'required',
             'description' => 'nullable',
         ]);
         if ($validator->fails()) {
             return back()->withInput()->withErrors($validator);
         }
 
+
+        $dates = explode('  à  ', request('dates'));
+        $date_start = dateToTimestamp($dates[0]);
+        $date_end = dateToTimestamp($dates[1]);
+
         $event->title = request('title');
         $event->type = request('type');
-        $event->date_start = request('date_start');
-        $event->date_end = request('date_end');
+        $event->date_start = $date_start;
+        $event->date_end = $date_end;
         $event->description = request('description');
         $event->save();
 

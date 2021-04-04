@@ -2,7 +2,7 @@
 use Hashids\Hashids;
 use App\Models\Config;
 use \Gumlet\ImageResize;
-
+use Carbon\Carbon;
 
 if(!function_exists('encodeId')) {
     function encodeId($id) {
@@ -19,5 +19,17 @@ if(!function_exists('decodeId')) {
         } catch(Exception $e) {
             abort('404');
         }
+    }
+}
+
+if(!function_exists('timestampToDate')) {
+    function timestampToDate($timestamp) {
+        return Carbon::createFromTimestamp($timestamp, 'Europe/London')->format('Y-m-d'); 
+    }
+}
+
+if(!function_exists('dateToTimestamp')) {
+    function dateToTimestamp($date) {
+        return Carbon::create($date)->timestamp; 
     }
 }

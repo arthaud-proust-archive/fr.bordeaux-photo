@@ -22,7 +22,7 @@ $displayableRoutes = [
 
                 <!-- Logo -->
                 <!-- <div class="flex-shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('profil') }}">
                         <x-application-logo class="block h-10 w-auto fill-current text-p1" />
                     </a>
                 </div> -->
@@ -63,7 +63,7 @@ $displayableRoutes = [
                     <x-slot name="content">
                         @auth
                         <!-- Authentication -->
-                        <x-dropdown-link :href="route('login')">Profil</x-dropdown-link>
+                        <x-dropdown-link :href="route('profil')">Profil</x-dropdown-link>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
@@ -73,7 +73,7 @@ $displayableRoutes = [
                         </form>
                         @else
                         <x-dropdown-link :href="route('login')">Connexion</x-dropdown-link>
-                        <x-dropdown-link :href="route('register')">Inscription</x-dropdown-link>
+                        <x-dropdown-link :href="route('register')">Créer un compte</x-dropdown-link>
 
                         @endauth
                     </x-slot>
@@ -104,6 +104,7 @@ $displayableRoutes = [
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-b border-s3">
+            @auth
             <div class="flex items-center px-4">
                 <div class="flex-shrink-0">
                     <svg class="h-10 w-10 fill-current text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -111,12 +112,10 @@ $displayableRoutes = [
                     </svg>
                 </div>
 
-                @auth
                 <div class="ml-3">
                     <div class="font-medium text-base text-p1">{{ Auth::user()->name }}</div>
                     <div class="font-medium text-sm text-p3">{{ Auth::user()->email }}</div>
                 </div>
-                @endauth
             </div>
 
             <div class="mt-3 space-y-1">
@@ -124,11 +123,13 @@ $displayableRoutes = [
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
 
-                    <x-responsive-nav-link onclick="nav((event)=>{this.closest('form').submit();})">
-                        Se déconnecter
-                    </x-responsive-nav-link>
+                    <x-responsive-nav-link onclick="nav((event)=>{this.closest('form').submit();})">Se déconnecter</x-responsive-nav-link>
                 </form>
             </div>
+            @else 
+                <x-responsive-nav-link :href="route('login')">Connexion</x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('register')">Créer un compte</x-responsive-nav-link>
+            @endauth
         </div>
     </div>
 </nav>

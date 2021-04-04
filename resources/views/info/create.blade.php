@@ -6,10 +6,9 @@
     </x-slot>
     
     <x-view.section width="3">
-        <x-form.base action="route('info.store')" method="POST" submitColor="green">
+        <x-form.base :action="route('info.store')" method="POST" submitColor="green">
             <x-form.field type="input" label="Titre" name="title"/>
-            <x-form.field type="textarea" label="Contenu" name="content"/>
-            <div class="bg-si mt-1 border-si py-2 rounded-md" id="editor"></div>
+            <x-form.field type="quill" label="Contenu" name="content"/>
         </x-form.base>
     </x-view.section>
 

@@ -7,9 +7,9 @@
                 @if($title??null)
                     <h1 class="text-3xl pb-3">{{ $title }}</h1>
                 @endif
-                <p>
+                <div>
                     {{ $slot }}
-                </p>
+                </div>
             </div>
         </div>
     </div>

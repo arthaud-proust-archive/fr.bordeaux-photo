@@ -6,7 +6,7 @@ if(isset($submitBtn)) {
 }
 @endphp
 
-<form action="{{ $action }}" method="{{ $method }}" enctype="{{ $enctype ?? '' }}">
+<form class="deltaForm" action="{{ $action }}" method="{{ $method }}" enctype="{{ $enctype ?? '' }}">
     @csrf
     {{ $head ?? '' }}
     <div class="sm:overflow-hidden">

@@ -12,9 +12,16 @@
     @endauthRole
 
     @foreach($infos as $info) 
-    <x-view.section :title="$info->title">
-        <x-view.link :href="route('info.edit', $info->hashid)" text="Éditer" />
-        <p class="mt-2">{{ $info->content }}</p>
+    <x-view.section>
+        <x-slot name="title">
+            {{ $info->title}}
+            <x-view.link muted :href="route('info.edit', $info->hashid)" text="Éditer" />
+        </x-slot>
+        <div class="mt-2 quillContent">
+            {{ $info->content }}
+            {{-- @quillContent($info->content) --}}
+        </div>
+
     </x-view.section>
     @endforeach
 </x-app-layout>

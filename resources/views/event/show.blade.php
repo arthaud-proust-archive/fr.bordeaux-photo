@@ -30,6 +30,9 @@
                 <x-event.typeicon :type="$event->type" />
             </a>
         </x-slot>
-        <p class="mt-2">{{ $event->description }}</p>
+        <div class="mt-2 quillContent">
+            {{ $event->description }}
+            {{-- @quillContent($event->description) --}}
+        </div>
     </x-view.section>
 </x-app-layout>

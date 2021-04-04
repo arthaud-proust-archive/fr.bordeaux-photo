@@ -56,8 +56,8 @@ Route::middleware(['maintenanceCheck'])->group(function () {
 
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::get('/profil', function () {
+    return view('user.show');
+})->middleware(['auth'])->name('profil');
 
 require __DIR__.'/auth.php';

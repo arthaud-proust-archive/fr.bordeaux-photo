@@ -9,9 +9,10 @@
         <x-form.base :action="route('event.store')" method="POST" submitColor="green" submitText="Ajouter" cancel>
             <x-form.field type="input" label="Titre" name="title"/>
             <x-form.field type="select" label="Type" name="type" :options="['rallye'=>'Rallye', 'nocturne'=>'Nocturne']"/>
-            <x-form.field type="textarea" label="Contenu" name="description"/>
-            <x-form.field type="input" label="Date de début" name="date_start"/>
-            <x-form.field type="input" label="Date de fin" name="date_end"/>
+            <x-form.field type="date" label="Date de début" name="dates"/>
+            <!-- <x-form.field type="date" label="Date de début" name="date_start" :value="Carbon\Carbon::now()->addDays(1)->toDateString()"/> -->
+            <!-- <x-form.field type="date" label="Date de fin" name="date_end" :value="Carbon\Carbon::now()->addDays(1)->toDateString()"/> -->
+            <x-form.field type="quill" label="Contenu" name="description"/>
         </x-form.base>
     </x-view.section>
 

@@ -3,7 +3,7 @@ const lerp = (a,b,u)=>(1-u) * a + u * b;
 
 module.exports = class {
     constructor(themeColors, options={}) {
-        this.colors = themeColors;
+        this.themeColors = themeColors;
         this.transitionDuration = options.transitionDuration || 100;
         this.element = options.element || 'html';
         this.identifier = options.identifier || 'app';
@@ -14,6 +14,22 @@ module.exports = class {
 
     get actual() {
         return this._actualTheme
+    }
+
+    get colors() {
+        return this.themeColors[this._actualTheme];
+    }
+
+    get colorNames() {
+        return Object.keys(this.themeColors[this._actualTheme]);
+    }
+
+    get colorValues() {
+        return Object.values(this.themeColors[this._actualTheme]);
+    }
+
+    get colorCSSVars() {
+        return Object.keys(this.themeColors[this._actualTheme]).map(colorName=>`var(${colorName})`);
     }
 
     fadeFunc(el, attr=false, property, start, end, duration) {
@@ -44,11 +60,11 @@ module.exports = class {
     };
 
     fade(theme) {
-        for(const [key, value] of Object.entries(this.colors[theme])) {
-            this.fadeFunc(this.element, false, key, this.colors[theme=='dark'?'light':'dark'][key], value, this.transitionDuration);
+        for(const [key, value] of Object.entries(this.themeColors[theme])) {
+            this.fadeFunc(this.element, false, key, this.themeColors[theme=='dark'?'light':'dark'][key], value, this.transitionDuration);
         }
-        // for(const [key, value] of Object.entries(this.colors[theme=='dark'?'light':'dark'])) {
-        //     this.fadeFunc(this.element+' .invert-theme', false, key, this.colors[theme=='dark'?'dark':'light'][key], value, this.transitionDuration);
+        // for(const [key, value] of Object.entries(this.themeColors[theme=='dark'?'light':'dark'])) {
+        //     this.fadeFunc(this.element+' .invert-theme', false, key, this.themeColors[theme=='dark'?'dark':'light'][key], value, this.transitionDuration);
         // }
         document.querySelector('html').setAttribute('data-theme',theme);
     }
@@ -63,7 +79,7 @@ module.exports = class {
 
         localStorage.setItem(`${this.identifier}-theme`, theme);
         
-        this.fadeFunc('meta[name="theme-color"]', true, 'content', this.colors[theme=='dark'?'light':'dark']['--s1'], this.colors[theme]['--s1'], this.transitionDuration);
+        this.fadeFunc('meta[name="theme-color"]', true, 'content', this.themeColors[theme=='dark'?'light':'dark']['--s1'], this.themeColors[theme]['--s1'], this.transitionDuration);
 
         if (theme == 'dark') {
             // $('meta[name="theme-color"]').attr('content', "#16161a");
@@ -87,7 +103,7 @@ module.exports = class {
 
     addCssVars() {
         let styles = document.createElement("style");
-        for(const [theme, colors] of Object.entries(this.colors)) {
+        for(const [theme, colors] of Object.entries(this.themeColors)) {
             styles.innerHTML+=`html[data-theme="${theme}"]:root {`;
             for (const[color, v] of Object.entries(colors)) { // v is value, it's rgb color
                 // styles.innerHTML+=`${color}: rgb(${v.r}, ${v.g}, ${v.b}) ;`;
@@ -100,7 +116,7 @@ module.exports = class {
 
     addCssClasses() {
         let styles = document.createElement("style");
-        for (const[color, v] of Object.entries(this.colors[Object.keys(this.colors)[0]])) { // v is value, it's rgb color
+        for (const[color, v] of Object.entries(this.themeColors[Object.keys(this.themeColors)[0]])) { // v is value, it's rgb color
             let name = color.replace(/-/g, '')
             styles.innerHTML+=`.bg-${name} {background-color: var(${color}) !important;}
             .hover\\:bg-${name}:hover {background-color: var(${color}) !important;}

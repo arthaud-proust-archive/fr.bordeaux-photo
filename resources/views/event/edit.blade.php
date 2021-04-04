@@ -10,9 +10,10 @@
         <x-form.base :action="route('event.edit', $event->hashid)" method="POST" submitColor="green" submitText="Modifier" cancel>
             <x-form.field :bind="$event" type="input" label="Titre" name="title"/>
             <x-form.field :bind="$event" type="select" label="Type" name="type" :options="['rallye'=>'Rallye', 'nocturne'=>'Nocturne']"/>
-            <x-form.field :bind="$event" type="textarea" label="Contenu" name="description"/>
-            <x-form.field :bind="$event" type="input" label="Date de début" name="date_start"/>
-            <x-form.field :bind="$event" type="input" label="Date de fin" name="date_end"/>
+            <x-form.field :bind="$event" type="date" label="Date" name="dates"/>
+            <!-- <x-form.field :value="timestampToDate($event->date_start)" type="date" label="Date de début" name="date_start"/> -->
+            <!-- <x-form.field :value="timestampToDate($event->date_end)" type="date" label="Date de fin" name="date_end"/> -->
+            <x-form.field :bind="$event" type="quill" label="Contenu" name="description"/>
         </x-form.base>
     </x-view.section>
 

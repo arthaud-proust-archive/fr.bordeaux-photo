@@ -3,23 +3,23 @@ require('alpinejs');
 require('lazysizes');
 const Theme = require('./theme');
 const Quill = require('quill');
+// const Litepicker = require('litepicker');
+// const QuillDeltaToHtmlConverter = require('quill-delta-to-html').QuillDeltaToHtmlConverter;
+// const QuillDeltaToHtmlConverterCfg = {
+//     inlineStyles:true
+// };
 
 
-var container = document.getElementById('editor');
-if(container) {
-    const editor = new Quill(container, {
-        modules: {
-          toolbar: [
-            [{ header: [1, 2, false] }],
-            ['bold', 'italic', 'underline'],
-            ['image', 'code-block']
-          ]
-        },
-        placeholder: 'Compose an epic...',
-        theme: 'snow'  // or 'bubble'
-      });
+
+
+
+
+window.nav = function(callback) {
+    document.body.classList.remove('loaded');
+    setTimeout(function() {
+        callback();
+    }, 250);
 }
-
 /*let themeColors = {
     dark: {
         '--w1': {r:250, g:250, b:250},
@@ -82,16 +82,6 @@ const themeColors = {
     },
 }
 
-// var e = '{\n';
-// Object.entries(themeColors).forEach(function(t){
-//     e+=`${t[0]}:{`
-//     Object.entries(t[1]).forEach(function(c){
-//         e+=`\n '${c[0]}': 'rgb(${c[1].r},${c[1].g},${c[1].b})',`
-//     })
-//     e+=`\n},\n`
-// })
-// e+=`}`
-// console.log(e);
 
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -110,7 +100,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     document.querySelectorAll('a').forEach(link=>{
-        console.log(link.getAttribute("href"));
         if(!link.getAttribute("href")) return
         if(link.getAttribute("href").charAt(0) =='#') {
             link.addEventListener('click', function(e) {
@@ -128,119 +117,178 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.log(link);
                     document.location = link.href;
                 }, 250);
-                // Cancel the event as stated by the standard.
             });
         }
     
     })    
 
+    window.forms = [];
+    document.querySelectorAll('.deltaForm').forEach(form=>{
+        const quillContainer = form.querySelector('.quillContainer');
+        const quillHidden = form.querySelector('.quillHidden');
+        const submitBtn = form.querySelector('input[type="submit"], button[type="submit"]');
+
+        if(quillContainer && quillHidden && submitBtn) {
+            let editor = new Quill(quillContainer, {
+                modules: {
+                    toolbar: [
+                        [{ header: [1, 2, 3, false] }],
+                        ['bold', 'italic', 'underline'],
+                        [{color: [...appTheme.colorCSSVars, false]}, {background: [...appTheme.colorCSSVars, false]}],
+                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                        ['blockquote', 'code-block', 'link']
+                    ]
+                },
+                placeholder: quillContainer.dataset.placeholder||'',
+                theme: 'snow'  // or 'bubble'
+            });
+
+            if(quillHidden.value) {
+                editor.setContents(JSON.parse(quillHidden.value));
+            }
+
+            submitBtn.addEventListener('click', function(e) {
+                quillHidden.value = JSON.stringify(editor.getContents());
+            })
+
+            window.forms.push(editor);
+        }
+    });
+
+    window.quills = [];
+    document.querySelectorAll('.quillContent').forEach(div=>{
+        let content = div.innerHTML;
+        let quill = new Quill(div, {
+            modules: {
+                toolbar: false
+            },
+            readOnly: true,
+            theme: 'snow'  // or 'bubble'
+        });
+        quill.setContents(JSON.parse(content));
+        // converter = new QuillDeltaToHtmlConverter(JSON.parse(div.innerText).ops, QuillDeltaToHtmlConverterCfg);
+        // div.innerHTML = converter.convert();
+    });
 
 
-// dragover and dragenter events need to have 'preventDefault' called
-// in order for the 'drop' event to register. 
-// See: https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Drag_operations#droptargets
-const dropContainers = document.querySelectorAll('.dropContainer');
-const loadFile = function (file, container) {
+    // window.disableLitepickerStyles = true;
+    document.querySelectorAll('input[data-type="date"]').forEach(input=>{
+        let picker = new Litepicker({
+            autoRefresh: true,
+            singleMode: false,
+            minDays: 0,
+            format: 'DD-MM-YYYY',
+            delimiter: '  à  ',
+            element: input
+        });
+    });
 
-    if (!FileReader || !file) {
+
+    // dragover and dragenter events need to have 'preventDefault' called
+    // in order for the 'drop' event to register. 
+    // See: https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Drag_operations#droptargets
+    const dropContainers = document.querySelectorAll('.dropContainer');
+    const loadFile = function (file, container) {
+
+        if (!FileReader || !file) {
+            return;
+        }
+    
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            container.style.backgroundImage = `url(${e.target.result})`;
+
+            container.classList.remove('dropStarted');
+            container.classList.add('dropDone');
+            // resizedataURL(e.target.result).then(img=>{
+            //     new Compressor(img, {
+            //         quality: 0.4,
+            //         success(result) {
+            //             result.name="image.jpg";
+            //             document.getElementById("preview").src = URL.createObjectURL(result);
+            //             const formData = new FormData();
+
+            //             // The third parameter is required for server
+            //             formData.append('img', result, result.name);
+
+            //             // Send the compressed image file to server with XMLHttpRequest.
+            //             axios.post('/profil/img', formData).then(r => {
+            //                 console.log(r.data);
+            //             });
+            //         },
+            //         error(err) {
+            //             console.log(err.message);
+            //         },
+            //     });
+            // })
+        };
+        reader.readAsDataURL(file);
+
         return;
+        // new Compressor(files[0], {
+        //     quality: 0.4,
+        //     success(result) {
+        //         result.name="image.jpg";
+        //         document.getElementById("preview").src = URL.createObjectURL(result);
+        //         const formData = new FormData();
+
+        //         // The third parameter is required for server
+        //         formData.append('img', result, result.name);
+
+        //         // Send the compressed image file to server with XMLHttpRequest.
+        //         axios.post('/profil/img', formData).then(r => {
+        //             console.log(r.data);
+        //         });
+        //     },
+        //     error(err) {
+        //         console.log(err.message);
+        //     },
+        // });
     }
- 
-    var reader = new FileReader();
-    reader.onload = function (e) {
-        container.style.backgroundImage = `url(${e.target.result})`;
+    dropContainers.forEach(dropContainer=>{
+        let fileInput = dropContainer.querySelector('input[type="file"]');
 
-        container.classList.remove('dropStarted');
-        container.classList.add('dropDone');
-        // resizedataURL(e.target.result).then(img=>{
-        //     new Compressor(img, {
-        //         quality: 0.4,
-        //         success(result) {
-        //             result.name="image.jpg";
-        //             document.getElementById("preview").src = URL.createObjectURL(result);
-        //             const formData = new FormData();
-
-        //             // The third parameter is required for server
-        //             formData.append('img', result, result.name);
-
-        //             // Send the compressed image file to server with XMLHttpRequest.
-        //             axios.post('/profil/img', formData).then(r => {
-        //                 console.log(r.data);
-        //             });
-        //         },
-        //         error(err) {
-        //             console.log(err.message);
-        //         },
-        //     });
-        // })
-    };
-    reader.readAsDataURL(file);
-
-    return;
-    // new Compressor(files[0], {
-    //     quality: 0.4,
-    //     success(result) {
-    //         result.name="image.jpg";
-    //         document.getElementById("preview").src = URL.createObjectURL(result);
-    //         const formData = new FormData();
-
-    //         // The third parameter is required for server
-    //         formData.append('img', result, result.name);
-
-    //         // Send the compressed image file to server with XMLHttpRequest.
-    //         axios.post('/profil/img', formData).then(r => {
-    //             console.log(r.data);
-    //         });
-    //     },
-    //     error(err) {
-    //         console.log(err.message);
-    //     },
-    // });
-}
-dropContainers.forEach(dropContainer=>{
-    let fileInput = dropContainer.querySelector('input[type="file"]');
-
-    dropContainer.ondragover = dropContainer.ondragenter = function(e) {
-        dropContainer.classList.add('dragOver');
-        e.preventDefault();
-    };
-      
-
-    dropContainer.ondragleave = function(e) {
-        dropContainer.classList.remove('dragOver');
-        e.preventDefault();
-    };
-      
-    dropContainer.ondrop = function(e) {
-        dropContainer.classList.remove('dragOver');
-        dropContainer.classList.add('dropStarted');
-        // pretty simple -- but not for IE :(
-        fileInput.files = e.dataTransfer.files;
-      
-        loadFile(e.dataTransfer.files[0], dropContainer);
-
-        /*
-        // If you want to use some of the dropped files
-        const dT = new DataTransfer();
-        dT.items.add(e.dataTransfer.files[0]);
-        // dT.items.add(e.dataTransfer.files[3]);
-        fileInput.files = dT.files;
-        */
-        e.preventDefault();
-    };
-
-    fileInput.onchange = function (evt) {
-        var tgt = evt.target || window.event.srcElement,
-            files = tgt.files;
-
+        dropContainer.ondragover = dropContainer.ondragenter = function(e) {
+            dropContainer.classList.add('dragOver');
+            e.preventDefault();
+        };
         
-        loadFile(files[0], dropContainer);
-    }
-})
+
+        dropContainer.ondragleave = function(e) {
+            dropContainer.classList.remove('dragOver');
+            e.preventDefault();
+        };
+        
+        dropContainer.ondrop = function(e) {
+            dropContainer.classList.remove('dragOver');
+            dropContainer.classList.add('dropStarted');
+            // pretty simple -- but not for IE :(
+            fileInput.files = e.dataTransfer.files;
+        
+            loadFile(e.dataTransfer.files[0], dropContainer);
+
+            /*
+            // If you want to use some of the dropped files
+            const dT = new DataTransfer();
+            dT.items.add(e.dataTransfer.files[0]);
+            // dT.items.add(e.dataTransfer.files[3]);
+            fileInput.files = dT.files;
+            */
+            e.preventDefault();
+        };
+
+        fileInput.onchange = function (evt) {
+            var tgt = evt.target || window.event.srcElement,
+                files = tgt.files;
+
+            
+            loadFile(files[0], dropContainer);
+        }
+    })
 
 
-const elsDisabled = document.querySelectorAll('[disabled] .dropContainer, [disabled] button, [disabled] a, [disabled] label, [disabled] input, [disabled] textarea, [disabled] select');
-elsDisabled.forEach(input=>{
+    const elsDisabled = document.querySelectorAll('[disabled] .dropContainer, [disabled] button, [disabled] a, [disabled] label, [disabled] input, [disabled] textarea, [disabled] select');
+    elsDisabled.forEach(input=>{
         input.onclick = input.onselect = input.ondragenter = input.ondrop = input.onmousedown = input.onmouseover = input.onfocus = input.onkeydown = function(e) {
             e.stopPropagation();
             e.stopImmediatePropagation();
@@ -249,21 +297,21 @@ elsDisabled.forEach(input=>{
 
         }
         input.style.cursor = 'default';
-})
-
-document.querySelectorAll('.close-alert').forEach(alert=> {
-    setTimeout(()=> {
-        alert.closest('.alert').classList.add('fade-out')
-        setTimeout(()=> {
-            alert.closest('.alert').style.display = "none";
-        }, 500);
-    }, 4000);
-    alert.addEventListener('click', function(e) {
-        this.closest('.alert').classList.add('fade-out')
-        setTimeout(()=> {
-            this.closest('.alert').style.display = "none";
-        }, 500);
     })
-});
+
+    document.querySelectorAll('.close-alert').forEach(alert=> {
+        setTimeout(()=> {
+            alert.closest('.alert').classList.add('fade-out')
+            setTimeout(()=> {
+                alert.closest('.alert').style.display = "none";
+            }, 500);
+        }, 4000);
+        alert.addEventListener('click', function(e) {
+            this.closest('.alert').classList.add('fade-out')
+            setTimeout(()=> {
+                this.closest('.alert').style.display = "none";
+            }, 500);
+        })
+    });
 
 })
