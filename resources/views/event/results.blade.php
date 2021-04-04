@@ -15,9 +15,12 @@
     </x-view.section>
     @endauth
 
-    <x-view.section title="Le gagnant du concours est {{ $podium[0]->authorModel->name}}!">
-        
-    </x-view.section>
+    @if( $podium[0] ?? false)
+    <x-view.section title="Le gagnant du concours est {{ $podium[0]->authorModel->name}}!"></x-view.section>
+    @else
+    <x-view.section title="Aucun résultat"></x-view.section>
+    @endif
+    
 
     <x-view.section title="Podium">
         <div class="flex flex-row flex-wrap justify-center items-end">
