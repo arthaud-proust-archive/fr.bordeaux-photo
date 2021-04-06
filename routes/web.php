@@ -5,6 +5,8 @@ use App\Http\Controllers\InfoController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\VoteController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfilController;
 
 
 /*
@@ -23,12 +25,9 @@ Route::get('maintenance', function () {
 
 
 Route::middleware(['maintenanceCheck'])->group(function () {
+
     Route::get('/', [InfoController::class, 'home'])->name('home');
-
-    
-    Route::get('/info/create', [InfoController::class, 'create'])->name('info.create');
-    Route::post('/info/create', [InfoController::class, 'store'])->name('info.store');
-
+     
     Route::get('/events', [EventController::class, 'index'])->name('event.index');
     Route::get('/event/{hashid}', [EventController::class, 'show'])->name('event.show');
     Route::get('/event/{hashid}/photos', [EventController::class, 'photos'])->name('event.photos');
@@ -49,6 +48,8 @@ Route::middleware(['maintenanceCheck'])->group(function () {
     });
 
     Route::middleware(['role:admin'])->group(function () {
+        Route::get('/info/create', [InfoController::class, 'create'])->name('info.create');
+        Route::post('/info/create', [InfoController::class, 'store'])->name('info.store');    
     
         Route::get('/info/{hashid}/edit', [InfoController::class, 'edit'])->name('info.edit');
         Route::post('/info/{hashid}/edit', [InfoController::class, 'update'])->name('info.update');
@@ -60,12 +61,21 @@ Route::middleware(['maintenanceCheck'])->group(function () {
         Route::get('/event/{hashid}/edit', [EventController::class, 'edit'])->name('event.edit');
         Route::post('/event/{hashid}/edit', [EventController::class, 'update'])->name('event.update');
         Route::post('/event/{hashid}/delete', [EventController::class, 'delete'])->name('event.delete');
+
+        Route::get('/users', [UserController::class, 'index'])->name('user.index');
+        Route::get('/user/{hashid}', [UserController::class, 'show'])->name('user.show');
+        Route::get('/user/{hashid}/edit', [UserController::class, 'edit'])->name('user.edit');
+        Route::post('/user/{hashid}/edit', [UserController::class, 'update'])->name('user.update');
+        Route::delete('/user/{hashid}/edit', [UserController::class, 'delete'])->name('user.delete');
     });
 
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/profil/edit/', [ProfilController::class, 'edit'])->name('profil.edit');
+        Route::post('/profil/edit', [ProfilController::class, 'update'])->name('profil.update');
+        Route::delete('/profil/edit', [ProfilController::class, 'delete'])->name('profil.delete');
+        Route::get('/profil/{hashid?}', [ProfilController::class, 'show'])->name('profil.show');
+    });
 });
 
-Route::get('/profil', function () {
-    return view('user.show');
-})->middleware(['auth'])->name('profil');
 
 require __DIR__.'/auth.php';

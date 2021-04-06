@@ -142,9 +142,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 theme: 'snow'  // or 'bubble'
             });
 
-            if(quillHidden.value) {
+            try {
                 editor.setContents(JSON.parse(quillHidden.value));
-            }
+            } catch(e) {}
 
             submitBtn.addEventListener('click', function(e) {
                 quillHidden.value = JSON.stringify(editor.getContents());
@@ -286,17 +286,19 @@ document.addEventListener('DOMContentLoaded', function() {
     })
 
 
-    const elsDisabled = document.querySelectorAll('[disabled] .dropContainer, [disabled] button, [disabled] a, [disabled] label, [disabled] input, [disabled] textarea, [disabled] select');
+    const elsDisabled = document.querySelectorAll('[disabled] .ql-editor, [disabled] .dropContainer, [disabled] button, [disabled] a, [disabled] label, [disabled] input, [disabled] textarea, [disabled] select');
     elsDisabled.forEach(input=>{
+        input.contentEditable = false;
         input.onclick = input.onselect = input.ondragenter = input.ondrop = input.onmousedown = input.onmouseover = input.onfocus = input.onkeydown = function(e) {
             e.stopPropagation();
             e.stopImmediatePropagation();
             e.preventDefault();
             return false;
-
         }
         input.style.cursor = 'default';
     })
+    const toolbarDisabled = document.querySelectorAll('[disabled] .ql-toolbar');
+    toolbarDisabled.forEach(toolbar=>toolbar.style.display = "none");
 
     document.querySelectorAll('.close-alert').forEach(alert=> {
         setTimeout(()=> {

@@ -36,6 +36,12 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    static $roles = [
+        'admin' => 'Administrateur',
+        'jury' => 'Jury',
+        'user' => 'Utilisateur',
+    ];
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -45,8 +51,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function roles() {
+        return User::$roles;
+    }
+
     public function getHashidAttribute() {
         return encodeId($this->id);
+    }
+
+    public function getNamedRoleAttribute() {
+        return User::$roles[$this->role];
     }
 
     public function scopeJury($query) {

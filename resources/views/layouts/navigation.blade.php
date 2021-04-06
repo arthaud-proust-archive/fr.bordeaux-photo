@@ -22,7 +22,7 @@ $displayableRoutes = [
 
                 <!-- Logo -->
                 <!-- <div class="flex-shrink-0 flex items-center">
-                    <a href="{{ route('profil') }}">
+                    <a href="{{ route('profil.show') }}">
                         <x-application-logo class="block h-10 w-auto fill-current text-p1" />
                     </a>
                 </div> -->
@@ -63,7 +63,10 @@ $displayableRoutes = [
                     <x-slot name="content">
                         @auth
                         <!-- Authentication -->
-                        <x-dropdown-link :href="route('profil')">Profil</x-dropdown-link>
+                        <x-dropdown-link :href="route('profil.show')">Profil</x-dropdown-link>
+                        @authRole('admin')
+                        <x-dropdown-link :href="route('user.index')">Utilisateurs</x-dropdown-link>
+                        @endauthRole
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
@@ -100,6 +103,12 @@ $displayableRoutes = [
                     {{ $title }}
                 </x-responsive-nav-link>
             @endforeach
+
+            @authRole('admin')
+                <x-responsive-nav-link :href="route('user.index')" :active="request()->routeIs('user.index')">
+                    Liste des utilisateurs
+                </x-responsive-nav-link>
+            @endauthRole
         </div>
 
         <!-- Responsive Settings Options -->
@@ -112,10 +121,13 @@ $displayableRoutes = [
                     </svg>
                 </div>
 
-                <div class="ml-3">
-                    <div class="font-medium text-base text-p1">{{ Auth::user()->name }}</div>
-                    <div class="font-medium text-sm text-p3">{{ Auth::user()->email }}</div>
-                </div>
+                <a href="{{ route('profil.show') }}">
+                    <div class="ml-3">
+                        <div class="font-medium text-base text-p1">{{ Auth::user()->name }}</div>
+                        <div class="font-medium text-sm text-p3">{{ Auth::user()->email }}</div>
+                    </div>
+                </a>
+
             </div>
 
             <div class="mt-3 space-y-1">
