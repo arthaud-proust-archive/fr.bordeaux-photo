@@ -22,6 +22,12 @@ if(!function_exists('decodeId')) {
     }
 }
 
+if(!function_exists('timestampToReadableDate')) {
+    function timestampToReadableDate($timestamp, $format='OD MMMM YYYY') {
+        return Carbon::createFromTimestamp($timestamp, 'Europe/London')->locale('fr_FR')->isoFormat($format);
+    }
+}
+
 if(!function_exists('timestampToDate')) {
     function timestampToDate($timestamp) {
         return Carbon::createFromTimestamp($timestamp, 'Europe/London')->format('Y-m-d'); 

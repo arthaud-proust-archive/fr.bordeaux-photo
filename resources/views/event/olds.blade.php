@@ -1,12 +1,12 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-p1 leading-tight">
-            Évènements
+            Anciens évènements
         </h2>
     </x-slot>
 
     <x-view.section>
-        <x-view.link :href="route('event.index.olds')" text="Voir les anciens évènements" />
+        <x-view.link :href="route('event.index')" text="Voir les évènements récents" />
         @authRole('admin')
         <x-view.link :href="route('event.create')" text="Ajouter un évènement" />
         @endauthRole

@@ -8,10 +8,9 @@
 
 
     @auth
-    <x-view.section title="Liens">
+    <x-view.section>
         @authRole('admin') <x-view.link :href="route('event.edit', $event->hashid)" text="Éditer l'évènement" /> @endauthRole
         <x-view.link :href="route('event.show', $event->hashid)" text="Retour à l'évènement" />
-        <x-view.link :href="route('event.photos', $event->hashid)" text="Voir les photos" />
     </x-view.section>
     @endauth
 

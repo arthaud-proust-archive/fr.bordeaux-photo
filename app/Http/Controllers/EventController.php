@@ -13,21 +13,30 @@ class EventController extends Controller
 {
     public function index() {
         return view('event.index', [
-            'events' => event::all()
+            'events' => event::recent()->orderBy('date_end', 'desc')->paginate(10)
+        ]);
+    }
+
+    public function indexOlds() {
+        return view('event.olds', [
+            'events' => event::old()->orderBy('date_end', 'desc')->paginate(10)
         ]);
     }
 
     public function show(Request $request, $hashid) {
         return view('event.show', [
             'event' => event::whereId(decodeId($hashid))->firstOrFail(),
-        ])->with('status', 'success')->with('content', 'Vous avez déjà ajouté une photo, modifiez-la');
+        ])
+        // ->with('status', 'success')->with('content', 'Vous avez déjà ajouté une photo, modifiez-la')
+        ;
+
     }
 
     public function results(Request $request, $hashid) {
         return view('event.results', [
             'event' => event::whereId(decodeId($hashid))->firstOrFail(),
             'podium' => photo::where('event', $hashid)->hasNote()->orderBy('note', 'desc')->take(3)->get(),
-            'results' => photo::where('event', $hashid)->hasNote()->orderBy('note', 'desc')->paginate(1)
+            'results' => photo::where('event', $hashid)->hasNote()->orderBy('note', 'desc')->paginate(5)
         ]);
     }
 

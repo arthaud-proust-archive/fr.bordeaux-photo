@@ -52,3 +52,6 @@ html[data-theme="light"]:root {
 .ql-disabled {
     border: none !important;
 }
+.quillContent .ql-editor {
+    padding:0 !important;
+}

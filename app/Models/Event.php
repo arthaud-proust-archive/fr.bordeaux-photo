@@ -18,7 +18,8 @@ class Event extends BaseModel
         'date_end',
         'description',
         'participants',
-        'jury'
+        'jury',
+        'voted'
     ];
 
 
@@ -27,6 +28,33 @@ class Event extends BaseModel
         return $query
             ->where('date_start', '<', Carbon::now()->timestamp)
             ->where('date_end', '>', Carbon::now()->timestamp);
+    }
+
+    public function scopeRecent($query)
+    {
+        return $query->where('date_end', '>', Carbon::now()->subMonth()->timestamp);
+    }
+
+    public function scopeOld($query)
+    {
+        return $query->where('date_end', '<', Carbon::now()->subMonth()->timestamp);
+    }
+
+    public function getIsOpenAttribute() {
+        return $this->date_start < Carbon::now()->timestamp && $this->date_end > Carbon::now()->timestamp;
+    }
+
+    public function getIsStartedAttribute() {
+        return $this->date_start < Carbon::now()->timestamp;
+    }
+
+    public function getIsEndedAttribute() {
+        return $this->date_end < Carbon::now()->timestamp;
+    }
+
+    public function getReadableDatesAttribute() {
+        return ($this->date_start == $this->date_end) ? 'le '.timestampToReadableDate($this->date_start)
+        :'du '.timestampToReadableDate($this->date_start, 'OD MMMM').' au '.timestampToReadableDate($this->date_end);
     }
 
     public function getDatesAttribute() {

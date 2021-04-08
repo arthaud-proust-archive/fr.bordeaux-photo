@@ -35,12 +35,12 @@ Route::middleware(['maintenanceCheck'])->group(function () {
     Route::post('/photo/{hashid}/edit', [PhotoController::class, 'update'])->name('photo.update');
     Route::post('/photo/{hashid}/delete', [PhotoController::class, 'delete'])->name('photo.delete');
 
-    Route::get('/user/{hashid}', [UserController::class, 'show'])->name('user.show');
 
     Route::middleware(['role:jury'])->group(function () {
         Route::get('/event/{hashid}/vote', [VoteController::class, 'show'])->name('vote.show');
         Route::post('/event/{hashid}/vote', [VoteController::class, 'note'])->name('vote.note');
         Route::get('/event/{hashid}/end', [VoteController::class, 'displayNotes'])->name('vote.display');
+        Route::get('/event/{hashid}/photos', [EventController::class, 'photos'])->name('event.photos');
     });
 
     Route::middleware(['role:admin'])->group(function () {
@@ -74,8 +74,8 @@ Route::middleware(['maintenanceCheck'])->group(function () {
 
 
     Route::get('/events', [EventController::class, 'index'])->name('event.index');
+    Route::get('/events/old', [EventController::class, 'indexOlds'])->name('event.index.olds');
     Route::get('/event/{hashid}', [EventController::class, 'show'])->name('event.show');
-    Route::get('/event/{hashid}/photos', [EventController::class, 'photos'])->name('event.photos');
     Route::get('/event/{hashid}/results', [EventController::class, 'results'])->name('event.results');
     
 });

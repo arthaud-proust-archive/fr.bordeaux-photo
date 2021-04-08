@@ -96,6 +96,11 @@ class VoteController extends Controller
             }
         }
 
+        if($jurys == json_decode($event->jury)) {
+            $event->voted = true;
+            $event->save();
+        }
+
         return redirect()->route('event.results', $event_hashid)->with('status', 'success')->with('content', 'Notes calculées');
     }
 }

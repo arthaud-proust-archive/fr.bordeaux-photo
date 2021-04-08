@@ -1,6 +1,6 @@
 <div class="py-8">
     <div class="max-w-{{ $width ?? 7 }}xl mx-auto sm:px-6 lg:px-8">
-        <div class="overflow-hidden sm:rounded-lg">
+        <div class="overflow-hidden sm:rounded-2xl">
             <div {{ $attributes->merge(['class' => 'p-6 bg-s1 text-p1 ']) }}
             {{-- border-b border-p3 --}}
             >

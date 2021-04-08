@@ -31,7 +31,7 @@ class UserController extends Controller
     }
 
 
-    public function update(Request $request, $hashid=null) {
+    public function update(Request $request, $hashid) {
         $user = User::where('id', decodeId($hashid))->firstOrFail();
 
         $validator = Validator::make($request->all(), [
@@ -47,7 +47,14 @@ class UserController extends Controller
         $user->bio = request('bio');
         $user->save();
         
-        return redirect()->route('user.show', $user->hashid);
+        return redirect()->route('user.show', $user->hashid)->with('status', 'success')->with('content', 'Profil modifié');;
     }
 
+    public function delete(Request $request, $hashid) {
+        $user = User::where('id', decodeId($hashid))->firstOrFail();
+
+        $user->delete();
+        
+        return redirect()->route('user.list', $user->hashid)->with('status', 'success')->with('content', 'Utilisateur supprimé');;
+    }
 }
