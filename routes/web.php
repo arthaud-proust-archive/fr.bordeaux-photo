@@ -28,11 +28,7 @@ Route::middleware(['maintenanceCheck'])->group(function () {
 
     Route::get('/', [InfoController::class, 'home'])->name('home');
      
-    Route::get('/events', [EventController::class, 'index'])->name('event.index');
-    Route::get('/event/{hashid}', [EventController::class, 'show'])->name('event.show');
-    Route::get('/event/{hashid}/photos', [EventController::class, 'photos'])->name('event.photos');
-    Route::get('/event/{hashid}/results', [EventController::class, 'results'])->name('event.results');
-    
+
     Route::get('/photo/create/{event_hashid?}', [PhotoController::class, 'create'])->name('photo.create');
     Route::post('/photo/create', [PhotoController::class, 'store'])->name('photo.store');
     Route::get('/photo/{hashid}/edit', [PhotoController::class, 'edit'])->name('photo.edit');
@@ -75,6 +71,13 @@ Route::middleware(['maintenanceCheck'])->group(function () {
         Route::delete('/profil/edit', [ProfilController::class, 'delete'])->name('profil.delete');
         Route::get('/profil/{hashid?}', [ProfilController::class, 'show'])->name('profil.show');
     });
+
+
+    Route::get('/events', [EventController::class, 'index'])->name('event.index');
+    Route::get('/event/{hashid}', [EventController::class, 'show'])->name('event.show');
+    Route::get('/event/{hashid}/photos', [EventController::class, 'photos'])->name('event.photos');
+    Route::get('/event/{hashid}/results', [EventController::class, 'results'])->name('event.results');
+    
 });
 
 
