@@ -14,12 +14,12 @@ class ProfilController extends Controller
 {
     public function show(Request $request, $hashid=null) {
         if($hashid) {
-            return view('user.show', [
+            return view('profil.show', [
                 'user' => User::where('id', decodeId($hashid))->firstOrFail()
             ]);
 
         } else {
-            return view('user.show', [
+            return view('profil.show', [
                 'user' => Auth::user()
             ]); 
         }

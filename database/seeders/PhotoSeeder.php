@@ -19,7 +19,7 @@ class PhotoSeeder extends Seeder
         DB::table('photos')->insert([
             'title' => 'Photo test',
             'author' => 'ejRe',
-            'author_name' => 'Arthaud Proust',
+            // 'author_name' => 'Arthaud Proust',
             'event' => 'ejRe',
             'photo' => '/assets/photos/ejRe/ejRe/full.jpg',
             'notes' => '{}'
@@ -28,7 +28,7 @@ class PhotoSeeder extends Seeder
         DB::table('photos')->insert([
             'title' => 'Photo test',
             'author' => 'ejRe',
-            'author_name' => 'Arthaud Proust',
+            // 'author_name' => 'Arthaud Proust',
             'event' => 'ejRe',
             'photo' => '/assets/photos/ejRe/bk5e/full.jpg',
             'notes' => '{}'
@@ -37,7 +37,7 @@ class PhotoSeeder extends Seeder
         DB::table('photos')->insert([
             'title' => 'Photo test',
             'author' => 'ejRe',
-            'author_name' => 'Arthaud Proust',
+            // 'author_name' => 'Arthaud Proust',
             'event' => 'ejRe',
             'photo' => '/assets/photos/ejRe/el5a/full.jpg',
             'notes' => '{}'
@@ -46,7 +46,7 @@ class PhotoSeeder extends Seeder
         DB::table('photos')->insert([
             'title' => 'Photo test',
             'author' => 'ejRe',
-            'author_name' => 'Arthaud Proust',
+            // 'author_name' => 'Arthaud Proust',
             'event' => 'ejRe',
             'photo' => '/assets/photos/ejRe/bmOe/full.jpg',
             'notes' => '{}'
