@@ -45,11 +45,13 @@ class Event extends BaseModel
     }
 
     public function getOpenInAttribute() {
-        return 'Ouvre dans '.Carbon::createFromTimestamp($this->date_start)->diffInDays(Carbon::now()).' jours';
+        $diff = Carbon::createFromTimestamp($this->date_start)->diffInDays(Carbon::now());
+        return $diff==0?'Ouvre demain':'Ouvre dans '.$diff.' jours';
     }
 
     public function getCloseInAttribute() {
-        return 'Fin dans '.Carbon::createFromTimestamp($this->date_end)->diffInDays(Carbon::now()).' jours';
+        $diff = Carbon::createFromTimestamp($this->date_end)->diffInDays(Carbon::now());
+        return $diff==0?'Fin ce soir':'Fin dans '.$diff.' jours';
     }
 
     public function getIsOpenAttribute() {
