@@ -119,6 +119,7 @@ $siteurl = config('app.produrl');
                 "sameAs": [
                     "https://instagram.com/bordeaux_photo",
                     "https://www.facebook.com/photo.a.bordeaux",
+                    "https://www.linkedin.com/in/arthaud-proust/",
                     "https://twitter.com/arthaud_proust"
                 ]
             }
