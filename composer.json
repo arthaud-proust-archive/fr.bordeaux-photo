@@ -15,7 +15,9 @@
         "hashids/hashids": "^4.1",
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
-        "nadar/quill-delta-parser": "^2.6"
+        "nadar/quill-delta-parser": "^2.6",
+        "renatomarinho/laravel-page-speed": "^2.0",
+        "spatie/laravel-sitemap": "^5.9"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

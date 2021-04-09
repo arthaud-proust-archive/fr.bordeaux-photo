@@ -11,7 +11,9 @@
         @endauthRole
 
         @authRole('jury')
+            @if($event->isStarted)
             <x-view.link :href="route('event.photos', $event->hashid)" text="Voir les photos" />
+            @endif
             @if($event->isEnded)
                 <x-view.link :href="route('vote.show', $event->hashid)" text="Voter" />
             @endif

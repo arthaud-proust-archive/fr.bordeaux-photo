@@ -6,7 +6,7 @@
     </x-slot>
 
     <x-view.links>
-        <x-view.link :href="route('event.index.olds')" text="Voir les anciens évènements" />
+        <x-view.link :href="route('event.index.olds')" text="Voir les anciens évènements" color="p2" bg="s2" hover="s3"/>
         @authRole('admin')
         <x-view.link :href="route('event.create')" text="Ajouter un évènement" />
         @endauthRole
