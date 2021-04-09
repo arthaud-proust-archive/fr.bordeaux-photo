@@ -7,12 +7,10 @@
 
 
 
-    @auth
-    <x-view.section>
+    <x-view.links>
         @authRole('admin') <x-view.link :href="route('event.edit', $event->hashid)" text="Éditer l'évènement" /> @endauthRole
         <x-view.link :href="route('event.show', $event->hashid)" text="Retour à l'évènement" />
-    </x-view.section>
-    @endauth
+    </x-view.links>
 
     @if( $podium[0] ?? false)
     <x-view.section title="Le gagnant du concours est {{ $podium[0]->authorModel->name}}!"></x-view.section>

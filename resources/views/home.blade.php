@@ -11,8 +11,11 @@
     </x-view.section>
     @endauthRole
 
+    <div class="mx-auto sm:px-6 lg:px-8 max-w-7xl justify-center flex flex-row flex-wrap">
     @foreach($infos as $info) 
-    <x-view.section>
+<div class="flex-grow flex-shrink max-w-xl">
+
+    <x-view.section class="bg-s1">
         <x-slot name="title">
             {{ $info->title}}
             @authRole('admin')
@@ -25,5 +28,7 @@
         </div>
 
     </x-view.section>
+    </div>
     @endforeach
+    </div>
 </x-app-layout>

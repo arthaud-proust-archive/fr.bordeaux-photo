@@ -7,15 +7,13 @@
 
 
 
-    @auth
-    <x-view.section title="Liens">
+    <x-view.links>
         @authRole('admin') <x-view.link :href="route('event.edit', $event->hashid)" text="Éditer l'évènement" /> @endauthRole
         <x-view.link :href="route('event.show', $event->hashid)" text="Retour à l'évènement" />
         @if($event->isEnded)
             <x-view.link :href="route('vote.show', $event->hashid)" text="Voter" />
         @endif
-    </x-view.section>
-    @endauth
+    </x-view.links>
 
     <x-view.section title="Photos">
         @foreach($photos as $photo) 

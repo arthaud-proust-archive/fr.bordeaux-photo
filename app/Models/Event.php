@@ -40,6 +40,18 @@ class Event extends BaseModel
         return $query->where('date_end', '<', Carbon::now()->subMonth()->timestamp);
     }
 
+    public function getIsVotingAttribute() {
+        return $this->date_end < Carbon::now()->timestamp && !$this->voted;
+    }
+
+    public function getOpenInAttribute() {
+        return 'Ouvre dans '.Carbon::createFromTimestamp($this->date_start)->diffInDays(Carbon::now()).' jours';
+    }
+
+    public function getCloseInAttribute() {
+        return 'Fin dans '.Carbon::createFromTimestamp($this->date_end)->diffInDays(Carbon::now()).' jours';
+    }
+
     public function getIsOpenAttribute() {
         return $this->date_start < Carbon::now()->timestamp && $this->date_end > Carbon::now()->timestamp;
     }

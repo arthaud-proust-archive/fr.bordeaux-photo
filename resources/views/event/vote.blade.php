@@ -20,12 +20,10 @@ $options = [
 
 
 
-    @auth
-    <x-view.section title="Liens">
+    <x-view.links>
         <x-view.link :href="route('event.show', $event->hashid)" text="Retour à l'évènement" />
         <x-view.link :href="route('event.results', $event->hashid)" text="Voir les résultats" />
-    </x-view.section>
-    @endauth
+    </x-view.links>
 
     @if($photo)
         <x-view.section title="{{ $photo->id}} {{$photo->hashid}}">

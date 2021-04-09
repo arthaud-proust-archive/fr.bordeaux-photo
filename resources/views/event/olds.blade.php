@@ -5,12 +5,14 @@
         </h2>
     </x-slot>
 
-    <x-view.section>
+    <x-view.links>
         <x-view.link :href="route('event.index')" text="Voir les évènements récents" />
         @authRole('admin')
         <x-view.link :href="route('event.create')" text="Ajouter un évènement" />
         @endauthRole
-    </x-view.section>
+    </x-view.links>
+    
+    <div class="mx-auto sm:px-6 lg:px-8 max-w-7xl justify-center sm:justify-start flex flex-row flex-wrap">
     @foreach($events as $event)
         <x-view.section class="bg-s2">
             <x-slot name="title">
@@ -34,6 +36,7 @@
         </div>
         </x-view.section>
     @endforeach
+    </div>
 
     <x-view.section>
         {{$events->links()}}

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-p1 leading-tight">
-            Éditer un évènement
+            Créer un évènement
         </h2>
     </x-slot>
 
