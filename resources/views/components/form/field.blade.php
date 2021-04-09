@@ -25,6 +25,12 @@ $id = strtolower(preg_replace('/\W/', '_', $name));
             <input type="text" value="{{ $value ?? '' }}" placeholder="{{ $placeholder ?? '' }}" name="{{ $id }}" id="{{ $id }}" autocomplete="off" class="bg-si mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm @error($id) border-red-500 @else border-si @enderror rounded-md">
         </div>
     @break
+    @case('password')
+        <div class="col-span-6">
+            <label for="{{ $id }}" class="block text-sm font-medium text-p1">{{ $label ?? $name }}</label>
+            <input type="password" value="{{ $value ?? '' }}" placeholder="{{ $placeholder ?? '' }}" name="{{ $id }}" id="{{ $id }}" autocomplete="off" class="bg-si mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm @error($id) border-red-500 @else border-si @enderror rounded-md">
+        </div>
+    @break
     @case('date')
         <div class="col-span-6">
             <label for="{{ $id }}" class="block text-sm font-medium text-p1">{{ $label ?? $name }}</label>

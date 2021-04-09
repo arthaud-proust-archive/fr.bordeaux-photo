@@ -1,0 +1,1 @@
+<img  {{ $attributes }} src="{{ asset('/assets/img/hero.png')}}" alt=""/>
