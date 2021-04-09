@@ -16,7 +16,7 @@
             <x-pill>{{ ucFirst($event->type) }} <x-event.typeicon :type="$event->type" /></x-pill>
         </div>
         <div class="py-4">
-            {{ ucFirst($event->readableDates) }}. <b>{{ $event->isOpen?$event->closeIn:$event->openIn}}</b>
+            {{ ucFirst($event->readableDates) }}. @if(!$event->isEnded)<b>{{ $event->isOpen?$event->closeIn:$event->openIn}}</b>@endif
         </div>
         <div class="quillContent">
             {{ $event->description }}
