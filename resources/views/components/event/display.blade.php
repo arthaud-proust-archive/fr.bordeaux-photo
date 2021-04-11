@@ -21,7 +21,7 @@
             {{ ucFirst($event->readableDates) }}. @if(!$event->isEnded)<b>{{ $event->isOpen?$event->closeIn:$event->openIn}}</b>@endif
         </div>
         <div class="quillContent">
-            {{ $event->description }}
+            @bindPagesRoute($event->description)
         </div>
     </x-view.section>
 </div>

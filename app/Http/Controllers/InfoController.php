@@ -4,25 +4,36 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Info;
+use App\Models\Page;
 use Validator;
 use Response;
 
 class InfoController extends Controller
 {
     public function home() {
-        return view('home', [
-            'infos' => Info::all()
-        ]);
+        if($home = Page::firstWhere('url', '/')) {
+            return view('page.show', [
+                'page' => Page::firstWhere('url', '/'),
+                'infos' => Info::page($home->hashid)->get()
+            ]);
+        } else {
+            return view('home', [
+                'infos' => Info::all()
+            ]); 
+        }
     }
 
     public function create() {
-        return view('info.create');
+        return view('info.create', [
+            'pages' => Page::select(['title', 'id', 'url'])->get()->append('hashid')
+        ]);
     }
 
     public function store(Request $request) {
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
             'content' => 'required',
+            'pages' => 'required'
         ]);
         if ($validator->fails()) {
             return back()->withInput()->withErrors($validator);
@@ -31,6 +42,7 @@ class InfoController extends Controller
         $info = info::create([
             'title' => request('title'),
             'content' => request('content'),
+            'pages' => json_encode(array_keys(request('pages')))
         ]);
         return redirect()->route('home')->with('status', 'success')->with('content', 'Info ajoutée');
     }
@@ -39,7 +51,8 @@ class InfoController extends Controller
 
     public function edit(Request $request, $hashid) {
         return view('info.edit', [
-            'info' => info::whereId(decodeId($hashid))->firstOrFail()
+            'info' => info::whereId(decodeId($hashid))->firstOrFail(),
+            'pages' => Page::select(['title', 'id', 'url'])->get()->append('hashid')
         ]);
     }
 
@@ -48,6 +61,7 @@ class InfoController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
             'content' => 'required',
+            'pages' => 'required'
         ]);
         if ($validator->fails()) {
             return back()->withInput()->withErrors($validator);
@@ -55,6 +69,7 @@ class InfoController extends Controller
 
         $info->title = request('title');
         $info->content = request('content');
+        $info->pages = json_encode(array_keys(request('pages')));
         $info->save();
 
         return redirect()->route('home')->with('status', 'success')->with('content', 'Info modifiée');

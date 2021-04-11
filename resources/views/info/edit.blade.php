@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-p1 leading-tight">
-            Éditer une info à la une
+            Éditer une info
         </h2>
     </x-slot>
 
@@ -9,12 +9,18 @@
         <x-form.base :action="route('info.delete', $info->hashid)" method="POST" submitBtn="Supprimer (irréversible):red" nobody />
         <x-form.base :action="route('info.edit', $info->hashid)" method="POST" submitColor="green" submitText="Modifier" cancel>
             <x-form.field :bind="$info" type="input" label="Titre" name="title"/>
-            <!-- <x-form.field :bind="$info" type="textarea" label="Contenu" name="content"/> -->
             <x-form.field :bind="$info" type="quill" label="Contenu" name="content" placeholder="Contenu"/>
-
-            <!-- <x-form.field type="file" label="Contenu" name="content" mimes="images/jpg"/> -->
-            <!-- <x-form.field type="checkbox" label="Contenu" name="test1"/> -->
-            <!-- <x-form.field type="select" label="Contenu" name="test2" :options="[1,2,3]"/> -->
+            @infoPagesRoute
+            <div>
+                <label class="block text-sm font-medium text-p1">Afficher l'info sur les pages:</label>
+                @foreach($pages as $page)
+                @if($page->url =='/' || $info->inPage($page->hashid))
+                <x-form.field type="checkbox" value :label="$page->title" name="pages[{{$page->hashid}}]"/>
+                @else
+                <x-form.field type="checkbox" :label="$page->title" name="pages[{{$page->hashid}}]"/>
+                @endif
+                @endforeach
+            </div>
         </x-form.base>
     </x-view.section>
 

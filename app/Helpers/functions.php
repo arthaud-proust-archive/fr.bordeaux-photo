@@ -3,6 +3,26 @@ use Hashids\Hashids;
 use App\Models\Config;
 use \Gumlet\ImageResize;
 use Carbon\Carbon;
+use App\Models\Page;
+
+if(!function_exists('bindPagesRoute')) {
+    function bindPagesRoute($text) {
+        // dd($text);
+        return preg_replace_callback('/page-(([a-zA-Z]|[0-9]){4})/', function($matches) {
+            // $page = Page::where('id', decodeId(substr($matches[0],1,-1)))->first();
+            // return $page?$page->url:$matches[0];
+
+            // on cherche l'url de la page
+            return (Page::where('id',
+                    decodeId( // via le hashid
+                        substr($matches[0],5) // on enlève le '{' et le '}'
+                    )
+                )->first())
+                // si il n'existe pas de page avec ce hashid, on retourne la chaine de caractère initiale
+                ->url ?? $matches[0];
+        }, $text);
+    }
+}
 
 if(!function_exists('encodeId')) {
     function encodeId($id) {
@@ -17,7 +37,7 @@ if(!function_exists('decodeId')) {
         try {
             return $hashids->decode($hashid)[0];
         } catch(Exception $e) {
-            abort('404');
+            return($hashid);
         }
     }
 }

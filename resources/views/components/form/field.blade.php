@@ -18,7 +18,9 @@ if(isset($mimes)) {
     }
     $typesName = implode(", ", $types);
 }
-$id = strtolower(preg_replace('/\W/', '_', $name));
+
+$id = strtolower(preg_replace('/(?!\[|\])\W/', '_', $name));
+// $id = strtolower(preg_replace('/\W/', '_', $name));
 @endphp
 <div  @if($disabled ?? '') class="opacity-50" disabled @endif>
 @switch($type)
@@ -26,6 +28,12 @@ $id = strtolower(preg_replace('/\W/', '_', $name));
         <div class="col-span-6">
             <label for="{{ $id }}" class="block text-sm font-medium text-p1">{{ $label ?? $name }}</label>
             <input type="text" value="{{ $value ?? '' }}" placeholder="{{ $placeholder ?? '' }}" name="{{ $id }}" id="{{ $id }}" autocomplete="off" class="bg-{{ $bgColor }} mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm @error($id) border-red-500 @else border-si @enderror rounded-md">
+        </div>
+    @break
+    @case('url')
+        <div class="col-span-6">
+            <label for="{{ $id }}" class="block text-sm font-medium text-p1">{{ $label ?? $name }}</label>
+            <input type="text" value="{{ $value ?? '' }}" placeholder="{{ $placeholder ?? '' }}" name="{{ $id }}" id="{{ $id }}" autocomplete="off" class="url-input bg-{{ $bgColor }} mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm @error($id) border-red-500 @else border-si @enderror rounded-md">
         </div>
     @break
     @case('password')

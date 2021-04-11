@@ -13,6 +13,7 @@
             <!-- <x-form.field type="date" label="Date de début" name="date_start" :value="Carbon\Carbon::now()->addDays(1)->toDateString()"/> -->
             <!-- <x-form.field type="date" label="Date de fin" name="date_end" :value="Carbon\Carbon::now()->addDays(1)->toDateString()"/> -->
             <x-form.field type="quill" label="Contenu" name="description"/>
+            @infoPagesRoute
         </x-form.base>
     </x-view.section>
 

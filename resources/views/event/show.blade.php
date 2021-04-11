@@ -50,7 +50,7 @@
             {{ ucFirst($event->readableDates) }}
         </div>
         <div class="pt-2 quillContent">
-            {{ $event->description }}
+            @bindPagesRoute($event->description)
         </div>
     </x-view.section>
 </x-app-layout>

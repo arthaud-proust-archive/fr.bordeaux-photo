@@ -9,7 +9,8 @@ if(isset($submitBtn)) {
 <form class="deltaForm" action="{{ $action }}" method="{{ $method }}" enctype="{{ $enctype ?? '' }}">
     @csrf
     {{ $head ?? '' }}
-    <div class="sm:overflow-hidden">
+    <!-- <div class="sm:overflow-hidden"> -->
+    <div class="">
         @if(!($nobody ?? ''))
         <div class="px-4 py-5 space-y-6 sm:p-6">
             {{ $slot ?? '' }}

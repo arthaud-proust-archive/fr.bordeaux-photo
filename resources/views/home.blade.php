@@ -23,7 +23,7 @@
             @endauthRole
         </x-slot>
         <div class="mt-2 quillContent">
-            {{ $info->content }}
+            @bindPagesRoute($info->content)
             {{-- @quillContent($info->content) --}}
         </div>
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\VoteController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\PageController;
 
 
 /*
@@ -26,7 +27,6 @@ Route::get('maintenance', function () {
 
 Route::middleware(['maintenanceCheck'])->group(function () {
 
-    Route::get('/', [InfoController::class, 'home'])->name('home');
      
 
     Route::get('/photo/create/{event_hashid?}', [PhotoController::class, 'create'])->name('photo.create');
@@ -62,13 +62,20 @@ Route::middleware(['maintenanceCheck'])->group(function () {
         Route::get('/user/{hashid}', [UserController::class, 'show'])->name('user.show');
         Route::get('/user/{hashid}/edit', [UserController::class, 'edit'])->name('user.edit');
         Route::post('/user/{hashid}/edit', [UserController::class, 'update'])->name('user.update');
-        Route::delete('/user/{hashid}/edit', [UserController::class, 'delete'])->name('user.delete');
+        Route::post('/user/{hashid}/delete', [UserController::class, 'delete'])->name('user.delete');
+
+        Route::get('/pages', [PageController::class, 'index'])->name('page.index');
+        Route::get('/page/create', [PageController::class, 'create'])->name('page.create');
+        Route::post('/page/create', [PageController::class, 'store'])->name('page.store');
+        Route::get('/page/{hashid}/edit', [PageController::class, 'edit'])->name('page.edit');
+        Route::post('/page/{hashid}/edit', [PageController::class, 'update'])->name('page.update');
+        Route::post('/page/{hashid}/delete', [PageController::class, 'delete'])->name('page.delete');
     });
 
     Route::middleware(['auth'])->group(function () {
         Route::get('/profil/edit/', [ProfilController::class, 'edit'])->name('profil.edit');
         Route::post('/profil/edit', [ProfilController::class, 'update'])->name('profil.update');
-        Route::delete('/profil/edit', [ProfilController::class, 'delete'])->name('profil.delete');
+        Route::post('/profil/delete', [ProfilController::class, 'delete'])->name('profil.delete');
         Route::get('/profil/{hashid?}', [ProfilController::class, 'show'])->name('profil.show');
     });
 
@@ -82,3 +89,5 @@ Route::middleware(['maintenanceCheck'])->group(function () {
 
 
 require __DIR__.'/auth.php';
+Route::get('/{hashid}', [PageController::class, 'show'])->name('page.show');
+Route::get('/', [InfoController::class, 'home'])->name('home');

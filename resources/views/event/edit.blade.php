@@ -14,6 +14,7 @@
             <!-- <x-form.field :value="timestampToDate($event->date_start)" type="date" label="Date de début" name="date_start"/> -->
             <!-- <x-form.field :value="timestampToDate($event->date_end)" type="date" label="Date de fin" name="date_end"/> -->
             <x-form.field :bind="$event" type="quill" label="Contenu" name="description"/>
+            @infoPagesRoute
         </x-form.base>
     </x-view.section>
 

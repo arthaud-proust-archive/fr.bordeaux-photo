@@ -9,7 +9,7 @@
         <x-view.link :href="route('profil.edit')" text="Modifier mon profil" />
         @endif
         <div class="quillContent">
-            {{$user->bio}}
+            @bindPagesRoute($user->bio)
         </div>
 
     </x-view.section>

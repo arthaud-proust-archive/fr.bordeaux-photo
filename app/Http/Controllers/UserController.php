@@ -55,6 +55,6 @@ class UserController extends Controller
 
         $user->delete();
         
-        return redirect()->route('user.list', $user->hashid)->with('status', 'success')->with('content', 'Utilisateur supprimé');;
+        return redirect()->route('user.index', $user->hashid)->with('status', 'success')->with('content', 'Utilisateur supprimé');;
     }
 }

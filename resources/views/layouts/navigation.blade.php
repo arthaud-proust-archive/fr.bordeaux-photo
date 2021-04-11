@@ -66,6 +66,7 @@ $displayableRoutes = [
                         <x-dropdown-link :href="route('profil.show')">Profil</x-dropdown-link>
                         @authRole('admin')
                         <x-dropdown-link :href="route('user.index')">Utilisateurs</x-dropdown-link>
+                        <x-dropdown-link :href="route('page.index')">Édition des pages</x-dropdown-link>
                         @endauthRole
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -108,6 +109,8 @@ $displayableRoutes = [
                 <x-responsive-nav-link :href="route('user.index')" :active="request()->routeIs('user.index')">
                     Liste des utilisateurs
                 </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('page.index')" :active="request()->routeIs('page.index')">Édition des pages</x-responsive-nav-link>
+
             @endauthRole
         </div>
 
