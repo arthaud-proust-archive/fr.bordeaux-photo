@@ -14,7 +14,7 @@
             <div>
                 <label class="block text-sm font-medium text-p1">Afficher l'info sur les pages:</label>
                 @foreach($pages as $page)
-                @if($page->url =='/' || $info->inPage($page->hashid))
+                @if($info->inPage($page->hashid))
                 <x-form.field type="checkbox" value :label="$page->title" name="pages[{{$page->hashid}}]"/>
                 @else
                 <x-form.field type="checkbox" :label="$page->title" name="pages[{{$page->hashid}}]"/>
