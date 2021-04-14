@@ -8,7 +8,7 @@
             >
                 
                 @if($title??null)
-                    <h1 class="text-3xl pb-3 pt-1">{{ $title }}</h1>
+                    <h1 class="text-3xl pb-3 pt-1 flex flex-wrap flex-row items-center justify-between">{{ $title }}</h1>
                 @endif
                 <div>
                     {{ $slot }}
