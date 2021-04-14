@@ -41,21 +41,22 @@ class Event extends BaseModel
     }
 
     public function getIsVotingAttribute() {
-        return $this->date_end < Carbon::now()->timestamp && !$this->voted;
+        return $this->getIsEndedAttribute() && !$this->voted;
     }
 
     public function getOpenInAttribute() {
         $diff = Carbon::createFromTimestamp($this->date_start)->diffInDays(Carbon::now());
-        return $diff==0?'Ouvre demain':'Ouvre dans '.$diff.' jours';
+        return $diff==0?'Ouvre demain':'Ouvre dans '.$diff.' jour'.($diff>1?'s':'');
     }
 
     public function getCloseInAttribute() {
-        $diff = Carbon::createFromTimestamp($this->date_end)->diffInDays(Carbon::now());
-        return $diff==0?'Fin ce soir':'Fin dans '.$diff.' jours';
+        $diff = Carbon::createFromTimestamp($this->date_end)->addDay()->diffInDays(Carbon::now());
+        return $diff==0?'Fin ce soir':'Fin dans '.$diff.' jour'.($diff>1?'s':'');
     }
 
     public function getIsOpenAttribute() {
-        return $this->date_start < Carbon::now()->timestamp && $this->date_end > Carbon::now()->timestamp;
+        // dd([Carbon::now()->format('Y-m-d H:m:s'), Carbon::createFromTimestamp($this->date_start)->format('Y-m-d H:m:s')]);
+        return $this->getIsStartedAttribute() && !$this->getIsEndedAttribute() ;
     }
 
     public function getIsStartedAttribute() {
@@ -63,7 +64,7 @@ class Event extends BaseModel
     }
 
     public function getIsEndedAttribute() {
-        return $this->date_end < Carbon::now()->timestamp;
+        return Carbon::createFromTimestamp($this->date_end)->addDay()->timestamp < Carbon::now()->timestamp;
     }
 
     public function getReadableDatesAttribute() {

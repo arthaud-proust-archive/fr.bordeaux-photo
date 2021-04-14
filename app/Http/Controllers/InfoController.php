@@ -14,11 +14,11 @@ class InfoController extends Controller
         if($home = Page::firstWhere('url', '/')) {
             return view('page.show', [
                 'page' => Page::firstWhere('url', '/'),
-                'infos' => Info::page($home->hashid)->get()
+                'infos' => Info::page($home->hashid)->orderBy('id', 'desc')->get()
             ]);
         } else {
             return view('home', [
-                'infos' => Info::all()
+                'infos' => Info::orderBy('id', 'desc')->get()
             ]); 
         }
     }

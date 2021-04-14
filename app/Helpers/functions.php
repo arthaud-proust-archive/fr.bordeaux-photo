@@ -29,19 +29,29 @@ if(!function_exists('decodeId')) {
 
 if(!function_exists('timestampToReadableDate')) {
     function timestampToReadableDate($timestamp, $format='OD MMMM YYYY') {
-        return Carbon::createFromTimestamp($timestamp, 'Europe/London')->locale('fr_FR')->isoFormat($format);
+        return Carbon::createFromTimestamp($timestamp)->locale('fr_FR')->isoFormat($format);
     }
 }
 
 if(!function_exists('timestampToDate')) {
-    function timestampToDate($timestamp) {
-        return Carbon::createFromTimestamp($timestamp, 'Europe/London')->format('Y-m-d'); 
+    function timestampToDate($timestamp, $onlyDate=false) {
+        $d = Carbon::createFromTimestamp($timestamp);
+        if($onlyDate) {
+            $d->hour = 0;
+            $d->minute = 0;
+        }
+        return $d->format('Y-m-d'); 
     }
 }
 
 if(!function_exists('dateToTimestamp')) {
-    function dateToTimestamp($date) {
-        return Carbon::create($date)->timestamp; 
+    function dateToTimestamp($date, $onlyDate=false) {
+        $d = Carbon::create($date);
+        if($onlyDate) {
+            $d->hour = 0;
+            $d->minute = 0;
+        }
+        return $d->timestamp; 
     }
 }
 

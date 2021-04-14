@@ -8,6 +8,7 @@ use App\Models\Photo;
 use App\Models\User;
 use Validator;
 use Response;
+use Carbon\Carbon;
 
 class EventController extends Controller
 {
@@ -104,10 +105,10 @@ class EventController extends Controller
             return back()->withInput()->withErrors($validator);
         }
 
-
         $dates = explode('  à  ', request('dates'));
-        $date_start = dateToTimestamp($dates[0]);
-        $date_end = dateToTimestamp($dates[1]);
+        $date_start = dateToTimestamp($dates[0], true);
+        $date_end = dateToTimestamp($dates[1], true);
+        // dd([Carbon::createFromTimestamp($date_start)->format('Y-m-d H:m:s')]);
 
         $event->title = request('title');
         $event->type = request('type');
@@ -115,6 +116,8 @@ class EventController extends Controller
         $event->date_end = $date_end;
         $event->description = request('description');
         $event->save();
+
+        // dd([Carbon::createFromTimestamp($event->date_start)->format('Y-m-d H:m:s')]);
 
         return redirect()->route('event.index')->with('status', 'success')->with('content', 'Évènement modifié');
     }
