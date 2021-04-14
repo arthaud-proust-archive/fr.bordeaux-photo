@@ -28,6 +28,8 @@ Thème sombre
 ###  Config :
 - vide
 
+### Thème:
+- voir [THEME.md](https://github.com/arthaud-proust/photo-a-bordeaux/blob/arthaud/THEME.md)
 
 ### Profil : 
 - nom (pseudo ou autre)
