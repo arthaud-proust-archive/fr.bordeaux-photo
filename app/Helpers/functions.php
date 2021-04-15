@@ -7,6 +7,11 @@ use App\Models\Page;
 
 
 
+if(!function_exists('page')) {
+    function page($url) {
+        return route('page.show', $url);
+    }
+}
 
 
 if(!function_exists('encodeId')) {

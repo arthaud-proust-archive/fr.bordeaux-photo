@@ -19,14 +19,14 @@ if(isset($submitBtn)) {
         
         <div class="px-4 py-3 text-right sm:px-6">
             @foreach($actions??[] as $txt=>$to)
-                <a class="inline-flex justify-center py-2 px-4 mr-1 border border-transparent text-sm font-medium rounded-md text-p1 hover:bg-s3 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 cursor-pointer" href="{{$to}}">{{$txt}}</a>
+                <a class="inline-flex justify-center py-2 px-4 m-1 border border-transparent text-sm font-medium rounded-md text-p1 hover:bg-s3 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 cursor-pointer" href="{{$to}}">{{$txt}}</a>
             @endforeach
 
             @if($cancel ?? '')
                 <a 
                     {{-- href="{{ $cancel==1?route('dashboard'):$cancel }}" --}}
                     onclick="nav(()=>window.history.back())"
-                    class="inline-flex justify-center py-2 px-4 mr-1 border border-transparent text-sm font-medium rounded-md text-p1 hover:bg-s3 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 cursor-pointer">
+                    class="inline-flex justify-center py-2 px-4 m-1 border border-transparent text-sm font-medium rounded-md text-p1 hover:bg-s3 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 cursor-pointer">
                     Retour
                 </a>
             @endif

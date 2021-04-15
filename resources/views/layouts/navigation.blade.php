@@ -78,7 +78,7 @@ $displayableRoutes = [
                         @else
                         <x-dropdown-link :href="route('login')">Connexion</x-dropdown-link>
                         <x-dropdown-link :href="route('register')">Créer un compte</x-dropdown-link>
-
+                        <x-dropdown-link :href="route('password.request')">Mot de passe oublié</x-dropdown-link>
                         @endauth
                     </x-slot>
                 </x-dropdown>
@@ -144,6 +144,8 @@ $displayableRoutes = [
             @else 
                 <x-responsive-nav-link :href="route('login')">Connexion</x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('register')">Créer un compte</x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('password.request')">Mot de passe oublié</x-responsive-nav-link>
+
             @endauth
         </div>
     </div>

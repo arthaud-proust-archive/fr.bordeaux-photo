@@ -55,3 +55,7 @@ html[data-theme="light"]:root {
 .quillContent .ql-editor {
     padding:0 !important;
 }
+
+.footer-section {
+    min-width: 25ch;
+}

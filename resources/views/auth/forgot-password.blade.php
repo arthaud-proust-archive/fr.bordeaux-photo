@@ -1,36 +1,20 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+<x-app-layout>
+    <x-slot name="header">
+        <h1 class="mt-4 ml-4 text-5xl text-p1 leading-tight"></h1>
+    </x-slot>
 
-        <div class="mb-4 text-sm text-gray-600">
-            {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+    <div class="mx-auto w-full sm:max-w-xl mt-6 bg-white overflow-hidden sm:rounded-lg">
+        <x-application-banner class=" fill-current text-gray-500" />
         </div>
-
-        <!-- Session Status -->
-        <x-auth-session-status class="mb-4" :status="session('status')" />
-
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
-
-        <form method="POST" action="{{ route('password.email') }}">
-            @csrf
-
-            <!-- Email Address -->
-            <div>
-                <x-label for="email" :value="__('Email')" />
-
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <x-button>
-                    {{ __('Email Password Reset Link') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout>
+    <x-view.section class="bg-s1" width="">
+        <x-slot name="title">
+            Mot de passe oublié
+        </x-slot>
+        <p>
+            Renseignez votre adresse email, nous vous enverrons un mail pour réinitialiser votre mot de passe
+        </p>
+        <x-form.base :action="route('password.email')" method="POST" submitColor="green" submitText="Connexion" :actions="['Je l\'ai retrouvé!'=>route('login')]">
+            <x-form.field type="input" label="Email" name="email"/>
+        </x-form.base>
+    </x-view.section>
+</x-app-layout>

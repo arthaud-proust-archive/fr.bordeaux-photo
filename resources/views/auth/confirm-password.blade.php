@@ -1,36 +1,17 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
+<x-app-layout>
+    <x-slot name="header">
+        <h1 class="mt-4 ml-4 text-5xl text-p1 leading-tight"></h1>
+    </x-slot>
+
+    <x-view.section class="bg-s1" width="">
+        <x-slot name="title">
+            Par sécurité
         </x-slot>
-
-        <div class="mb-4 text-sm text-gray-600">
-            {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
-        </div>
-
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
-
-        <form method="POST" action="{{ route('password.confirm') }}">
-            @csrf
-
-            <!-- Password -->
-            <div>
-                <x-label for="password" :value="__('Password')" />
-
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="current-password" />
-            </div>
-
-            <div class="flex justify-end mt-4">
-                <x-button>
-                    {{ __('Confirm') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout>
+        <p>
+            Merci de rentrer votre mot de passe avant de continuer
+        </p>
+        <x-form.base :action="route('password.confirm')" method="POST" submitColor="green" submitText="Continuer" cancel>
+            <x-form.field type="password" label="Mot de passe" name="password"/>
+        </x-form.base>
+    </x-view.section>
+</x-app-layout>

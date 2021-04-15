@@ -89,5 +89,5 @@ Route::middleware(['maintenanceCheck'])->group(function () {
 
 
 require __DIR__.'/auth.php';
-Route::get('/{hashid}', [PageController::class, 'show'])->name('page.show');
+Route::get('/{url}', [PageController::class, 'show'])->name('page.show');
 Route::get('/', [InfoController::class, 'home'])->name('home');

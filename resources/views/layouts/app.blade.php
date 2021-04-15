@@ -126,8 +126,8 @@ $siteurl = config('app.produrl');
         </script>
 
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-s1">
+    <body class="font-sans antialiased bg-s1">
+        <div class="min-h-screen">
             @include('components.view.alert')
             @include('layouts.navigation')
 
@@ -145,5 +145,7 @@ $siteurl = config('app.produrl');
                 {{ $slot }}
             </main>
         </div>
+
+        @include('layouts.footer')
     </body>
 </html>

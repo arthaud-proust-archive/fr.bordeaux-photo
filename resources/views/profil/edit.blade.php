@@ -6,7 +6,7 @@
     </x-slot>
 
     <x-view.section width="3">
-        <!-- <x-form.base :action="route('profil.delete')" method="POST" submitBtn="Supprimer mon compte:red" nobody /> -->
+        {{-- <x-form.base :action="route('profil.delete')" method="POST" submitBtn="Supprimer mon compte:red" nobody /> --}}
         <x-form.base :action="route('profil.update')" method="POST" submitColor="green" submitText="Modifier" cancel>
             <x-form.field :bind="$user" type="input" label="Nom" name="name"/>
             <x-form.field :bind="$user" type="input" label="Email" name="email" disabled/>
