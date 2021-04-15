@@ -42,7 +42,7 @@ class PageController extends Controller
 
         $page = page::create([
             'title' => request('title'),
-            'url' => request('url'),
+            'url' => str_starts_with(request('url'), '/')? request('url'):'/'.request('url'),
             'description' => request('description')
         ]);
 
@@ -69,7 +69,7 @@ class PageController extends Controller
 
 
         $page->title = request('title');
-        $page->url = request('url');
+        $page->url = str_starts_with(request('url'), '/')? request('url'):'/'.request('url');
         $page->description = request('description');
         $page->save();
 
