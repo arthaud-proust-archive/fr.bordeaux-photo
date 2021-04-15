@@ -31,7 +31,7 @@ class InfoController extends Controller
 
     public function store(Request $request) {
         $validator = Validator::make($request->all(), [
-            'title' => 'required|string|max:255',
+            'title' => 'nullable|string|max:255',
             'content' => 'required',
             'pages' => 'required'
         ]);
@@ -59,7 +59,7 @@ class InfoController extends Controller
     public function update(Request $request, $hashid) {
         $info = info::whereId(decodeId($hashid))->firstOrFail();
         $validator = Validator::make($request->all(), [
-            'title' => 'required|string|max:255',
+            'title' => 'nullable|string|max:255',
             'content' => 'required',
             'pages' => 'required'
         ]);

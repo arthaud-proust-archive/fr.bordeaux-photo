@@ -15,7 +15,7 @@ class CreateInfosTable extends Migration
     {
         Schema::create('infos', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('title')->nullable();
             $table->mediumText('content');
         });
     }
