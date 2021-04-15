@@ -7,6 +7,10 @@ $themeColor = "#101010";
 $siteurl = config('app.produrl');
 @endphp
 
+<!--
+Je dit ça comme ça, le vol de photo c'est mal
+Merci de créditer les photographes
+ -->
 <!DOCTYPE html>
 <html lang="fr" >
     <head prefix="og: http://ogp.me/ns#">
