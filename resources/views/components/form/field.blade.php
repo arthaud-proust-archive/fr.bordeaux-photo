@@ -1,4 +1,4 @@
-@props(['type', 'label', 'name', 'value', 'placeholder', 'disabled', 'choices', 'mimes', 'sizemax', 'rows', 'bind', 'options', 'optionsNumber', 'bg'])
+@props(['type', 'label', 'name', 'value', 'placeholder', 'disabled', 'choices', 'mimes', 'sizemax', 'rows', 'bind', 'options', 'optionsNumber', 'bg', 'desc'])
 
 @php
 
@@ -131,4 +131,9 @@ $id = lcfirst(preg_replace('/(?!\[|\])\W/', '_', $name));
             {{ $message }}
         </span>
     @enderror
+    @if($desc ?? false)
+    <span class="flex flex-row flex-wrap items-center font-medium tracking-wide text-p3 text-xs mt-1 ml-1">
+            {!! $desc !!}
+    </span>
+    @endif
 </div>

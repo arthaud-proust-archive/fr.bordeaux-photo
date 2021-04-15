@@ -8,8 +8,8 @@
     <x-view.section width="3">
         {{-- <x-form.base :action="route('profil.delete')" method="POST" submitBtn="Supprimer mon compte:red" nobody /> --}}
         <x-form.base :action="route('profil.update')" method="POST" submitColor="green" submitText="Modifier" cancel>
-            <x-form.field :bind="$user" type="input" label="Nom" name="name"/>
-            <x-form.field :bind="$user" type="input" label="Email" name="email" disabled/>
+            <x-form.field :bind="$user" type="input" label="Comment doit-on vous appeler?" name="name"/>
+            <x-form.field :bind="$user" type="input" label="Email" name="email" disabled desc="Désolé, pour l'instant ça fonctionne pas. Besoin imminent? Contactez-nous"/>
             <x-form.field :bind="$user" type="quill" label="Bio" name="bio"/>
         </x-form.base>
     </x-view.section>

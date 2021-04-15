@@ -13,7 +13,7 @@
 
         <x-form.base :action="route('login')" method="POST" submitColor="green" submitText="Connexion" :actions="['Pas de compte?'=>route('register')]">
             <x-form.field type="input" label="Email" name="email"/>
-            <x-form.field type="password" label="Mot de passe" name="password"/>
+            <x-form.field type="password" label="Mot de passe" name="password" desc="Vous l'avez oublié? On peut <a href='{{ route('password.request') }}' class='ml-1 underline'>s'arranger</a>"/>
         </x-form.base>
     </x-view.section>
 </x-app-layout>
