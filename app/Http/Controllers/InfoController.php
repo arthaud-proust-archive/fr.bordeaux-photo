@@ -44,7 +44,7 @@ class InfoController extends Controller
             'content' => request('content'),
             'pages' => json_encode(array_keys(request('pages')))
         ]);
-        return redirect()->route('home')->with('status', 'success')->with('content', 'Info ajoutée');
+        return redirect()->route('page.index')->with('status', 'success')->with('content', 'Info ajoutée');
     }
 
 
@@ -72,13 +72,13 @@ class InfoController extends Controller
         $info->pages = json_encode(array_keys(request('pages')));
         $info->save();
 
-        return redirect()->route('home')->with('status', 'success')->with('content', 'Info modifiée');
+        return redirect()->route('page.index')->with('status', 'success')->with('content', 'Info modifiée');
     }
 
 
     public function delete(Request $request, $hashid) {
         $info = info::whereId(decodeId($hashid))->firstOrFail();
         $info->delete();
-        return redirect()->route('home')->with('status', 'success')->with('content', 'Info supprimée');
+        return redirect()->route('page.index')->with('status', 'success')->with('content', 'Info supprimée');
     }
 }

@@ -45,5 +45,9 @@ class AppServiceProvider extends ServiceProvider
             return "<?php echo (new \\nadar\quill\Lexer($expression) )->render(); ?>";
         });
 
+        Blade::directive('dd', function ($expression) {
+            return "<?php dd($expression); ?>";
+        });
+
     }
 }

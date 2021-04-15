@@ -19,7 +19,7 @@ if(isset($mimes)) {
     $typesName = implode(", ", $types);
 }
 
-$id = strtolower(preg_replace('/(?!\[|\])\W/', '_', $name));
+$id = lcfirst(preg_replace('/(?!\[|\])\W/', '_', $name));
 // $id = strtolower(preg_replace('/\W/', '_', $name));
 @endphp
 <div  @if($disabled ?? '') class="opacity-50" disabled @endif>
