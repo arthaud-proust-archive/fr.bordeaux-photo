@@ -29,11 +29,7 @@ Route::middleware(['maintenanceCheck'])->group(function () {
 
      
 
-    Route::get('/photo/create/{event_hashid?}', [PhotoController::class, 'create'])->name('photo.create');
-    Route::post('/photo/create', [PhotoController::class, 'store'])->name('photo.store');
-    Route::get('/photo/{hashid}/edit', [PhotoController::class, 'edit'])->name('photo.edit');
-    Route::post('/photo/{hashid}/edit', [PhotoController::class, 'update'])->name('photo.update');
-    Route::post('/photo/{hashid}/delete', [PhotoController::class, 'delete'])->name('photo.delete');
+
 
 
     Route::middleware(['role:jury'])->group(function () {
@@ -73,6 +69,13 @@ Route::middleware(['maintenanceCheck'])->group(function () {
     });
 
     Route::middleware(['auth'])->group(function () {
+
+        Route::get('/photo/create/{event_hashid?}', [PhotoController::class, 'create'])->name('photo.create');
+        Route::post('/photo/create', [PhotoController::class, 'store'])->name('photo.store');
+        Route::get('/photo/{hashid}/edit', [PhotoController::class, 'edit'])->name('photo.edit');
+        Route::post('/photo/{hashid}/edit', [PhotoController::class, 'update'])->name('photo.update');
+        Route::post('/photo/{hashid}/delete', [PhotoController::class, 'delete'])->name('photo.delete');
+        
         Route::get('/profil/edit/', [ProfilController::class, 'edit'])->name('profil.edit');
         Route::post('/profil/edit', [ProfilController::class, 'update'])->name('profil.update');
         Route::post('/profil/delete', [ProfilController::class, 'delete'])->name('profil.delete');
