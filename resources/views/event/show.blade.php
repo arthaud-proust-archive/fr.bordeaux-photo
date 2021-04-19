@@ -27,6 +27,9 @@
                 <x-view.link :href="route('photo.create', $event->hashid)" text="Envoyer ma photo" />
                 @endif
             @endauthRole
+            @guest
+                <x-view.link :href="route('photo.create', $event->hashid)" text="Envoyer ma photo" />
+            @endguest
         @endif
 
         @if($event->voted)
