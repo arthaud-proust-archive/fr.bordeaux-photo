@@ -1,5 +1,5 @@
 @php
-$sitename = config('app.name', 'Laravel');
+$sitename = config('app.name', 'Laravel').' - Inscrivez-vous!';
 $title = (isset($pagename)?$pagename.' - ':'').$sitename;
 $name = "Rallyes et nocturnes";
 $desc = "Participez à des concours photo au coeur de Bordeaux en parcourant la ville à la recherche de la meilleure photo pour le thème choisi.";
@@ -37,15 +37,30 @@ Merci de créditer les photographes
                 z-index: 9000;
                 opacity: 1;
                 transition:0.25s;
+
             }
+            body.loading::after {
+                animation: loading 0.25s 2s forwards;
+            }
+
             body.loaded::after {
                 z-index: -900;
                 opacity: 0;
+            }
+
+            @keyframes loading {
+                from {
+                    opacity: 1;
+                }
+                to {
+                    opacity: 0;
+                }
             }
         </style>
         <script>
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
+                document.body.classList.remove('loading')
                 document.body.classList.add('loaded')
             }, 50);
         })
