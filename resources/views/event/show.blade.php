@@ -48,7 +48,7 @@
             @else
                 <x-pill :bg="$event->isOpen?'green0':'red0'" :color="$event->isOpen?'green1':'red1'">{{ $event->isOpen?'Ouvert':'Fermé'}}</x-pill>
             @endif
-            <x-pill :href="page('types-evenements')">{{ ucFirst($event->type) }} <x-event.typeicon :type="$event->type" /></x-pill>
+            <x-pill :href="page('types-evenement')">{{ ucFirst($event->type) }} <x-event.typeicon :type="$event->type" /></x-pill>
         </div>
         <div class="py-2">
             {{ ucFirst($event->readableDates) }}
