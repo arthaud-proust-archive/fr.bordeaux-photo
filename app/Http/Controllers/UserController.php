@@ -53,7 +53,7 @@ class UserController extends Controller
         $user->bio = request('bio');
         $user->save();
         
-        return redirect()->route('user.show', $user->hashid)->with('status', 'success')->with('content', 'Profil modifié');;
+        return redirect()->route('user.index')->with('status', 'success')->with('content', 'Profil modifié');;
     }
 
     public function delete(Request $request, $hashid) {
