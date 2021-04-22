@@ -17,7 +17,7 @@
                 @if(Auth::id() !== $user->id) 
                     @foreach($user->roles() as $value=>$name) 
                         @if($value=="user")
-                            <x-form.field disabled :value="true" type="checkbox" :label="$name" name="role[{{ $value }}]"/>
+                            <!-- <x-form.field disabled :value="true" type="checkbox" :label="$name" name="role[{{ $value }}]"/> -->
                         @else
                             <x-form.field :value="$user->hasRole($value)" type="checkbox" :label="$name" name="role[{{ $value }}]"/>
                         @endif

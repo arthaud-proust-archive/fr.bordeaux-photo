@@ -42,10 +42,10 @@ class UserController extends Controller
             return back()->withInput()->withErrors($validator);
         }
 
-        $roles = array_keys(request('role'));
-
-        if(!in_array('user', $roles)) {
-            array_push($roles, 'user');
+        if(!request('role')) {
+            $roles = ["user"];
+        } else {
+            $roles = array_keys(request('role'));
         }
 
         $user->name = request('name');
