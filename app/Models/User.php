@@ -60,13 +60,28 @@ class User extends Authenticatable
     }
 
     public function getNamedRoleAttribute() {
-        return User::$roles[$this->role];
+        $decoded = json_decode($this->role);
+        if (json_last_error() === JSON_ERROR_NONE) {
+            return implode(', ', array_map(fn($role)=>User::$roles[$role],$decoded));
+        } else {
+            $this->role = json_encode([$this->role]);
+            $this->save();
+            return implode(', ', array_map(fn($role)=>User::$roles[$role],json_decode($this->role)));
+        }
     }
 
     public function scopeJury($query) {
-        return $query->where('role', 'jury');
+        return $query->where('role', 'LIKE', '%jury%');
     }
     public function scopeActive($query) {
         return $query->where('active', true);
+    }
+    public function hasRole($roles) {
+        foreach(json_decode($this->role) as $userRole) {
+            if(in_array($userRole, explode(',', $roles))) {
+                return true;
+            }
+        }
+        return false;
     }
 }

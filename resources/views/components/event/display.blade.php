@@ -1,7 +1,7 @@
 <div class="flex-grow max-w-2xl" itemscope itemtype="http://schema.org/Event">
     <x-view.section class="bg-s2">
         <x-slot name="title">
-                {{$event->title}}
+                {{$event->theme}}
                 <div class="text-base inline py-3">
                 @authRole('admin')
                 <x-view.link :href="route('event.edit', $event->hashid)" text="Éditer" />
@@ -31,7 +31,7 @@
             @else
                 <x-pill :bg="$event->isOpen?'green0':'red0'" :color="$event->isOpen?'green1':'red1'">{{ $event->isOpen?'Ouvert':'Fermé'}}</x-pill>
             @endif
-            <x-pill>{{ ucFirst($event->type) }} <x-event.typeicon :type="$event->type" /></x-pill>
+            <x-pill :href="page('types-evenements')">{{ ucFirst($event->type) }} <x-event.typeicon :type="$event->type" /></x-pill>
         </div>
 
         <div class="py-4">

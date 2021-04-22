@@ -17,10 +17,11 @@ class Role
      */
     public function handle(Request $request, Closure $next, $roles)
     {
-        if(in_array(Auth::user()->role, explode(',', $roles))) {
-            return $next($request);
-        } else {
-            abort(403);
+        foreach(json_decode(Auth::user()->role) as $userRole) {
+            if(in_array($userRole, explode(',', $roles))) {
+                return $next($request);
+            }
         }
+        abort(403);
     }
 }

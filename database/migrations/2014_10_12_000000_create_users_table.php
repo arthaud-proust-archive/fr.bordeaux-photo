@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('role')->default('user'); // niveau de perm
+            $table->string('role')->default('["user"]'); // niveau de perm
             $table->string('name')->unique(); // nom et prénom
             $table->string('img')->default('/assets/profiles/user.png'); // lien de la photo de profil
             $table->string('email')->unique();

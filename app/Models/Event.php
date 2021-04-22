@@ -21,7 +21,17 @@ class Event extends BaseModel
         'jury',
         'voted'
     ];
+    static $types = [
+        'concours' => 'Concours',
+        'rallye' => 'Rallye',
+        'nocturne' => 'Nocturne',
+        'virtuel' => 'Virtuel',
+        'concept' => 'Concept',
+    ];
 
+    public function types() {
+        return Event::$types;
+    }
 
     public function scopeOpen($query)
     {
@@ -78,6 +88,10 @@ class Event extends BaseModel
 
     public function getUserPhotoSentAttribute() {
         return photo::where('event', $this->hashid)->where('author', Auth::user()->hashid)->first();
+    }
+
+    public function getThemeAttribute() {
+        return $this->getIsStartedAttribute()?$this->title:'Thème caché';
     }
 
     public function juryComplete($jury_hashid) {

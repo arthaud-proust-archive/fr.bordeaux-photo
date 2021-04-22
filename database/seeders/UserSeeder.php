@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'role' => 'user',
+            'role' => '["user"]',
             'name' => 'Jean Bonnet',
             'img' => '/assets/profiles/user.png',
             'email' => 'utilisateur@email.com',
@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
-            'role' => 'jury',
+            'role' => '["jury"]',
             'name' => 'Jean Jury',
             'img' => '/assets/profiles/user.png',
             'email' => 'jury@email.com',
@@ -35,7 +35,7 @@ class UserSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
-            'role' => 'admin',
+            'role' => '["admin"]',
             'name' => 'Jean Admin',
             'img' => '/assets/profiles/user.png',
             'email' => 'admin@email.com',

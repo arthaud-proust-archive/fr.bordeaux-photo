@@ -29,8 +29,15 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
-        Blade::if('authRole', function ($value) {
-            return (Auth::check() && in_array(Auth::user()->role, explode(',', $value)));
+        Blade::if('authRole', function ($roles) {
+            if(Auth::check()) {
+                foreach(json_decode(Auth::user()->role) as $userRole) {
+                    if(in_array($userRole, explode(',', $roles))) {
+                        return true;
+                    }
+                }
+            }
+            return false;
         });
 
         Blade::directive('infoPagesRoute', function () {

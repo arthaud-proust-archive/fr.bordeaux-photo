@@ -42,8 +42,14 @@ class UserController extends Controller
             return back()->withInput()->withErrors($validator);
         }
 
+        $roles = array_keys(request('role'));
+
+        if(!in_array('user', $roles)) {
+            array_push($roles, 'user');
+        }
+
         $user->name = request('name');
-        $user->role = request('role');
+        $user->role = json_encode($roles);
         $user->bio = request('bio');
         $user->save();
         
