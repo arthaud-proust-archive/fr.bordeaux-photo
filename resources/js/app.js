@@ -13,25 +13,16 @@ let Inline = Quill.import('blots/inline');
 class Pagelink extends Inline{    
     
     static create(value){
-        console.log(value);
-        let node = super.create();
-        node.setAttribute('class','pagelink');
+        let node = super.create(value);
+        // node.setAttribute('class','pagelink');
         node.setAttribute('href', 'page-'+value);
         return node;    
     } 
-
-    format(name, value) {
-        if (name === 'pagelink' && value) {
-            this.domNode.setAttribute('href', value);
-        } else {
-            super.format(name, value);
-        }
-    }
     
 }
 
 Pagelink.blotName = 'pagelink';
-Pagelink.tagName = 'a';
+Pagelink.tagName = 'span';
 Quill.register(Pagelink);
 
 
