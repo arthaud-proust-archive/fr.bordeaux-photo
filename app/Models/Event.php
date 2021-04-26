@@ -11,6 +11,10 @@ class Event extends BaseModel
 {
     protected $table="events";
 
+    // pour la description raccourcie
+    public $maxChar = 120;
+    public $sensi = 20;
+
     protected $fillable = [
         'title',
         'type',
@@ -92,6 +96,50 @@ class Event extends BaseModel
 
     public function getThemeAttribute() {
         return $this->getIsStartedAttribute()?$this->title:'Thème caché';
+    }
+
+    public function getShortDescriptionAttribute() {
+
+        $noSplit = ["[","{",":",'"',"}","]"];
+        $canSplitLeft = -1;
+        $canSplitRight = -1;
+        $toSearch = '"insert":"';
+        $foundAtLeft = 0;
+        $foundAtRight = 0;
+        // recherche du delta contenant le caractère max vers la gauche
+        for ($i=$this->maxChar-1; isset($this->description[$i]); $i--) {
+            if($canSplitLeft==-1 && !in_array($this->description[$i], $noSplit)) {
+                $canSplitLeft = $i;
+            }
+            if(substr($this->description, $i, strlen($toSearch)) == $toSearch) {
+                $foundAtLeft = $i;
+                break;
+            }
+        }
+        for ($i=$this->maxChar; isset($this->description[$i]); $i++) {
+            if($canSplitRight==-1 && !in_array($this->description[$i], $noSplit)) {
+                $canSplitRight = $i;
+            }
+            if(substr($this->description, $i, strlen($toSearch)) == $toSearch) {
+                $foundAtRight = $i;
+                break;
+            }
+        }
+
+        $mostNearFound = $foundAtLeft>$foundAtRight?$foundAtRight:$foundAtLeft;
+        // $safePlace = [$foundAtLeft+strlen($toSearch), $foundAtRight-1];
+        if($mostNearFound < $this->sensi) {
+            $cuttedDesc = substr($this->description, 0, $this->maxChar).'"},{"attributes":{"readmore":true},"insert":"... Plus"}]}';
+        } else {
+            $cuttedDesc = substr($this->description, 0, $mostNearFound).'"attributes":{"readmore":true},"insert":"... Plus"}]}';
+        }
+
+        // dd([$foundAtLeft, $foundAtRight]);
+
+        // dd($i);
+        // return $this->description;
+        return $cuttedDesc;
+        return '{"ops":[{"insert":"'.$nBracketOpen.' '.$nBracketClosed.' `'.$this->description[$i-2].'`"}]}';
     }
 
     public function juryComplete($jury_hashid) {

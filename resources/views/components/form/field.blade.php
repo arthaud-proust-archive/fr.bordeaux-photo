@@ -119,7 +119,11 @@ $id = lcfirst(preg_replace('/(?!\[|\])\W/', '_', $name));
             <div class="mt-1">
                 <input type="hidden" class="quillHidden" id="{{ $id }}" name="{{ $id }}" value="{{ $value ?? '' }}">
                 <div class="quillContainer bg-si mt-1 border-si py-2 rounded-md @error($id) border-red-500 @else border-si @enderror" data-placeholder="{{ $placeholder ?? '' }}"></div>
+                <x-form.quillpopup/>
             </div>
+            <span class="flex flex-row flex-wrap items-center font-medium tracking-wide text-p3 text-xs mt-1 ml-1">
+                Pour ajouter un lien vers une page cliquer sur "page" après avoir sélectionné un mot
+            </span>
         </div>
     @break
     @case('hidden')

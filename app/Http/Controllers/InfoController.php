@@ -23,6 +23,12 @@ class InfoController extends Controller
         }
     }
 
+    public function getdesc(Request $request, $hashid) {
+        $info = info::whereId(decodeId($hashid))->firstOrFail();
+        return response(bindPagesRoute($info->content), 200)
+        ->header('Content-Type', 'text/plain');
+    }
+
     public function create() {
         return view('info.create', [
             'pages' => Page::select(['title', 'id', 'url'])->get()->append('hashid')

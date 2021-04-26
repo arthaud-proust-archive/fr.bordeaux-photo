@@ -59,3 +59,35 @@ html[data-theme="light"]:root {
 .footer-section {
     min-width: 25ch;
 }
+
+.readmore {
+    display: inline;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.ql-pagelink {
+    line-height: 1;
+    width: auto !important;
+}
+.ql-pagelink:after {
+    color: var(--p3);
+    font-size: 18px;
+    content: "page";
+}
+
+.quillPopup {
+    padding: 20px 30px;
+    border-radius: 5px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    background: var(--s2);
+    transform: translate(-50%, -50%);
+    display: none;
+    z-index: 2000;
+}
+
+.quillPopup.show {
+    display: block;
+}

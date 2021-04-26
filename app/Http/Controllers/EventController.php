@@ -34,6 +34,12 @@ class EventController extends Controller
 
     }
 
+    public function getdesc(Request $request, $hashid) {
+        $event = event::whereId(decodeId($hashid))->firstOrFail();
+        return response(bindPagesRoute($event->description), 200)
+        ->header('Content-Type', 'text/plain');
+    }
+
     public function results(Request $request, $hashid) {
         return view('event.results', [
             'event' => event::whereId(decodeId($hashid))->firstOrFail(),

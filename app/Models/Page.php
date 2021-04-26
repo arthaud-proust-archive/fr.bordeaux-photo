@@ -13,4 +13,8 @@ class Page extends BaseModel
         'description',
         'url'
     ];
+
+    public function getPageHashidAttribute() {
+        return 'page-'.encodeId($this->id);
+    }
 }

@@ -3,68 +3,53 @@ require('alpinejs');
 require('lazysizes');
 const Theme = require('./theme');
 const Quill = require('quill');
-// const Litepicker = require('litepicker');
-// const QuillDeltaToHtmlConverter = require('quill-delta-to-html').QuillDeltaToHtmlConverter;
-// const QuillDeltaToHtmlConverterCfg = {
-//     inlineStyles:true
-// };
-
-// const InlineBlot = Quill.import('blots/inline');
-
-// class NamedLinkBlot extends InlineBlot {
-//     static create(value) {
-//         const node = super.create(value);
-
-//         node.setAttribute('href', value);
-//         node.setAttribute('target', '_blank');
-//         return node;
-//     }
-// }
-// NamedLinkBlot.blotName = 'namedlink';
-// NamedLinkBlot.tagName = 'A';
-
-// Quill.register('formats/namedlink', NamedLinkBlot);
-
-// const Tooltip = Quill.import('ui/tooltip');
+const { default: axios } = require('axios');
 
 
-// class NamedLinkTooltip extends Tooltip {
-//     show() {
-//         super.show();
-//         this.root.classList.add('ql-editing');
-//     }
-// }
 
-// NamedLinkTooltip.TEMPLATE = [
-//     '<a class="ql-preview" target="_blank" href="about:blank"></a>',
-//     '<input type="text" data-link="https://quilljs.com">',
-//     'Url displayed',
-//     '<input type="text" data-name="Link name">',
-//     '<a class="ql-action"></a>',
-//     '<a class="ql-remove"></a>',
-// ].join('');
+let Inline = Quill.import('blots/inline');
 
 
-// const QuillModule = Quill.import('core/module');
+class Pagelink extends Inline{    
+    
+    static create(value){
+        console.log(value);
+        let node = super.create();
+        node.setAttribute('class','pagelink');
+        node.setAttribute('href', 'page-'+value);
+        return node;    
+    } 
 
-// class NamedLinkModule extends QuillModule {
-//     constructor(quill, options) {
-//         super(quill, options);
-//         this.tooltip = new NamedLinkTooltip(this.quill, options.bounds);
-//         this.quill.getModule('toolbar').addHandler('namedlink', this.namedLinkHandler.bind(this));
-//     }
+    format(name, value) {
+        if (name === 'pagelink' && value) {
+            this.domNode.setAttribute('href', value);
+        } else {
+            super.format(name, value);
+        }
+    }
+    
+}
 
-//     namedLinkHandler(value) {
-//         if (value) {
-//             var range = this.quill.getSelection();
-//             if (range == null || range.length === 0) return;
-//             var preview = this.quill.getText(range);
-//             this.tooltip.show();
-//         }
-//     }
-// }
+Pagelink.blotName = 'pagelink';
+Pagelink.tagName = 'a';
+Quill.register(Pagelink);
 
-// Quill.register('modules/namedlink', NamedLinkModule);
+
+
+class Readmore extends Inline{    
+    
+    static create(value){
+        let node = super.create();
+        node.setAttribute('class','readmore');
+        return node;
+    } 
+
+    
+}
+
+Readmore.blotName = 'readmore';
+Readmore.tagName = 'div';
+Quill.register(Readmore);
 
 window.removeDiacritics = function (str) {
     str = str.toLowerCase();
@@ -250,14 +235,46 @@ document.addEventListener('DOMContentLoaded', function() {
                         [{color: [...appTheme.colorCSSVars, false]}, {background: [...appTheme.colorCSSVars, false]}],
                         [{ 'list': 'ordered'}, { 'list': 'bullet' }],
                         ['blockquote', 'code-block', 'link'],
-                        // [handler],
-                        ['namedlink'],
-                        ['clean'] 
+                        ['pagelink'],
+                        ['clean'],
                     ]
                 },
                 placeholder: quillContainer.dataset.placeholder||'',
                 theme: 'snow'  // or 'bubble'
             });
+
+            editor.getModule('toolbar').addHandler('pagelink', function(value) {
+                var range = editor.getSelection();
+                if(range && range.length>0){
+                    console.log(range);
+                    var popup = form.querySelector('.quillPopup');
+                    console.log('range is valid');
+                    popup.classList.add('show');
+                    form.querySelector('.quillPopup-cancel').addEventListener('click', function(e) {
+                        e.preventDefault();
+                        popup.classList.remove('show');
+                    });
+                    form.querySelector('.quillPopup-save').addEventListener('click', function(e) {
+                        e.preventDefault();
+                        popup.classList.remove('show');
+                        let link =popup.querySelector('[name="page_selection"]').value;
+                        editor.formatText(range,{link});
+                    });
+                }else{
+                    console.log('it is invalid');
+                }
+            });
+            // document.querySelector('.ql-pagelink').addEventListener('click', function(e) {
+            //     e.preventDefault()  
+            //     console.log('function called');
+            //     var range = editor.getSelection();
+            //     if(range){
+            //         console.log('range is valid');
+            //         editor.formatText(range,{'pagelink':"e"});
+            //     }else{
+            //         console.log('it it invalid');
+            //     }
+            // });
 
             try {
                 editor.setContents(JSON.parse(quillHidden.value));
@@ -273,20 +290,52 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.quills = [];
     document.querySelectorAll('.quillContent').forEach(div=>{
-        let content = div.innerHTML;
-        let quill = new Quill(div, {
-            modules: {
-                toolbar: false
-            },
-            readOnly: true,
-            theme: 'snow'  // or 'bubble'
-        });
-        quill.setContents(JSON.parse(content));
-        // converter = new QuillDeltaToHtmlConverter(JSON.parse(div.innerText).ops, QuillDeltaToHtmlConverterCfg);
-        // div.innerHTML = converter.convert();
+        let content = div.innerHTML.trim();
+        try {
+            let quill = new Quill(div, {
+                modules: {
+                    toolbar: false
+                },
+                readOnly: true,
+                theme: 'snow'  // or 'bubble'
+            });
+            quill.setContents(JSON.parse(content));
+            
+        } catch(e) {console.warn(e)}
     });
 
+    document.querySelectorAll('.quillContentAsync').forEach(div=>{
+        let card = div.closest(".async-card").dataset;
+        axios.get(`/api/${card.type}/${card.hashid}/desc`).then(r=>{
+            try {
+                let quill = new Quill(div, {
+                    modules: {
+                        toolbar: false
+                    },
+                    readOnly: true,
+                    theme: 'snow'  // or 'bubble'
+                });
+                quill.setContents(r.data);
+            } catch(e) {console.warn(e)}
+        })
+    });
 
+    document.querySelectorAll('.readmore').forEach(readmore=> {
+        readmore.addEventListener('click', function() {
+            axios.get(`/api/event/${this.closest(".event-card").dataset.hashid}/desc`).then(r=>{
+                try {
+                    let quill = new Quill(this.closest(".quillContent"), {
+                        modules: {
+                            toolbar: false
+                        },
+                        readOnly: true,
+                        theme: 'snow'  // or 'bubble'
+                    });
+                    quill.setContents(r.data);
+                } catch(e) {console.warn(e)}
+            })
+        })
+    });
     // window.disableLitepickerStyles = true;
     document.querySelectorAll('input[data-type="date"]').forEach(input=>{
         let picker = new Litepicker({

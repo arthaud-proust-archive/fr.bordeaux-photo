@@ -18,3 +18,8 @@ mix.js('resources/js/app.js', 'public/js').postCss('resources/css/app.css', 'pub
 ]).postCss('resources/css/quill.css', 'public/css', [
     require('autoprefixer'),
 ]);
+
+
+if (mix.inProduction()) {
+    mix.version();
+}

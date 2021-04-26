@@ -14,7 +14,7 @@
 
     <div class="mx-auto sm:px-6 lg:px-8 max-w-7xl justify-center flex flex-row flex-wrap">
     @foreach($infos as $info) 
-    <div class="flex-grow flex-shrink max-w-xl">
+    <div class="flex-grow flex-shrink max-w-xl async-card" data-type="info" data-hashid="{{ $info->hashid }}">
         <x-view.section class="bg-s1">
             <x-slot name="title">
                 {{ $info->title}}
@@ -22,11 +22,8 @@
                 <x-view.link muted :href="route('info.edit', $info->hashid)" text="Éditer" />
                 @endauthRole
             </x-slot>
-            <div class="mt-2 quillContent">
-                @bindPagesRoute($info->content)
-                {{-- @quillContent($info->content) --}}
+            <div class="mt-2 quillContentAsync">
             </div>
-
         </x-view.section>
     </div>
     @endforeach

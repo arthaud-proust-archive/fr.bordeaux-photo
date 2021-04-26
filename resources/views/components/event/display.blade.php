@@ -1,4 +1,4 @@
-<div class="flex-grow max-w-2xl" itemscope itemtype="http://schema.org/Event">
+<div class="flex-grow max-w-2xl async-card" itemscope itemtype="http://schema.org/Event" data-type="event" data-hashid="{{ $event->hashid }}">
     <x-view.section class="bg-s2">
         <x-slot name="title">
                 {{$event->theme}}
@@ -38,8 +38,8 @@
             {{ ucFirst($event->readableDates) }}. @if(!$event->isEnded)<b>{{ $event->isOpen?$event->closeIn:$event->openIn}}</b>@endif
         </div>
 
-        <div class="quillContent">
-            @bindPagesRoute($event->description)
+            <!-- {"ops":[{"attributes":{"readmore":true},"insert":"Plus"}]} -->
+        <div class="quillContentAsync">
         </div>
     </x-view.section>
 </div>
