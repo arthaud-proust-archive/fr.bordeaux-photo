@@ -5,7 +5,20 @@ const Theme = require('./theme');
 const Quill = require('quill');
 const navManager = require('./nav');
 
-
+let Link = Quill.import('formats/link');
+class MyLink extends Link {
+    static create(value) {
+        let node = super.create(value);
+        value = this.sanitize(value);
+        if (value.startsWith('https://') || value.startsWith('http://')) {
+            node.className = 'link--external'
+        } else {
+            node.removeAttribute('target')
+        }
+        return node;
+    }
+}
+Quill.register(MyLink);
 let Inline = Quill.import('blots/inline');
 class Pagelink extends Inline{    
     static create(value){

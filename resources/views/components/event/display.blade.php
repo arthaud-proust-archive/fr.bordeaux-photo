@@ -41,7 +41,7 @@
             <!-- {"ops":[{"attributes":{"readmore":true},"insert":"Plus"}]} -->
         {{-- <div class="quillContentAsync"></div> --}}
         <div class="quillContent">
-            {{ $event->description }}
+            @bindPagesRoute($event->description)
         </div>
 
     </x-view.section>

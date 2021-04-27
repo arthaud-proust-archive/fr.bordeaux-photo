@@ -24,7 +24,7 @@
             </x-slot>
             {{--<div class="mt-2 quillContentAsync"></div>--}}
             <div class="mt-2 quillContent">
-                {{ $info->content }}
+                @bindPagesRoute($info->content)
             </div>
         </x-view.section>
     </div>
