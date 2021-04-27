@@ -22,7 +22,9 @@
                 <x-view.link muted :href="route('info.edit', $info->hashid)" text="Éditer" />
                 @endauthRole
             </x-slot>
-            <div class="mt-2 quillContentAsync">
+            {{--<div class="mt-2 quillContentAsync"></div>--}}
+            <div class="mt-2 quillContent">
+                {{ $info->content }}
             </div>
         </x-view.section>
     </div>

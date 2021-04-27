@@ -21,7 +21,7 @@ Merci de créditer les photographes
 
         <title>{{ $title }}</title>
 
-        <style>
+        <!-- <style>
             body::after {
                 content:'Photo à Bordeaux';
                 position: fixed;
@@ -49,7 +49,7 @@ Merci de créditer les photographes
                 document.body.classList.add('loaded')
             }, 50);
         })
-        </script>
+        </script> -->
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
@@ -61,6 +61,7 @@ Merci de créditer les photographes
         <link rel="stylesheet" href="{{ mix('css/quill.css') }}">
 
         <!-- Scripts -->
+        <script type="module" src="https://cdn.skypack.dev/pin/@hotwired/turbo@v7.0.0-beta.5-LhgiwOUjafYu3bb8VbTv/mode=imports,min/optimized/@hotwired/turbo.js"></script>
         <script src="{{ mix('js/app.js') }}" defer></script>
 
 

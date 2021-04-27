@@ -39,7 +39,10 @@
         </div>
 
             <!-- {"ops":[{"attributes":{"readmore":true},"insert":"Plus"}]} -->
-        <div class="quillContentAsync">
+        {{-- <div class="quillContentAsync"></div> --}}
+        <div class="quillContent">
+            {{ $event->description }}
         </div>
+
     </x-view.section>
 </div>
