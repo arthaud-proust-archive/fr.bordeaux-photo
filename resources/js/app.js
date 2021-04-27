@@ -10,7 +10,7 @@ class MyLink extends Link {
     static create(value) {
         let node = super.create(value);
         value = this.sanitize(value);
-        if (value.startsWith('https://') || value.startsWith('http://')) {
+        if ( (value.startsWith('https://') || value.startsWith('http://') ) && !value.startsWith('https://bordeaux-photo.fr')  && !value.startsWith('http://bordeaux-photo.fr')) {
             node.className = 'link--external'
         } else {
             node.removeAttribute('target')
