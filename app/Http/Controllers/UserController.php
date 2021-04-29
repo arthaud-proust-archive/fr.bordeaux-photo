@@ -53,9 +53,38 @@ class UserController extends Controller
         } else {
             $roles = array_keys(request('role'));
         }
+        $user->role = json_encode($roles);
+
+        if(request('img') && $user->hasRole('admin')) {
+            // File::delete(public_path().$user->img);
+            
+            // $imageName = 'img.'.strtolower(request('img')->getClientOriginalExtension());
+            // $path = '/assets/galleries/'.$user->hashId.'/';
+            // request('img')->move(public_path($path), $imageName);
+
+            // $user->img = $path.$imageName;
+            
+            $path = '/assets/profiles/';
+            if($user->img !== '/assets/profiles/user.png') {
+                File::delete(public_path($user->img));
+            }
+            
+            $imageName = $user->hashid.'.'.request('img')->getClientOriginalExtension();
+            request('img')->move(public_path($path), $imageName);
+
+            $user->img = $path.$imageName;
+
+            // resize_image($user->img, 1024);
+            compress_image($user->img, 30);
+
+            // if(Config::get('compress_photos') == 'oui') {
+            //     compress_image($user->img, 'high');
+            //     compress_image($user->img, 'medium');
+            //     compress_image($user->img, 'low');
+            // }
+        } 
 
         $user->name = request('name');
-        $user->role = json_encode($roles);
         $user->bio = request('bio');
         $user->save();
         

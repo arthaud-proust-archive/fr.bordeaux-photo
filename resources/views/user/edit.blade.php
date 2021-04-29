@@ -7,7 +7,10 @@
 
     <x-view.section width="3">
         <x-form.base :action="route('user.delete', $user->hashid)" method="POST" submitBtn="Supprimer le compte:red" nobody />
-        <x-form.base :action="route('user.update', $user->hashid)" method="POST" submitColor="green" submitText="Modifier" cancel>
+        <x-form.base :action="route('user.update', $user->hashid)" method="POST" submitColor="green" submitText="Modifier" enctype="multipart/form-data" cancel>
+            @if($user->hasRole('admin'))            
+                <x-form.field :bind="$user" type="file" label="Photo de profil" desc="Vous êtes un membre du projet, cette photo apparaitra sur <a class=underline href={{route('user.equipe') }}>cette page</a>" name="img" mimes="image/png, image/jpeg, image/gif"/>
+            @endif    
             <x-form.field :bind="$user" type="input" label="Nom" name="name"/>
             <x-form.field disabled :bind="$user" type="input" label="Email" name="email"/>
             <!-- <x-form.field :bind="$user" type="select" label="Rôle" name="role" :options="$user->roles()"/> -->
