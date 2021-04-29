@@ -1,4 +1,4 @@
-<div class="flex-grow max-w-2xl async-card" itemscope itemtype="http://schema.org/Event" data-type="event" data-hashid="{{ $event->hashid }}">
+<div class="flex-grow max-w-xl async-card" itemscope itemtype="http://schema.org/Event" data-type="event" data-hashid="{{ $event->hashid }}">
     <x-view.section class="bg-s2">
         <x-slot name="title">
                 {{$event->theme}}
