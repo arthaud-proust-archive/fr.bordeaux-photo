@@ -13,3 +13,5 @@ npm-debug.log
 yarn-error.log
 /public/sitemap.xml
 /public/assets/photos
+/public/assets/profiles/*
+!/public/assets/profiles/user.png

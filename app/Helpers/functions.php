@@ -7,6 +7,60 @@ use App\Models\Page;
 
 
 
+if(!function_exists('getPathAndFile')) {
+    function getPathAndFile($source)
+    {
+        $pos = strrpos($source, "/");
+        $path = substr($source, 0, $pos+1);
+        $file = substr($source, $pos+1);
+        return compact('path', 'file');
+    }
+}
+
+
+if(!function_exists('compress_image')) {
+    function compress_image($img_src, $quality=80, $nameByQuality=false)
+    {
+        $path_parts = pathinfo($img_src);
+        $ext = $path_parts['extension'];
+        $path = $path_parts['dirname'];
+        $name = $path_parts['filename'];
+
+        $src_url = public_path($img_src);
+        if($nameByQuality) {
+            $dest_url = public_path($path).'/'.$name.'-'.$quality.'.'.$ext;
+        } else {
+            $dest_url = public_path($img_src);
+        }
+        
+        $info = getimagesize($src_url);
+        if ($info['mime'] == 'image/jpeg') $image = imagecreatefromjpeg($src_url);
+        elseif ($info['mime'] == 'image/gif') $image = imagecreatefromgif($src_url);
+        elseif ($info['mime'] == 'image/png') $image = imagecreatefrompng($src_url);
+        imagejpeg($image, $dest_url, $quality);
+    }
+}
+
+if(!function_exists('resize_image')) {
+    function resize_image($img_src, $size, $nameBySize=false) {
+        $path_parts = pathinfo($img_src);
+        $ext = $path_parts['extension'];
+        $path = $path_parts['dirname'];
+        $name = $path_parts['filename'];
+
+        $src_url = public_path($img_src);
+        if($nameBySize) {
+            $dest_url = public_path($path).'/'.$name.'-'.$size.'.'.$ext;
+        } else {
+            $dest_url = public_path($img_src);
+        }
+        
+        $image = new ImageResize($src_url);
+        $image->resizeToWidth($size);
+        $image->save($dest_url);
+    }
+}
+
 if(!function_exists('page')) {
     function page($url) {
         return route('page.show', $url);

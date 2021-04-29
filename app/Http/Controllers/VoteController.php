@@ -32,6 +32,7 @@ class VoteController extends Controller
             'critere2' => 'required|numeric|min:0|max:5',
             'critere3' => 'required|numeric|min:0|max:5',
             'critere4' => 'required|numeric|min:0|max:5',
+            'bonus' => 'nullable|numeric|min:0'
         ]);
 
         if ($validator->fails()) {
@@ -47,7 +48,7 @@ class VoteController extends Controller
             $note_perso += intval(request('critere'.$i));
         }
 
-
+        $note_perso += intval(request('bonus', 0));
         
         // $notes[Auth::user()->hashid] = array_values(array_filter($request->input(), function($k) {
         //     return str_starts_with($k, 'critere');
@@ -58,6 +59,7 @@ class VoteController extends Controller
         foreach (array_filter($request->input(), function($k) { return str_starts_with($k, 'critere');}, ARRAY_FILTER_USE_KEY) as $critere_note) {
             array_push($criteres, intval($critere_note));
         }
+        array_push($criteres, intval(request('bonus', 0)));
 
         $notes = json_decode($photo->notes, true);
         //mise à jour de la note pour le jury actuel

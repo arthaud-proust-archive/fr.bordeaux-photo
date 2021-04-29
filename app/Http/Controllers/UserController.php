@@ -18,6 +18,12 @@ class UserController extends Controller
         ]);
     }
 
+    public function equipe(Request $request) {
+        return view('user.equipe', [
+            'users' => User::admin()->get()
+        ]);
+    }
+
     public function show(Request $request, $hashid) {
         return view('user.show', [
             'user' => User::where('id', decodeId($hashid))->firstOrFail()

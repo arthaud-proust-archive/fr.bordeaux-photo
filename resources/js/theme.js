@@ -33,8 +33,8 @@ module.exports = class {
     }
 
     fadeFunc(el, attr=false, property, start, end, duration) {
-        var target = document.querySelector(el);
-        if(!target) return;
+        var target = document.querySelectorAll(el);
+        if(!target || target.length == 0) return;
         var interval = 10;
         var steps = duration/interval;
         var step_u = 1.0/steps;
@@ -51,9 +51,13 @@ module.exports = class {
             var colorname = 'rgb('+r+','+g+','+b+')';
             // el.style.setProperty(property, colorname);
             if(attr) {
-                target.setAttribute(property, colorname);
+                for(let i=0; i<target.length;i++) {
+                    target[i].setAttribute(property, colorname);
+                }
             } else {
-                target.style.setProperty(property, colorname);
+                for(let i=0; i<target.length;i++) {
+                    target[i].style.setProperty(property, colorname);
+                }
             }
             u += step_u;
         }, interval);

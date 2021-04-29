@@ -12,7 +12,7 @@ foreach($events as $ev) {
     </x-slot>
 
     <x-view.section width="3">
-        <x-form.base :action="route('photo.store')" method="POST" cancel submitColor="green"  enctype="multipart/form-data">
+        <x-form.base :action="route('photo.store')" method="POST" cancel submitColor="green" enctype="multipart/form-data">
             <x-form.field :value="$event" type="select" label="Évènement" name="event" :options="$events_list" desc="Seul les évènements ouverts apparaissent"/>
             <x-form.field type="input" label="Titre (optionnel)" name="title" placeholder="Il pourrait donner un sens à votre photo"/>
             <x-form.field type="file" label="Photo" name="photo" mimes="image/png, image/jpeg, image/gif"/>

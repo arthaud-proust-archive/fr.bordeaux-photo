@@ -23,6 +23,9 @@ use App\Http\Controllers\PageController;
 Route::get('maintenance', function () {
     return view('maintenance');
 })->name('maintenance');
+Route::get('insta', function () {
+    return view('insta');
+})->name('insta');
 
 
 Route::middleware(['maintenanceCheck'])->group(function () {
@@ -82,7 +85,7 @@ Route::middleware(['maintenanceCheck'])->group(function () {
         Route::get('/profil/{hashid?}', [ProfilController::class, 'show'])->name('profil.show');
     });
 
-
+    Route::get('/a-propos', [UserController::class, 'equipe'])->name('user.equipe');
     Route::get('/events', [EventController::class, 'index'])->name('event.index');
     Route::get('/events/old', [EventController::class, 'indexOlds'])->name('event.index.olds');
     Route::get('/event/{hashid}', [EventController::class, 'show'])->name('event.show');

@@ -49,6 +49,20 @@ html[data-theme="light"]:root {
     }
 }
 
+
+.fade-in {
+    animation: fadeIn forwards 1s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 .ql-disabled {
     border: none !important;
 }
@@ -90,4 +104,13 @@ html[data-theme="light"]:root {
 
 .quillPopup.show {
     display: block;
+}
+
+#curator-feed-new-feed-layout > a:first-of-type {
+    z-index: -4000 !important;
+}
+
+
+.lightwidget {
+    color: var(--p1) !important;
 }

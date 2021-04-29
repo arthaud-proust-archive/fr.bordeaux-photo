@@ -73,6 +73,11 @@ class User extends Authenticatable
     public function scopeJury($query) {
         return $query->where('role', 'LIKE', '%jury%');
     }
+
+    public function scopeAdmin($query) {
+        return $query->where('role', 'LIKE', '%admin%');
+    }
+
     public function scopeActive($query) {
         return $query->where('active', true);
     }
