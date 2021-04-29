@@ -21,6 +21,10 @@
                     <x-view.link :href="route('photo.create', $event->hashid)" text="Envoyer ma photo" />
                     @endguest
                 @endif
+
+                @if($event->voted)
+                    <x-view.link :href="route('event.results', $event->hashid)" text="Résultats" />
+                @endif
                 </div>
         </x-slot>
 
@@ -29,7 +33,7 @@
             @if($event->isVoting)
                 <x-pill bg="s3">Vote en cours</x-pill>
             @else
-                <x-pill :bg="$event->isOpen?'green0':'red0'" :color="$event->isOpen?'green1':'red1'">{{ $event->isOpen?'Ouvert':'Fermé'}}</x-pill>
+                <x-pill :bg="$event->isOpen?'green0':'red0'" :color="$event->isOpen?'green1':'red1'">{{ $event->isOpen?'Ouvert':'Terminé et voté'}}</x-pill>
             @endif
             <x-pill :href="page('types-evenement')">{{ ucFirst($event->type) }} <x-event.typeicon :type="$event->type" /></x-pill>
         </div>

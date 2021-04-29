@@ -12,7 +12,7 @@
         <x-view.link :href="route('event.show', $event->hashid)" text="Retour à l'évènement" />
     </x-view.links>
 
-    @if( $podium[0] ?? false)
+    @if( ($podium[0] ?? false) && $event->voted )
     <x-view.section title="Le gagnant du concours est {{ $podium[0]->authorModel->name}}!"></x-view.section>
 
     <x-view.section title="Podium">
@@ -54,7 +54,7 @@
         {{$results->links()}}
     </x-view.section>
     @else
-    <x-view.section title="Aucun résultat"></x-view.section>
+    <x-view.section title="Les résultats seront affichés une fois que tous les jurys auront voté"></x-view.section>
     @endif
     
 
