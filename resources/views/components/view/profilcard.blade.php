@@ -1,6 +1,6 @@
 @php
 $width = $width??'1/3';
-$baseClass = "flex flex-col items-center w-auto p-3 mb-10 rounded";
+$baseClass = "flex flex-col items-center w-auto p-3 m-2 mb-10 rounded";
 @endphp
 <div {{ $attributes->merge(['class'=>$baseClass]) }} >
     @if($href??null)<a href="{{ $href??null }}">@endif
