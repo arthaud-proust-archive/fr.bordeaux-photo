@@ -3,7 +3,9 @@
 if(!isset($photo)) {
     $photo = $photos[0];
 }
-$notes = json_decode($photo->notes, true)[Auth::user()->hashid] ?? [];
+if(isset($photo)) {
+    $notes = json_decode($photo->notes, true)[Auth::user()->hashid] ?? [];
+}
 
 $criteres = [
     "Réponse au thème" => "Choix du sujet, respect du thème, originalité...",
@@ -39,7 +41,7 @@ $options = [
         @endif
     </x-view.links>
 
-    @if($photo)
+    @if(isset($photo))
         <x-view.section title="{{ $photo->title }}">
             <x-view.card width="full" :title="$photo->title" :src="$photo->photo" />
         </x-view.section>
