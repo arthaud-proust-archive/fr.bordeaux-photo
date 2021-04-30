@@ -1,6 +1,8 @@
 @php
 
-$photo = $photos[0];
+if(!isset($photo)) {
+    $photo = $photos[0];
+}
 $criteres = [
     "Réponse au thème" => "Choix du sujet, respect du thème, originalité...",
     "Composition" => "Cadrage, harmonie, lumière...",
@@ -29,7 +31,10 @@ $options = [
 
     <x-view.links>
         <x-view.link :href="route('event.show', $event->hashid)" text="Retour à l'évènement" />
-        <x-view.link :href="route('event.results', $event->hashid)" text="Voir les résultats" />
+        <x-view.link :href="route('event.photos', $event->hashid)" text="Voir les photos" />
+        @if($event->voted)
+            <x-view.link :href="route('event.results', $event->hashid)" text="Voir les résultats" />
+        @endif
     </x-view.links>
 
     @if($photo)
@@ -44,7 +49,9 @@ $options = [
                 <x-form.field value="0" type="number" label="Points bonus" desc="Suivant la liste bonus établi, entrez le nombre de points à ajouter" name="bonus"/>
             </x-form.base>
         </x-view.section>
-        {{ $photos->links('pagination.photo') }}
+        @if(isset($photos))
+            {{ $photos->links('pagination.photo') }}
+        @endif
     @else
         <x-view.section title="Aucune photo">
             <p class="mb-6">Vous avez fini!</p>

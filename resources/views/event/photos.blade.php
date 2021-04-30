@@ -16,8 +16,14 @@
     </x-view.links>
 
     <x-view.section title="Photos">
+        <div class="flex flex-row flex-wrap">
         @foreach($photos as $photo) 
-            <x-view.card :title="$photo->title" :src="$photo->photo" />
+            @if(Auth::user()->hasRole('jury'))
+            <x-view.card width="1/2" :href="route('vote.show', ['hashid'=>$event->hashid, 'photo'=>$photo->hashid])" :title="$photo->title" :src="$photo->photo" subtitle="Cliquer sur l'image pour modifier la note"/>
+            @else
+            <x-view.card width="1/2" :title="$photo->title" :src="$photo->photo"/>
+            @endif
         @endforeach
+        </div>
     </x-view.section>
 </x-app-layout>

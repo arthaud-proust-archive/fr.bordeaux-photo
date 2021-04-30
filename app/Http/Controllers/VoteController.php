@@ -14,13 +14,21 @@ use Illuminate\Support\Facades\File;
 class VoteController extends Controller
 {
 
-    public function show(Request $request, $event) {
-        $photos = photo::where('event', $event)->notNoted()->paginate(1);
+    public function show(Request $request, $event, $photo_hashid=null) {
+        if($photo_hashid) {
+            return view('event.vote', [
+                'event' => event::whereId(decodeId($event))->firstOrFail(),
+                'photo' => photo::where('event', $event)->whereId(decodeId($photo_hashid))->firstOrFail()
+            ]);
+            $photos = photo::where('event', $event)->notNoted()->inRandomOrder()->paginate(1);
+        } else {
+            return view('event.vote', [
+                'event' => event::whereId(decodeId($event))->firstOrFail(),
+                'photos' => photo::where('event', $event)->notNoted()->inRandomOrder()->paginate(1)
+            ]);
+        }
         
-        return view('event.vote', [
-            'event' => event::whereId(decodeId($event))->firstOrFail(),
-            'photos' => $photos
-        ]);
+        
 
     }
 

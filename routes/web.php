@@ -36,7 +36,7 @@ Route::middleware(['maintenanceCheck'])->group(function () {
 
 
     Route::middleware(['role:jury'])->group(function () {
-        Route::get('/event/{hashid}/vote', [VoteController::class, 'show'])->name('vote.show');
+        Route::get('/event/{hashid}/vote/{photo?}', [VoteController::class, 'show'])->name('vote.show');
         Route::post('/event/{hashid}/vote', [VoteController::class, 'note'])->name('vote.note');
         Route::get('/event/{hashid}/end', [VoteController::class, 'displayNotes'])->name('vote.display');
         Route::get('/event/{hashid}/photos', [EventController::class, 'photos'])->name('event.photos');
