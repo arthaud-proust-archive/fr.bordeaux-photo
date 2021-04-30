@@ -21,9 +21,9 @@
             @foreach($users as $user)
                 <x-view.profilcard style="animation-delay: {{0.5+$k+$a*sin(($loop->index-$h)/$b)}}s;" class="opacity-0 fade-in" src="{{ asset($user->img) }}" :title="$user->name" :subtitle="$user->bio" />
             @endforeach
-            @for($i=0; $i<=10;$i++)
+            <!-- @for($i=0; $i<=10;$i++)
             <x-view.profilcard style="animation-delay: {{1+$k+$a*sin(($i-$h)/$b)}}s;" class="opacity-0 fade-in" src="{{ asset('/assets/equipe/arthaud.jpg') }}" title="Arthaud Proust" subtitle="Jury" />
-            @endfor
+            @endfor -->
         </div>
     </x-view.section>
 </x-app-layout>
