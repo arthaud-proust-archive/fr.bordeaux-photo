@@ -76,7 +76,7 @@ class VoteController extends Controller
         $photo->notes = json_encode($notes);
         $photo->save();
 
-
+        $this->displayNotes($request, $photo->event);
         return redirect()->route('vote.show', $photo->event)->with('status', 'success')->with('content', 'Note ajoutée');
     }
 

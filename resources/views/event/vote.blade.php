@@ -3,6 +3,8 @@
 if(!isset($photo)) {
     $photo = $photos[0];
 }
+$notes = json_decode($photo->notes, true)[Auth::user()->hashid] ?? [];
+
 $criteres = [
     "Réponse au thème" => "Choix du sujet, respect du thème, originalité...",
     "Composition" => "Cadrage, harmonie, lumière...",
@@ -44,9 +46,9 @@ $options = [
         <x-view.section width="3" title="Note">
             <x-form.base :action="route('vote.note', $photo->hashid)" method="POST" submitColor="green" submitText="Je mets cette note">
                 @foreach($criteres as $critere=>$desc)
-                <x-form.field optionsNumber value="0" type="select" :label="$critere" :desc="$desc" name="critere{{$loop->index+1}}" :options="$options"/>
+                <x-form.field optionsNumber type="select" :value="$notes[$loop->index] ?? 6" :label="$critere" :desc="$desc" name="critere{{$loop->index+1}}" :options="$options"/>
                 @endforeach
-                <x-form.field value="0" type="number" label="Points bonus" desc="Suivant la liste bonus établi, entrez le nombre de points à ajouter" name="bonus"/>
+                <x-form.field :value="$notes[4] ?? 0" type="number" label="Points bonus" desc="Suivant la liste bonus établi, entrez le nombre de points à ajouter" name="bonus"/>
             </x-form.base>
         </x-view.section>
         @if(isset($photos))
