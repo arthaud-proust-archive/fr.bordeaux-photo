@@ -57,10 +57,10 @@ $options = [
             {{ $photos->links('pagination.photo') }}
         @endif
     @else
-        <x-view.section title="Aucune photo">
+        {{-- <x-view.section title="Aucune photo">
             <p class="mb-6">Vous avez fini!</p>
             <x-view.link :href="route('vote.display', $event->hashid)" text="Calculer les résultats" />
-        </x-view.section>
+        </x-view.section> --}}
     @endif
     
 </x-app-layout>

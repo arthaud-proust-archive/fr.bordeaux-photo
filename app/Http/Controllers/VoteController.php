@@ -22,10 +22,15 @@ class VoteController extends Controller
             ]);
             $photos = photo::where('event', $event)->notNoted()->inRandomOrder()->paginate(1);
         } else {
-            return view('event.vote', [
-                'event' => event::whereId(decodeId($event))->firstOrFail(),
-                'photos' => photo::where('event', $event)->notNoted()->inRandomOrder()->paginate(1)
-            ]);
+            $photos = photo::where('event', $event)->notNoted()->inRandomOrder()->paginate(1);
+            if($photos->count() > 0) {
+                return view('event.vote', [
+                    'event' => event::whereId(decodeId($event))->firstOrFail(),
+                    'photos' => $photos
+                ]);
+            }
+            return redirect()->route('event.photos', $event);
+
         }
         
         
@@ -51,12 +56,12 @@ class VoteController extends Controller
         $event = event::where('id', decodeId($photo->event))->firstOrFail();
 
         // somme des critères
-        $note_perso = 0;
-        for($i=1; 5>$i;$i++) {
-            $note_perso += intval(request('critere'.$i));
-        }
+        // $note_perso = 0;
+        // for($i=1; 5>$i;$i++) {
+        //     $note_perso += intval(request('critere'.$i));
+        // }
 
-        $note_perso += intval(request('bonus', 0));
+        // $note_perso += intval(request('bonus', 0));
         
         // $notes[Auth::user()->hashid] = array_values(array_filter($request->input(), function($k) {
         //     return str_starts_with($k, 'critere');
@@ -76,41 +81,45 @@ class VoteController extends Controller
         $photo->notes = json_encode($notes);
         $photo->save();
 
-        $this->displayNotes($request, $photo->event);
+        $this->displayNotes($photo->event);
         return redirect()->route('vote.show', $photo->event)->with('status', 'success')->with('content', 'Note ajoutée');
     }
 
-    public function displayNotes(Request $request, $event_hashid) {
+    public function displayNotes($event_hashid) {
         $event = event::where('id', decodeId($event_hashid))->firstOrFail();
         $photos = photo::where('event', $event_hashid)->get();
-        // liste des jurys qui ont noté toutes les photos
-        $jurys = $event->listJuryComplete();
+        // liste des jurés qui ont noté toutes les photos
+        $jures = $event->listJuryComplete();
 
         // si elle n'est pas vide
-        if(count($jurys) > 0) {
+        if(count($jures) > 0) {
             // on va calculer la note de chaque photo
             foreach($photos as $photo) {
                 
                 $note_sum = false;
-                // la somme des notes de chaque jury pour la photo
-                foreach($jurys as $jury) {
-                    $note_sum += $photo->noteOf($jury);
+                // la somme des notes de chaque juré pour la photo
+                foreach($jures as $jure) {
+                    $note_sum += $photo->noteOf($jure);
                 }
 
-                // on divise par le nombre de jury, pour faire la moyenne
-                $note = $note_sum/count($jurys);
-    
+                // on divise par le nombre de jurés, pour faire la moyenne
+                $note = $note_sum/count($jures);
                 // on enregistre la note
                 $photo->note = $note;
                 $photo->save();
             }
+        } else {
+            foreach($photos as $photo) {
+                $photo->note = NULL;
+                $photo->save();
+            }
         }
 
-        if($jurys == json_decode($event->jury)) {
-            $event->voted = true;
-            $event->save();
-        }
+        // si la liste des juré qui ont voté correspond au jury
+        $event->voted = $jures == json_decode($event->jury);
+        $event->save();
 
-        return redirect()->route('event.results', $event_hashid)->with('status', 'success')->with('content', 'Notes calculées');
+        return 'ok';
+        // return redirect()->route('event.results', $event_hashid)->with('status', 'success')->with('content', 'Notes calculées');
     }
 }

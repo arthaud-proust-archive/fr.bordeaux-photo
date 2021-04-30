@@ -21,7 +21,7 @@ class CreatePhotosTable extends Migration
             $table->string('author');
             // $table->string('author_name');
             $table->text('notes');
-            $table->tinyInteger('note')->nullable();
+            $table->double('note')->nullable();
         });
     }
 
