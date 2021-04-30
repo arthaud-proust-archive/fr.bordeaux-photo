@@ -31,8 +31,10 @@ class UserController extends Controller
     }
 
     public function edit(Request $request, $hashid) {
+        $user = User::where('id', decodeId($hashid))->firstOrFail();
+        if($user->id == Auth::id()) return redirect()->route('profil.edit');
         return view('user.edit', [
-            'user' => User::where('id', decodeId($hashid))->firstOrFail()
+            'user' => $user
         ]);
     }
 
