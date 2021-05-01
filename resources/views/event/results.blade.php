@@ -22,6 +22,7 @@ $podiumArray = [
     @if( ($podium[0] ?? false) && $event->voted )
     {{-- <x-view.section title="Le gagnant du concours est {{ $podium[0]->authorModel->name}}!"></x-view.section> --}}
 
+    @if($results->currentPage()==1)
     <x-view.section title="Podium gagnant" class="p-0 md:p-6">
         <div class="flex flex-row flex-wrap justify-center items-end">
             @foreach($podiumArray as $place)
@@ -37,12 +38,13 @@ $podiumArray = [
             @endforeach
         </div>
     </x-view.section>
+    @endif
     <x-view.section title="Résultats">
         <div class="flex flex-row flex-wrap">
             @foreach($results as $result) 
                 <x-view.card width="full" :src="$result->photo">
                     <x-slot name="title">
-                        <span class="text-xl text-p1">#{{ $loop->index+1 }}</span>
+                        <span class="text-xl text-p1">#{{ ($results->currentPage()-1) * $results->perPage() + $loop->index+1 }}</span>
                         <span class="text-sm">
                             {{ $result->title }} par {{ $result->authorModel->name }}
                             <!-- <x-view.link muted href="{{ route('profil.show', $result->author) }}" :text="$result->authorModel->name" /> -->
