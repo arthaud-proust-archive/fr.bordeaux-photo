@@ -37,7 +37,7 @@ class ChangePasswordController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'old_password' => ['required', new OldPwd],
-            'password' => 'required|string|confirmed|min:8|different:old_password',
+            'password' => 'required|string|confirmed|different:old_password',
         ]);
         if ($validator->fails()) {
             return back()->withInput()->withErrors($validator);

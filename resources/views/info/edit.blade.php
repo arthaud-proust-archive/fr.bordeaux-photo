@@ -10,7 +10,6 @@
         <x-form.base :action="route('info.edit', $info->hashid)" method="POST" submitColor="green" submitText="Modifier" cancel>
             <x-form.field :bind="$info" type="input" label="Titre" name="title"/>
             <x-form.field :bind="$info" type="quill" label="Contenu" name="content" placeholder="Contenu"/>
-            @infoPagesRoute
             <div>
                 <label class="block text-sm font-medium text-p1">Afficher l'info sur les pages:</label>
                 @foreach($pages as $page)

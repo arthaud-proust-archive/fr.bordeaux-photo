@@ -1,3 +1,10 @@
+@php 
+$podiumArray = [
+    [1,'second', '4/12'],
+    [0,'first', '2/5'],
+    [2,'third', '3/12']
+];
+@endphp
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-p1 leading-tight">
@@ -13,31 +20,21 @@
     </x-view.links>
 
     @if( ($podium[0] ?? false) && $event->voted )
-    <x-view.section title="Le gagnant du concours est {{ $podium[0]->authorModel->name}}!"></x-view.section>
+    {{-- <x-view.section title="Le gagnant du concours est {{ $podium[0]->authorModel->name}}!"></x-view.section> --}}
 
-    <x-view.section title="Podium">
+    <x-view.section title="Podium gagnant" class="p-0 md:p-6">
         <div class="flex flex-row flex-wrap justify-center items-end">
-            @if( $podium[1] ?? false)
-            <x-view.card width="4/12" :title="$podium[1]->title" :src="$podium[1]->photo">
-                <x-slot name="title">
-                    {{ $podium[1]->title }} par <x-view.link muted href="{{ route('profil.show', $podium[1]->author) }}" :text="$podium[1]->authorModel->name" />
-                </x-slot>
-            </x-view.card>
-            @endif
-            @if( $podium[0] ?? false)
-            <x-view.card width="2/5" :title="$podium[0]->title" :src="$podium[0]->photo">
-                <x-slot name="title">
-                    {{ $podium[0]->title }} par <x-view.link muted href="{{ route('profil.show', $podium[0]->author) }}" :text="$podium[0]->authorModel->name" />
-                </x-slot>
-            </x-view.card>
-            @endif
-            @if( $podium[2] ?? false)
-            <x-view.card width="3/12" :title="$podium[2]->title" :src="$podium[2]->photo">
-                <x-slot name="title">
-                    {{ $podium[2]->title }} par <x-view.link muted href="{{ route('profil.show', $podium[2]->author) }}" :text="$podium[2]->authorModel->name" />
-                </x-slot>
-            </x-view.card>
-            @endif
+            @foreach($podiumArray as $place)
+                @if( $podium[1] ?? false)
+                <x-view.card :width="$place[2]" :title="$podium[$place[0]]->title" :src="$podium[$place[0]]->photo">
+                    <x-slot name="title">
+                        <img class="mx-auto block w-12 md:w-24 mt-6" src="{{ asset('assets/'.$place[1].'.svg') }}">
+                        {{-- <span class="text-5xl mx-auto block text-center">{{ $place[1] }}</span> --}}
+                        <!-- {{ $podium[1]->title }} par <x-view.link muted href="{{ route('profil.show', $podium[1]->author) }}" :text="$podium[1]->authorModel->name" /> -->
+                    </x-slot>
+                </x-view.card>
+                @endif
+            @endforeach
         </div>
     </x-view.section>
     <x-view.section title="Résultats">
@@ -45,7 +42,11 @@
             @foreach($results as $result) 
                 <x-view.card width="full" :src="$result->photo">
                     <x-slot name="title">
-                        {{ $result->title }} par <x-view.link muted href="{{ route('profil.show', $result->author) }}" :text="$result->authorModel->name" />
+                        <span class="text-xl text-p1">#{{ $loop->index+1 }}</span>
+                        <span class="text-sm">
+                            {{ $result->title }} par {{ $result->authorModel->name }}
+                            <!-- <x-view.link muted href="{{ route('profil.show', $result->author) }}" :text="$result->authorModel->name" /> -->
+                        </span>
                     </x-slot>
                 </x-view.card>
 
@@ -54,7 +55,7 @@
         {{$results->links()}}
     </x-view.section>
     @else
-    <x-view.section title="Les résultats seront affichés une fois que tous les jurys auront voté"></x-view.section>
+        <x-view.section title="Les résultats seront affichés une fois que le jury aura voté"></x-view.section>
     @endif
     
 

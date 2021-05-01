@@ -33,7 +33,7 @@ class PhotoController extends Controller
         $validator = Validator::make($request->all(), [
             'photo' => 'required|image|mimes:jpeg,png,jpg,gif',
             'event' => 'required|string|max:255',
-            'title' => 'nullable|string|max:255',
+            'title' => 'nullable|string|max:20',
         ]);
 
         if ($validator->fails()) {
@@ -83,7 +83,7 @@ class PhotoController extends Controller
 
         $validator = Validator::make($request->all(), [
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif',
-            'title' => 'nullable|string|max:255',
+            'title' => 'nullable|string|max:20',
         ]);
 
         if ($validator->fails()) {
