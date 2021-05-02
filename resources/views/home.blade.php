@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h1 class="mt-4 ml-4 text-5xl text-p1 leading-tight">
-            Photo à Bordeaux
+            À la une
         </h1>
     </x-slot>
 

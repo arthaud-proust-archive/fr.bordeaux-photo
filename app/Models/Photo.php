@@ -18,6 +18,23 @@ class Photo extends BaseModel
         'note'
     ];
 
+    public $criteres = [
+        "Réponse au thème" => "Choix du sujet, respect du thème, originalité...",
+        "Composition" => "Cadrage, harmonie, lumière...",
+        "Technique" => "Exposition, profondeur de champs, traitement...",
+        "Critère subjectif" => "Coup de coeur, histoire que ça raconte, émotion..."
+    ];
+
+    public $critereOptions = [
+        '0 - Vraiment pas',
+        '1 - Pas trop',
+        '2 - Limite',
+        '3 - Respecté',
+        '4 - Très bien',
+        '5 - Exceptionnel',
+        'Choisir la note'
+    ];
+
     public function scopeNoted($query) {
         return $query->where('notes', 'LIKE', '%'.Auth::user()->hashid.'%');
     }

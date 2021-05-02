@@ -96,5 +96,6 @@ Route::middleware(['maintenanceCheck'])->group(function () {
 
 
 require __DIR__.'/auth.php';
+Route::redirect('/', 'events');
+Route::get('/informations', [InfoController::class, 'home'])->name('home');
 Route::get('/{url}', [PageController::class, 'show'])->name('page.show');
-Route::get('/', [InfoController::class, 'home'])->name('home');
