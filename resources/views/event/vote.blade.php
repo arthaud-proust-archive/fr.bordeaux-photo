@@ -29,12 +29,18 @@ if(isset($photo)) {
         <x-view.section title="{{ $photo->title }}">
             <x-view.card width="full" :title="$photo->title" :src="$photo->photo" />
         </x-view.section>
-        <x-view.section width="3" title="Note">
+        <x-view.section width="3" title="Notation">
             <x-form.base :action="route('vote.note', $photo->hashid)" method="POST" submitColor="green" submitText="Je mets cette note">
-                @foreach($photo->criteres as $critere=>$desc)
-                <x-form.field optionsNumber type="select" :value="$notes[$loop->index] ?? 6" :label="$critere" :desc="$desc" name="critere{{$loop->index+1}}" :options="$photo->critereOptions"/>
+                <div class="w-full overflow-y-auto flex flex-row md:flex-wrap w-auto">
+                @foreach($photo->criteres as $critere)
+                    <div class="m-2 flex-shrink-0 w-2/3 sm:w-2/5">
+                    <x-form.field optionsNumber type="select" :value="$notes[$loop->index] ?? 6" :label="$critere[0]" :desc="$critere[1]" name="critere{{$loop->index+1}}" :options="$photo->critereOptions"/>
+                    </div>
                 @endforeach
-                <x-form.field :value="$notes[4] ?? 0" type="number" label="Points bonus" desc="Suivant la liste bonus établi, entrez le nombre de points à ajouter" name="bonus"/>
+                    <div class="m-2 flex-shrink-0 w-1/2 sm:w-2/5">
+                        <x-form.field :value="$notes[4] ?? 0" type="number" label="Points bonus" desc="Suivant la liste bonus établi, entrez le nombre de points à ajouter" name="bonus"/>
+                    </div>
+                </div>
             </x-form.base>
         </x-view.section>
         @if(isset($photos))

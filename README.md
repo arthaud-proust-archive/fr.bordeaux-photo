@@ -34,16 +34,17 @@ Thème sombre
 ### Profil : 
 - nom (pseudo ou autre)
 - email
-- photo de profil
+- <span style="text-decoration:line-through; ">photo de profil</span>
 - biographie
-- niveau de perm (user, jury, admin)
+- tableau: roles(user, jury, admin)
+- perso: photos, participations, notes
 
 ### Évènements : 
-- Type : rallye/nocturne
+- Type : rallye/nocturne/concours/virtuel/concept
+- Thème
 - Date de début
 - Date de fin
 - Présentation
-- Participants
 
 ### Envoi de photo: 
 - Tous les utilisateurs sauf les jurys

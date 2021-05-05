@@ -8,8 +8,7 @@ $siteurl = config('app.produrl');
 @endphp
 
 <!--
-Je dit ça comme ça, le vol de photo c'est mal
-Merci de créditer les photographes
+Merci de créditer les photographes si les photos ne sont pas les votres
  -->
 <!DOCTYPE html>
 <html lang="fr" >

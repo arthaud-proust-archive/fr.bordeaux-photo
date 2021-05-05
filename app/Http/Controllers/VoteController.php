@@ -81,15 +81,22 @@ class VoteController extends Controller
         $photo->notes = json_encode($notes);
         $photo->save();
 
-        $this->displayNotes($photo->event);
+        // on calcule les notes
+        $this->calcNotes($photo->event);
+
         return redirect()->route('vote.show', $photo->event)->with('status', 'success')->with('content', 'Note ajoutée');
     }
 
-    public function displayNotes($event_hashid) {
+    // calcul des notes
+    public function calcNotes($event_hashid) {
         $event = event::where('id', decodeId($event_hashid))->firstOrFail();
         $photos = photo::where('event', $event_hashid)->get();
         // liste des jurés qui ont noté toutes les photos
         $jures = $event->listJuryComplete();
+
+        // si la liste des juré qui ont voté correspond au jury
+        $event->voted = $jures == json_decode($event->jury);
+        $event->save();
 
         // si elle n'est pas vide
         if(count($jures) > 0) {
@@ -115,9 +122,7 @@ class VoteController extends Controller
             }
         }
 
-        // si la liste des juré qui ont voté correspond au jury
-        $event->voted = $jures == json_decode($event->jury);
-        $event->save();
+
 
         return 'ok';
         // return redirect()->route('event.results', $event_hashid)->with('status', 'success')->with('content', 'Notes calculées');

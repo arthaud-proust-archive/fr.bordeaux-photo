@@ -34,6 +34,16 @@ class EventController extends Controller
 
     }
 
+    public function jury(Request $request, $hashid) {
+        $event = event::whereId(decodeId($hashid))->firstOrFail();
+        return view('event.jury', [
+            'event' => event::whereId(decodeId($hashid))->firstOrFail()
+        ])
+        // ->with('status', 'success')->with('content', 'Vous avez déjà ajouté une photo, modifiez-la')
+        ;
+
+    }
+
     public function getdesc(Request $request, $hashid) {
         $event = event::whereId(decodeId($hashid))->firstOrFail();
         return response(bindPagesRoute($event->description), 200)

@@ -15,14 +15,23 @@ class Photo extends BaseModel
         'title',
         'author',
         'notes',
-        'note'
+        'note',
+        'nominations'
     ];
 
+    // public $criteres = [
+    //     ["Réponse au thème", "Choix du sujet, respect du thème, originalité..."],
+    //     ["Composition", "Cadrage, harmonie, lumière..."],
+    //     ["Technique", "Exposition, profondeur de champs, traitement..."],
+    //     ["Critère subjectif", "Coup de coeur, histoire que ça raconte, émotion..."],
+    // ];
+
     public $criteres = [
-        "Réponse au thème" => "Choix du sujet, respect du thème, originalité...",
-        "Composition" => "Cadrage, harmonie, lumière...",
-        "Technique" => "Exposition, profondeur de champs, traitement...",
-        "Critère subjectif" => "Coup de coeur, histoire que ça raconte, émotion..."
+        ["Respect du thème", "Attention à bien chercher à comprendre la photo avant de dire qu'il y a hors-sujet"],
+        ["Originalité", "Photo banale? C'est recherché? Vous-y attendiez-vous?", true],
+        ["Composition", "Cadrage, harmonie, lumière..."],
+        ["Technique", "Exposition, profondeur de champs, traitement..."],
+        ["Critère subjectif", "Coup de coeur, histoire que ça raconte, émotion...", true],
     ];
 
     public $critereOptions = [

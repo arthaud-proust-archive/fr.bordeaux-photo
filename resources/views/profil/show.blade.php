@@ -9,8 +9,8 @@
         <x-view.link :href="route('profil.edit')" text="Modifier mon profil" />
         <x-view.link :href="route('password.change')" text="Modifier mon mot de passe" />
         @endif
-        <div class="quillContent">
-            @bindPagesRoute($user->bio)
+        <div class="pt-3 quillContent">
+            {{ $user->bio }}
         </div>
 
     </x-view.section>

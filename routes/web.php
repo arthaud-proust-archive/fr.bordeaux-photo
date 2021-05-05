@@ -38,7 +38,7 @@ Route::middleware(['maintenanceCheck'])->group(function () {
     Route::middleware(['role:jury'])->group(function () {
         Route::get('/event/{hashid}/vote/{photo?}', [VoteController::class, 'show'])->name('vote.show');
         Route::post('/event/{hashid}/vote', [VoteController::class, 'note'])->name('vote.note');
-        Route::get('/event/{hashid}/end', [VoteController::class, 'displayNotes'])->name('vote.display');
+        Route::get('/event/{hashid}/end', [VoteController::class, 'calcNotes'])->name('vote.display');
         Route::get('/event/{hashid}/photos', [EventController::class, 'photos'])->name('event.photos');
     });
 
@@ -84,6 +84,7 @@ Route::middleware(['maintenanceCheck'])->group(function () {
         Route::post('/profil/delete', [ProfilController::class, 'delete'])->name('profil.delete');
         Route::get('/profil/{hashid?}', [ProfilController::class, 'show'])->name('profil.show');
         Route::get('/event/{hashid}/results', [EventController::class, 'results'])->name('event.results');
+        Route::get('/event/{hashid}/jury', [EventController::class, 'jury'])->name('event.jury');
     });
 
     Route::get('/a-propos', [UserController::class, 'equipe'])->name('user.equipe');

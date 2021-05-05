@@ -52,7 +52,8 @@ class PhotoController extends Controller
             'photo' => '',
             'title' => request('title'),
             'author' => Auth::user()->hashid,
-            'notes' => '{}'
+            'notes' => '{}',
+            'nominations' => '{}'
             // 'extension' => request('photo')->getClientOriginalExtension()
         ]);
 

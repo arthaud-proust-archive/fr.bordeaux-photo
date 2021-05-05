@@ -6,6 +6,7 @@ use App\Models\BaseModel;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Photo;
+use App\Models\User;
 
 class Event extends BaseModel
 {
@@ -52,6 +53,15 @@ class Event extends BaseModel
     public function scopeOld($query)
     {
         return $query->where('date_end', '<', Carbon::now()->subMonth()->timestamp);
+    }
+
+    // attributs
+    public function getJuryModelsAttribute() {
+        $jury = [];
+        foreach(json_decode($this->jury, true) as $jure) {
+            array_push($jury, User::whereId(decodeId($jure))->firstOrFail());
+        }
+        return $jury;
     }
 
     public function getIsVotingAttribute() {
