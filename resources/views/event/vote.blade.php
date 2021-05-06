@@ -18,11 +18,7 @@ if(isset($photo)) {
 
 
     <x-view.links>
-        <x-view.link :href="route('event.show', $event->hashid)" text="Retour à l'évènement" />
-        <x-view.link :href="route('event.photos', $event->hashid)" text="Voir les photos" />
-        @if($event->voted)
-            <x-view.link :href="route('event.results', $event->hashid)" text="Voir les résultats" />
-        @endif
+        @include('include.event-links')
     </x-view.links>
 
     @if(isset($photo))

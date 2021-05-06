@@ -6,36 +6,7 @@
     </x-slot>
 
     <x-view.links>
-        <x-view.link :href="route('event.show', $event->hashid)" text="Retour à l'évènement" />
-        @authRole('admin') 
-            <x-view.link :href="route('event.edit', $event->hashid)" text="Éditer l'évènement" /> 
-        @endauthRole
-
-        @authRole('jury')
-            @if($event->isStarted)
-            <x-view.link :href="route('event.photos', $event->hashid)" text="Voir les photos" />
-            @endif
-            @if($event->isEnded)
-                <x-view.link :href="route('vote.show', $event->hashid)" text="Voter" />
-            @endif
-        @endauthRole
-
-        @if($event->isOpen)
-            @authRole('user')
-                @if($event->userPhotoSent)
-                <x-view.link :href="route('photo.edit', $event->userPhotoSent->hashid)" text="Modifier ma photo" />
-                @else
-                <x-view.link :href="route('photo.create', $event->hashid)" text="Envoyer ma photo" />
-                @endif
-            @endauthRole
-            @guest
-                <x-view.link :href="route('photo.create', $event->hashid)" text="Envoyer ma photo" />
-            @endguest
-        @endif
-
-        @if($event->voted)
-            <x-view.link :href="route('event.results', $event->hashid)" text="Voir les résultats" />
-        @endif
+        @include('include.event-links')
     </x-view.links>
 
     <x-view.section class="bg-s2">

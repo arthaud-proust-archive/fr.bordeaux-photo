@@ -15,21 +15,22 @@ class VoteController extends Controller
 {
 
     public function show(Request $request, $event, $photo_hashid=null) {
-        if($photo_hashid) {
+        $event = event::whereId(decodeId($event))->firstOrFail();
+        if($photo_hashid && $event->isVoting) {
             return view('event.vote', [
-                'event' => event::whereId(decodeId($event))->firstOrFail(),
-                'photo' => photo::where('event', $event)->whereId(decodeId($photo_hashid))->firstOrFail()
+                'event' => $event,
+                'photo' => photo::where('event', $event->hashid)->whereId(decodeId($photo_hashid))->firstOrFail()
             ]);
-            $photos = photo::where('event', $event)->notNoted()->inRandomOrder()->paginate(1);
+            $photos = photo::where('event', $event->hashid)->notNoted()->inRandomOrder()->paginate(1);
         } else {
-            $photos = photo::where('event', $event)->notNoted()->inRandomOrder()->paginate(1);
+            $photos = photo::where('event', $event->hashid)->notNoted()->inRandomOrder()->paginate(1);
             if($photos->count() > 0) {
                 return view('event.vote', [
-                    'event' => event::whereId(decodeId($event))->firstOrFail(),
+                    'event' => $event,
                     'photos' => $photos
                 ]);
             }
-            return redirect()->route('event.photos', $event);
+            return redirect()->route('event.photos', $event->hashid);
 
         }
         
@@ -98,23 +99,60 @@ class VoteController extends Controller
         $event->voted = $jures == json_decode($event->jury);
         $event->save();
 
-        // si elle n'est pas vide
-        if(count($jures) > 0) {
-            // on va calculer la note de chaque photo
+        // si elle n'est pas vide et si y'a des photos
+        if($photos->count()>0 && count($jures) > 0) {
+
+            // on va calculer la note de chaque photo et ses nominations (la meilleure d'un critère?, ex la plus originale)
+
+            // comme on va passer sur les photos, on fait en même temps la comparaison des notes
+            $maxCriteres = []; // tableau des critères à nominer
+            for($i=0; count($photos[0]->criteres)>$i; $i++) {
+                if(count($photos[0]->criteres[$i]) > 2) { // si le critère est à nominer
+                    $maxCriteres[$i] = ['max'=>0, 'photo'=>null];
+                }
+            }
+            $njure = count($jures);
+
             foreach($photos as $photo) {
                 
-                $note_sum = false;
-                // la somme des notes de chaque juré pour la photo
-                foreach($jures as $jure) {
-                    $note_sum += $photo->noteOf($jure);
-                }
+                $note = 0;// somme des critères
+                $photo_notes = json_decode($photo->notes, true);
+                // on calcule la moyenne du jury pour chacun des critères
+                for($k=0; count($photos[0]->criteres)>$k; $k++) {
+                    $critere_sum = 0;
+                    // la somme des notes de chaque juré pour le critere
+                    foreach($jures as $jure) {
+                        $critere_sum += $photo_notes[$jure][$k];
+                    }
 
-                // on divise par le nombre de jurés, pour faire la moyenne
-                $note = $note_sum/count($jures);
+                    // on divise par le nombre de jurés, pour faire la moyenne
+                    $critere_note = $critere_sum/$njure;
+                    // on compare avec la plus haute note pour ce critère
+                    if(array_key_exists($k, $maxCriteres) && $maxCriteres[$k]['max']< $critere_note) {
+                        $maxCriteres[$k]['max'] = $critere_note;
+                        $maxCriteres[$k]['photo'] = $photo->hashid;
+                    }
+                    
+                    $note+=$critere_note;
+                }
+                
                 // on enregistre la note
                 $photo->note = $note;
+                $photo->nominations = "[]";
                 $photo->save();
             }
+
+            // attribution des nominations aux photos
+            foreach($maxCriteres as $j => $maxCritere) {
+                if($maxCritere['max']>0) { // si il y a une nomination
+                    $photo = Photo::whereId(decodeId($maxCritere['photo']))->firstOrFail();
+                    $nominations = json_decode($photo->nominations, true);
+                    array_push($nominations, $j);
+                    $photo->nominations = json_encode($nominations);
+                    $photo->save();
+                }
+            }
+
         } else {
             foreach($photos as $photo) {
                 $photo->note = NULL;

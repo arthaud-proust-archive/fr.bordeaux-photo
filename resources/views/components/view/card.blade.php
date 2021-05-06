@@ -1,12 +1,14 @@
 @php
 $width = $width??'1/3';
-$baseClass = "w-".$width." p-3 mb-10 rounded";
+$baseClass = "w-".$width." p-3 mb-10 rounded relative";
 @endphp
 <div {{ $attributes->merge(['class'=>$baseClass]) }} >
     @if($href??null)<a href="{{ $href??null }}">@endif
         <div class="relative">
             <img data-src="{{ $src ?? null }}" class="lazyload {{ $imgRounded??'rounded' }}" style="max-height: 90vh;">
-            <div class="absolute w-full h-full" style="transform: translateY(-100%)"></div>
+            <div class="absolute w-full h-full" style="transform: translateY(-100%)">
+            {{ $onimg ?? null }}
+            </div>
         </div>
     @if($href??null)</a>@endif
 

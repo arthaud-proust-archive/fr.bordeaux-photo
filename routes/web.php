@@ -26,7 +26,9 @@ Route::get('maintenance', function () {
 Route::get('insta', function () {
     return view('insta');
 })->name('insta');
-
+Route::get('manifest.webmanifest', function () {
+    return view('manifest');
+})->name('manifest');
 
 Route::middleware(['maintenanceCheck'])->group(function () {
 

@@ -100,7 +100,7 @@ Merci de créditer les photographes si les photos ne sont pas les votres
 
 
            <!-- Apple meta -->
-           <link rel="apple-touch-icon" href="{{ asset('/assets/img/apple-touch-icon.png') }}" />
+        <link rel="apple-touch-icon" href="{{ asset('/assets/img/apple-touch-icon.png') }}" />
         <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('/assets/img/apple-touch-icon-57x57.png') }}" />
         <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('/assets/img/apple-touch-icon-72x72.png') }}" />
         <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('/assets/img/apple-touch-icon-76x76.png') }}" />
@@ -111,6 +111,7 @@ Merci de créditer les photographes si les photos ne sont pas les votres
         <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('/assets/img/apple-touch-icon-180x180.png') }}" />
 
         <link rel="icon" href="{{ asset('/assets/img/favicon.ico') }}">
+        <link rel="manifest" href="/manifest.webmanifest">
 
 
         <script type="application/ld+json">

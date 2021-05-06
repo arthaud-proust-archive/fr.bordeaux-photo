@@ -26,12 +26,13 @@ class Photo extends BaseModel
     //     ["Critère subjectif", "Coup de coeur, histoire que ça raconte, émotion..."],
     // ];
 
-    public $criteres = [
+    public $criteres = [ // [nom, desc, Texte de nomination si critère à nominer]
         ["Respect du thème", "Attention à bien chercher à comprendre la photo avant de dire qu'il y a hors-sujet"],
-        ["Originalité", "Photo banale? C'est recherché? Vous-y attendiez-vous?", true],
+        ["Originalité", "C'est la seule comme ça? C'est recherché? Vous-y attendiez-vous?", ["La plus originale", "original"] ],
+        ["Créativité", "À bien différencier de l'originalité. Y-a-t-il de l'effort, un travail de mise en scène?", ["La plus créative", "creative"] ],
         ["Composition", "Cadrage, harmonie, lumière..."],
         ["Technique", "Exposition, profondeur de champs, traitement..."],
-        ["Critère subjectif", "Coup de coeur, histoire que ça raconte, émotion...", true],
+        ["Critère subjectif", "Coup de coeur, histoire que ça raconte, émotion...", ["Coup de coeur", "crush"] ],
     ];
 
     public $critereOptions = [
@@ -43,6 +44,10 @@ class Photo extends BaseModel
         '5 - Exceptionnel',
         'Choisir la note'
     ];
+
+    public function scopeEvent($query, $event_hashid) {
+        return $query->where('event', $event_hashid);
+    }
 
     public function scopeNoted($query) {
         return $query->where('notes', 'LIKE', '%'.Auth::user()->hashid.'%');
@@ -62,6 +67,15 @@ class Photo extends BaseModel
 
     public function scopeHasNote($query) {
         return $query->whereNotNull('note');
+    }
+
+    public function scopeHasNomination($query) {
+        return $query->where('nominations', '!=', '[]');
+    }
+
+    public function notesOf($jury_hashid) {
+        $jurys_notes = json_decode($this->notes, true);
+        return $jurys_notes[$jury_hashid];
     }
 
     public function noteOf($jury_hashid) {

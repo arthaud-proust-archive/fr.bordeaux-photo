@@ -8,17 +8,13 @@
 
 
     <x-view.links>
-        @authRole('admin') <x-view.link :href="route('event.edit', $event->hashid)" text="Éditer l'évènement" /> @endauthRole
-        <x-view.link :href="route('event.show', $event->hashid)" text="Retour à l'évènement" />
-        @if($event->isEnded)
-            <x-view.link :href="route('vote.show', $event->hashid)" text="Voter" />
-        @endif
+        @include('include.event-links')
     </x-view.links>
 
     <x-view.section title="Photos">
         <div class="flex flex-row flex-wrap">
         @foreach($photos as $photo) 
-            @if(Auth::user()->hasRole('jury'))
+            @if(Auth::user()->hasRole('jury') && $event->isVoting)
             <x-view.card width="1/2" :href="route('vote.show', ['hashid'=>$event->hashid, 'photo'=>$photo->hashid])" :title="$photo->title" :src="$photo->photo" subtitle="Cliquer sur l'image pour modifier la note"/>
             @else
             <x-view.card width="1/2" :title="$photo->title" :src="$photo->photo"/>

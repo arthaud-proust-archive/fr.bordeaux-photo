@@ -53,15 +53,16 @@ class EventController extends Controller
     public function results(Request $request, $hashid) {
         return view('event.results', [
             'event' => event::whereId(decodeId($hashid))->firstOrFail(),
-            'podium' => photo::where('event', $hashid)->hasNote()->orderBy('note', 'desc')->take(3)->get(),
-            'results' => photo::where('event', $hashid)->hasNote()->orderBy('note', 'desc')->paginate(5)
+            'podium' => photo::event($hashid)->hasNote()->orderBy('note', 'desc')->take(3)->get(),
+            'nomineds' => photo::event($hashid)->hasNote()->hasNomination()->get(),
+            'results' => photo::event($hashid)->hasNote()->orderBy('note', 'desc')->paginate(5)
         ]);
     }
 
     public function photos(Request $request, $hashid) {
         return view('event.photos', [
             'event' => event::whereId(decodeId($hashid))->firstOrFail(),
-            'photos' => photo::where('event', $hashid)->get()
+            'photos' => photo::event($hashid)->get()
         ]);
     }
     

@@ -108,6 +108,20 @@ class Event extends BaseModel
         return $this->getIsStartedAttribute()?$this->title:'Thème caché';
     }
 
+    
+    public function juryComplete($jury_hashid) {
+        return photo::notedBy($jury_hashid)->count() == photo::event($this->hashid)->count();
+    }
+
+    public function listJuryComplete() {
+        return array_filter(json_decode($this->jury), function($jury_hashid) { 
+            return 
+                photo::event($this->hashid)->notedBy($jury_hashid)->count() 
+                == photo::event($this->hashid)->count(); 
+        });
+    }
+
+    /*
     public function getShortDescriptionAttribute() {
 
         $noSplit = ["[","{",":",'"',"}","]"];
@@ -150,13 +164,6 @@ class Event extends BaseModel
         // return $this->description;
         return $cuttedDesc;
         return '{"ops":[{"insert":"'.$nBracketOpen.' '.$nBracketClosed.' `'.$this->description[$i-2].'`"}]}';
-    }
+    } */
 
-    public function juryComplete($jury_hashid) {
-        return photo::notedBy($jury_hashid)->count() == photo::where('event', $this->hashid)->count();
-    }
-
-    public function listJuryComplete() {
-        return array_filter(json_decode($this->jury), function($jury_hashid) { return photo::notedBy($jury_hashid)->count() == photo::where('event', $this->hashid)->count(); });
-    }
 }

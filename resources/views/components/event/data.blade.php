@@ -1,3 +1,51 @@
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Event",
+      "name": "{{ $event->title }}",
+      "isAccessibleForFree": true,
+      "url": "{{ route('event.show', $event->hashid) }}",
+      "startDate": "{{ timestampToDate($event->date_start) }}",
+      "endDate": "{{ timestampToDate($event->date_end) }}",
+      "eventAttendanceMode": "https://schema.org/MixedEventAttendanceMode",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "location": {
+        "@type": "Place",
+        "name": "Bordeaux",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Quais",
+          "addressLocality": "Bordeaux",
+          "postalCode": "33000",
+          "addressRegion": "Gironde",
+          "addressCountry": "France"
+        }
+      },
+      "image": [
+        "{{ asset('/assets/img/hero.png') }}"
+       ],
+      "description": "Voir le {{$event->type}} sur le site",
+      "offers": {
+        "@type": "Offer",
+        "url": "{{ route('event.show', $event->hashid) }}",
+        "price": "0",
+        "priceCurrency": "EURO",
+        "availability": "https://schema.org/InStock",
+        "validFrom": "{{ timestampToDate($event->date_start) }}"
+      },
+      "performer": {
+        "@type": "PerformingGroup",
+        "name": "Bordeaux Photo"
+      },
+      "organizer": {
+        "@type": "Organization",
+        "name": "Bordeaux Photo",
+        "url": "{{ route('event.index') }}"
+      }
+    }
+</script>
+
+{{--
 <x-prop startDate :content="timestampToDate($event->date_start)"/>
 <x-prop endDate :content="timestampToDate($event->date_end)"/>
 <x-prop isAccessibleForFree content="true"/>
@@ -20,3 +68,4 @@
         <span itemprop="addressLocality">Bordeaux</span>, <span itemprop="addressRegion">Gironde</span> <span itemprop="postalCode">33000</span>
     </div>
 </div>
+--}}
