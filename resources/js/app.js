@@ -143,27 +143,32 @@ const initPage = function() {
             this.value = removeDiacritics(this.value);
         })
     });
+    document.querySelectorAll('main a, header a, footer a, button[type="submit"]').forEach(link=>{
+        link.addEventListener('click', function(e) {
+            this.classList.add('actionLoading');
+        });
+    });
     // document.querySelectorAll('a').forEach(link=>{
     //     if(!link.getAttribute("href")) return
-    //     if(link.getAttribute("href").charAt(0) =='#') {
-    //         link.addEventListener('click', function(e) {
-    //             e.preventDefault();
-    //             document.querySelector(this.getAttribute("href")).scrollIntoView({
-    //                 behavior: "smooth"
-    //             });
-    //         });
-    //     } else {
-    //         link.addEventListener('click', function(e) {
-    //             e.preventDefault();
-    //             document.body.classList.remove('loaded');
-    //             // document.getElementById('maskLeave').classList.add('active');
-    //             setTimeout(function() {
-    //                 console.log(link);
-    //                 document.location = link.href;
-    //             }, 250);
-    //         });
-    //     }
-    
+
+        // if(link.getAttribute("href").charAt(0) =='#') {
+        //     link.addEventListener('click', function(e) {
+        //         e.preventDefault();
+        //         document.querySelector(this.getAttribute("href")).scrollIntoView({
+        //             behavior: "smooth"
+        //         });
+        //     });
+        // } else {
+        //     link.addEventListener('click', function(e) {
+        //         e.preventDefault();
+        //         document.body.classList.remove('loaded');
+        //         // document.getElementById('maskLeave').classList.add('active');
+        //         setTimeout(function() {
+        //             console.log(link);
+        //             document.location = link.href;
+        //         }, 250);
+        //     });
+        // }
     // })    
 
     window.forms = [];
