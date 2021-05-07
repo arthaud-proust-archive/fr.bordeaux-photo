@@ -126,6 +126,10 @@ const themeColors = {
 
 
 const initPage = function() {
+    document.querySelectorAll('.actionLoading').forEach(loading=>{
+        console.log(loading);
+        loading.classList.remove('actionLoading');
+    });
     navManager.init();
     console.log('Page changed, init fired');
     document.getElementById('themeToggler').addEventListener('click', function() {
@@ -143,7 +147,9 @@ const initPage = function() {
             this.value = removeDiacritics(this.value);
         })
     });
-    document.querySelectorAll('main a, header a, footer a, button[type="submit"]').forEach(link=>{
+
+    document.querySelectorAll('a, button[type="submit"]').forEach(link=>{
+        // document.querySelectorAll('main a, header a, footer a, button[type="submit"]').forEach(link=>{
         link.addEventListener('click', function(e) {
             this.classList.add('actionLoading');
         });
@@ -446,3 +452,4 @@ const firstInit = function() {
 }
 document.addEventListener('DOMContentLoaded', firstInit);
 document.documentElement.addEventListener('turbo:render', initPage);
+
