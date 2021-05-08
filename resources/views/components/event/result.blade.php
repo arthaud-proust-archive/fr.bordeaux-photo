@@ -5,7 +5,7 @@
             {{ $result->title }} 
             @if(Auth::user()->hashid == $result->author)
                 Votre photo 
-                @if($photo->final_notes !== "[]")
+                @if($result->final_notes !== "[]")
                     <x-view.link muted :href="route('photo.show', $result->hashid)" text="Commentaires et notes" />
                 @endif
             @else
