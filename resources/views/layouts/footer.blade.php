@@ -7,7 +7,7 @@ $e = [
 ];
 @endphp
 
-<footer class="mt-6 rounded-t-3xl max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 bg-s2 text-p2 flex flex-row flex-wrap lg:flex-nowrap justify-evenly">
+<footer class="mt-20 rounded-t-3xl max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 bg-s2 text-p2 flex flex-row flex-wrap lg:flex-nowrap justify-evenly">
     <x-footer.links title="Liens" :links="$e" />
     <x-footer.section title="À propos">
         <p>Nous sommes de jeunes Bordelais et Bordelaises qui apportons de l'évènementiel à la ville en organisant des concours photo aux thèmes variés.</p>

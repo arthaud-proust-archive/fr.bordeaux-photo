@@ -14,6 +14,17 @@ use Illuminate\Support\Facades\File;
 class PhotoController extends Controller
 {
     
+    public function show(Request $request, $hashid) {
+        $photo = photo::whereId(decodeId($hashid))->firstOrFail();
+        if(Auth::user()->hashid !== $photo->author) abort(403);
+
+        return view('photo.show', [
+            'event' => event::whereId(decodeId($photo->event))->firstOrFail(),
+            'photo' => $photo
+            // 'events' => event::open()->append('hashid')->pluck('id')->toArray()
+        ]);
+
+    }
 
     public function create(Request $request, $event_hashid=null) {
         if($photo = photo::where('event', $event_hashid)->where('author', Auth::user()->hashid)->first()) {
@@ -53,8 +64,9 @@ class PhotoController extends Controller
             'title' => request('title'),
             'author' => Auth::user()->hashid,
             'notes' => '{}',
-            'nominations' => '[]'
-            // 'extension' => request('photo')->getClientOriginalExtension()
+            'nominations' => '[]',
+            'comments' => '{}',
+            'final_notes' => '{}'
         ]);
 
         $ext = request('photo')->getClientOriginalExtension();

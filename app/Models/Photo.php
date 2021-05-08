@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\BaseModel;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Event;
 
 class Photo extends BaseModel
 {
@@ -16,7 +17,10 @@ class Photo extends BaseModel
         'author',
         'notes',
         'note',
-        'nominations'
+        'nominations',
+        'comments',
+        'final_notes',
+        'place'
     ];
 
     // public $criteres = [
@@ -45,12 +49,21 @@ class Photo extends BaseModel
         'Choisir la note'
     ];
 
+    public function getEvent()
+    {
+        return Event::whereId(decodeId($this->event))->firstOrFail();
+    }
+
     public function scopeEvent($query, $event_hashid) {
         return $query->where('event', $event_hashid);
     }
 
     public function scopeNoted($query) {
         return $query->where('notes', 'LIKE', '%'.Auth::user()->hashid.'%');
+    }
+
+    public function scopeHasPlace($query) {
+        return $query->whereNotNull('place');
     }
 
     public function scopeNotedBy($query, $jury_hashid) {

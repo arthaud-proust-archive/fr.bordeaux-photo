@@ -25,4 +25,7 @@
 
 @if($event->voted)
     <x-view.link hideOn route="event.results" :params="$event->hashid" text="Voir les résultats" />
+    @if($event->userPhotoSent)
+        <x-view.link hideOn route="photo.show" :params="$event->userPhotoSent->hashid" text="Résultat de ma photo" />
+    @endif
 @endif

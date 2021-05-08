@@ -46,7 +46,8 @@ class VoteController extends Controller
             'critere2' => 'required|numeric|min:0|max:5',
             'critere3' => 'required|numeric|min:0|max:5',
             'critere4' => 'required|numeric|min:0|max:5',
-            'bonus' => 'nullable|numeric|min:0'
+            'bonus' => 'nullable|numeric|min:0',
+            'comment' => 'nullable|string'
         ]);
 
         if ($validator->fails()) {
@@ -78,8 +79,14 @@ class VoteController extends Controller
         $notes = json_decode($photo->notes, true);
         //mise à jour de la note pour le jury actuel
         $notes[Auth::user()->hashid] =$criteres;
-
         $photo->notes = json_encode($notes);
+
+        if(request('comment')) {
+            $comments = json_decode($photo->comments, true);
+            $comments[Auth::user()->hashid] = request('comment');
+            $photo->comments = json_encode($comments);
+        }
+
         $photo->save();
 
         // on calcule les notes
@@ -91,7 +98,7 @@ class VoteController extends Controller
     // calcul des notes
     public function calcNotes($event_hashid) {
         $event = event::where('id', decodeId($event_hashid))->firstOrFail();
-        $photos = photo::where('event', $event_hashid)->get();
+        $photos = photo::event($event_hashid)->get();
         // liste des jurés qui ont noté toutes les photos
         $jures = $event->listJuryComplete();
 
@@ -117,6 +124,7 @@ class VoteController extends Controller
                 
                 $note = 0;// somme des critères
                 $photo_notes = json_decode($photo->notes, true);
+                $final_notes = [];
                 // on calcule la moyenne du jury pour chacun des critères
                 for($k=0; count($photos[0]->criteres)>$k; $k++) {
                     $critere_sum = 0;
@@ -134,10 +142,12 @@ class VoteController extends Controller
                     }
                     
                     $note+=$critere_note;
+                    array_push($final_notes, $critere_note);
                 }
                 
                 // on enregistre la note
                 $photo->note = $note;
+                $photo->final_notes = json_encode($final_notes);
                 $photo->nominations = "[]";
                 $photo->save();
             }
@@ -153,6 +163,14 @@ class VoteController extends Controller
                 }
             }
 
+            // attribution des places en fonction des notes
+            $photos = $photo::event($event_hashid)->hasNote()->orderBy('note', 'desc')->get();
+            $place = 1;
+            foreach($photos as $photo) {
+                $photo->place = $place;
+                $photo->save();
+                $place++;
+            }
         } else {
             foreach($photos as $photo) {
                 $photo->note = NULL;

@@ -20,7 +20,7 @@ class UserController extends Controller
 
     public function equipe(Request $request) {
         return view('user.equipe', [
-            'users' => User::admin()->get()
+            'users' => User::admin()->inRandomOrder()->get()
         ]);
     }
 

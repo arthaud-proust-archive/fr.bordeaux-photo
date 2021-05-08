@@ -1,9 +1,14 @@
 <x-view.card width="full" class="mb-12" :src="$result->photo">
     <x-slot name="title">
-        <span class="text-xl text-p1">#{{ ($results->currentPage()-1) * $results->perPage() + $loop->index+1 }}</span>
+        <span class="text-xl text-p1">#{{ $result->place }}</span>
         <span class="text-sm">
-            {{ $result->title }} par {{ $result->authorModel->name }}
-            <!-- <x-view.link muted href="{{ route('profil.show', $result->author) }}" :text="$result->authorModel->name" /> -->
+            {{ $result->title }} 
+            @if(Auth::user()->hashid == $result->author)
+                Votre photo <x-view.link muted :href="route('photo.show', $result->hashid)" text="Commentaires et notes" />
+            @else
+                par {{ $result->authorModel->name }}
+            @endif
+            <!-- <x-view.link muted :href="route('profil.show', $result->author)" :text="$result->authorModel->name" /> -->
         </span>
         <div class="pl-6 inline-block">
         @foreach(json_decode($result->nominations, true) as $nomination) 

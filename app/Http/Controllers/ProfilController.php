@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Photo;
 use Validator;
 use Response;
 use Illuminate\Support\Str;
@@ -17,10 +18,10 @@ class ProfilController extends Controller
             return view('profil.show', [
                 'user' => User::where('id', decodeId($hashid))->firstOrFail()
             ]);
-
         } else {
             return view('profil.show', [
-                'user' => Auth::user()
+                'user' => Auth::user(),
+                'photos' => Photo::hasPlace()->where('author', Auth::user()->hashid)->get()
             ]); 
         }
     }

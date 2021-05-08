@@ -22,7 +22,8 @@ class CreatePhotosTable extends Migration
             // $table->string('author_name');
             $table->text('notes');
             $table->double('note')->nullable();
-            $table->text('nominations')->default('{}');
+            $table->text('nominations');
+            $table->text('comments');
         });
     }
 

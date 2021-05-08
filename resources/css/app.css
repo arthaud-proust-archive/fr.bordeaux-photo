@@ -168,3 +168,16 @@ html[data-theme="light"]:root {
 .lightwidget {
     color: var(--p1) !important;
 }
+
+.lazyload,
+.lazyloading {
+	/* opacity: 0; */
+    min-height: 200px;
+    /* background: var(--s3) */
+}
+
+.lazyloading {
+	/* opacity: 1; */
+	/* transition: opacity 300ms; */
+	background: var(--s3) url(/assets/loading.svg) no-repeat center;
+}

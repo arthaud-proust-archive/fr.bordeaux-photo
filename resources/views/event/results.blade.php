@@ -28,7 +28,8 @@ $podiumArray = [
                 @if( $podium[1] ?? false)
                 <x-view.card :width="$place[2]" :title="$podium[$place[0]]->title" :src="$podium[$place[0]]->photo">
                     <x-slot name="title">
-                        <img class="mx-auto block w-12 md:w-24 mt-6" src="{{ asset('assets/'.$place[1].'.svg') }}">
+                        <img class="mx-auto block w-12 md:w-24 mt-6" 
+                        src="{{ asset('assets/'.$place[1].'.svg') }}">
                         {{-- <span class="text-5xl mx-auto block text-center">{{ $place[1] }}</span> --}}
                         <!-- {{ $podium[1]->title }} par <x-view.link muted href="{{ route('profil.show', $podium[1]->author) }}" :text="$podium[1]->authorModel->name" /> -->
                     </x-slot>
@@ -46,7 +47,8 @@ $podiumArray = [
                         <x-slot name="title">
                         <div class="flex w-full flex-row justify-center">
                         @foreach(json_decode($nomined->nominations, true) as $nomination) 
-                            <img class="m-1 w-1/2 inline-block" src="{{ asset('assets/'.$nomined->criteres[$nomination][2][1].'.svg') }}" title="{{ $nomined->criteres[$nomination][2][0] }}">
+                            <img class="m-1 w-1/2 inline-block" 
+                            src="{{ asset('assets/'.$nomined->criteres[$nomination][2][1].'.svg') }}" title="{{ $nomined->criteres[$nomination][2][0] }}">
                         @endforeach
                         </div>
                         </x-slot>
@@ -59,7 +61,7 @@ $podiumArray = [
     <x-view.section title="Résultats">
         <div class="flex flex-row flex-wrap">
             @foreach($results as $result) 
-                <x-event.result :result="$result" :results="$results" :loop="$loop" />
+                <x-event.result :result="$result"/>
             @endforeach
         </div>
         {{$results->links()}}

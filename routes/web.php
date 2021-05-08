@@ -77,6 +77,7 @@ Route::middleware(['maintenanceCheck'])->group(function () {
 
         Route::get('/photo/create/{event_hashid?}', [PhotoController::class, 'create'])->name('photo.create');
         Route::post('/photo/create', [PhotoController::class, 'store'])->name('photo.store');
+        Route::get('/photo/{hashid}', [PhotoController::class, 'show'])->name('photo.show');
         Route::get('/photo/{hashid}/edit', [PhotoController::class, 'edit'])->name('photo.edit');
         Route::post('/photo/{hashid}/edit', [PhotoController::class, 'update'])->name('photo.update');
         Route::post('/photo/{hashid}/delete', [PhotoController::class, 'delete'])->name('photo.delete');

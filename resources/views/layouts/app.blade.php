@@ -18,6 +18,8 @@ Merci de créditer les photographes si les photos ne sont pas les votres
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="theme-color">
 
+        <meta name="google-signin-client_id" content="198930830504-l95s1s3j2l5m86rgmk3tuqcv72q85800.apps.googleusercontent.com">
+
         <title>{{ $title }}</title>
 
         <!-- <style>
