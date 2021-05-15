@@ -38,7 +38,7 @@ if(isset($photo)) {
                         <x-form.field :value="$notes[4] ?? 0" type="number" label="Points bonus" desc="Suivant la liste bonus établi, entrez le nombre de points à ajouter" name="bonus"/>
                     </div>
                 </div>
-                <x-form.field :value="$comment" type="input" label="Commentaire (optionnel)" desc="Donnez votre avis, subjectif, objectif, qu'est ce qui pourrait être amélioré?" name="comment"/>
+                <x-form.field :value="$comment" type="textarea" label="Commentaire (optionnel)" desc="Donnez votre avis, subjectif, objectif, qu'est ce qui pourrait être amélioré?" name="comment"/>
             </x-form.base>
         </x-view.section>
         @if(isset($photos))

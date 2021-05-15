@@ -7,7 +7,7 @@
 
     <x-view.section width="3">
         <x-form.base :action="route('photo.update', $photo->hashid)" method="POST" cancel submitColor="green"  enctype="multipart/form-data">
-            <x-form.field :bind="$photo" type="input" label="Titre (optionnel)" name="title" placeholder="Il pourrait donner un sens à votre photo" desc="Maximum 20 caractères"/>
+            <x-form.field :bind="$photo" type="input" label="Titre (optionnel)" name="title" placeholder="Il pourrait éclairer votre photo" desc="Maximum 20 caractères, la photo doit être compréhensible sans le titre"/>
             <x-form.field :bind="$photo" type="file" label="Photo" name="photo" mimes="image/png, image/jpeg, image/gif"/>
         </x-form.base>
     </x-view.section>
