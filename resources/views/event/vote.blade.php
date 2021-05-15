@@ -35,7 +35,7 @@ if(isset($photo)) {
                     </div>
                 @endforeach
                     <div class="m-2 flex-shrink-0 w-1/2 sm:w-2/5">
-                        <x-form.field :value="$notes[4] ?? 0" type="number" label="Points bonus" desc="Suivant la liste bonus établi, entrez le nombre de points à ajouter" name="bonus"/>
+                        <x-form.field :value="$notes[6] ?? 0" type="number" label="Points bonus" desc="Suivant la liste bonus établi, entrez le nombre de points à ajouter" name="bonus"/>
                     </div>
                 </div>
                 <x-form.field :value="$comment" type="textarea" label="Commentaire (optionnel)" desc="Donnez votre avis, subjectif, objectif, qu'est ce qui pourrait être amélioré?" name="comment"/>
