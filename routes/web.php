@@ -8,6 +8,7 @@ use App\Http\Controllers\VoteController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\VisualController;
 
 
 /*
@@ -71,6 +72,15 @@ Route::middleware(['maintenanceCheck'])->group(function () {
         Route::get('/page/{hashid}/edit', [PageController::class, 'edit'])->name('page.edit');
         Route::post('/page/{hashid}/edit', [PageController::class, 'update'])->name('page.update');
         Route::post('/page/{hashid}/delete', [PageController::class, 'delete'])->name('page.delete');
+
+
+        Route::get('/visual', function () {
+            return view('visual.index');
+        })->name('visual.index');
+        Route::get('/visual/events', [VisualController::class, 'events'])->name('visual.events');
+        Route::get('/visual/event/{hashid}', [VisualController::class, 'event'])->name('visual.event');
+        Route::get('/visual/laureats', [VisualController::class, 'laureats'])->name('visual.laureats');
+        Route::get('/visual/laureat/{hashid}', [VisualController::class, 'laureat'])->name('visual.laureat');
     });
 
     Route::middleware(['auth'])->group(function () {

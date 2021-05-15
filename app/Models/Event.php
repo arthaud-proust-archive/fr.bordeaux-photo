@@ -38,6 +38,11 @@ class Event extends BaseModel
         return Event::$types;
     }
 
+    public function scopeVoted($query)
+    {
+        return $query->where('voted',1);
+    }
+
     public function scopeOpen($query)
     {
         return $query

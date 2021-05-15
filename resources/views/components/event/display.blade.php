@@ -8,6 +8,11 @@
                 @endauthRole
                 <x-view.link :href="route('event.show', $event->hashid)" text="Voir" />
 
+                @if($event->isVoting)
+                    @authRole('jury')
+                        <x-view.link route="vote.show" :params="$event->hashid" text="Voter" />
+                    @endauthRole
+                @endif
                 
                 @if($event->isOpen)
                     @authRole('user')

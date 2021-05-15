@@ -32,11 +32,11 @@ class Photo extends BaseModel
 
     public $criteres = [ // [nom, desc, Texte de nomination si critère à nominer]
         ["Respect du thème", "Attention à bien chercher à comprendre la photo avant de dire qu'il y a hors-sujet"],
-        ["Originalité", "C'est la seule comme ça? C'est recherché? Vous-y attendiez-vous?", ["La plus originale", "original"] ],
-        ["Créativité", "À bien différencier de l'originalité. Y-a-t-il de l'effort, un travail de mise en scène?", ["La plus créative", "creative"] ],
+        ["Originalité", "C'est la seule comme ça? C'est recherché? Vous-y attendiez-vous?", ["La plus originale", "original", "originale"] ],
+        ["Créativité", "À bien différencier de l'originalité. Y-a-t-il de l'effort, un travail de mise en scène?", ["La plus créative", "creative", "créative"] ],
         ["Composition", "Cadrage, harmonie, lumière..."],
         ["Technique", "Exposition, profondeur de champs, traitement..."],
-        ["Critère subjectif", "Coup de coeur, histoire que ça raconte, émotion...", ["Coup de coeur", "crush"] ],
+        ["Critère subjectif", "Coup de coeur, histoire que ça raconte, émotion...", ["Coup de coeur", "crush", "coup de coeur"] ],
     ];
 
     public $critereOptions = [

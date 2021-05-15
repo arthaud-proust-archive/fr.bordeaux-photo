@@ -181,3 +181,9 @@ html[data-theme="light"]:root {
 	/* transition: opacity 300ms; */
 	background: var(--s3) url(/assets/loading.svg) no-repeat center;
 }
+
+.visual canvas {
+    border: 1px solid var(--s2);
+    height: 300px;
+    width: 300px;
+}
