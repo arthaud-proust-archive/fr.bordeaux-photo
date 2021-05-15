@@ -27,6 +27,7 @@ class CreateEventsTable extends Migration
             $table->text('participants');
             $table->text('jury');
             $table->boolean('voted')->default(false);
+            $table->text('data_thumbnails');
         });
     }
 

@@ -34,6 +34,12 @@ class VisualController extends Controller
 
     }
 
+    public function events(Request $request) {
+        return view('visual.events', [
+            'events' => event::orderBy('date_end', 'desc')->get(),
+        ]);
+    }
+
     public function laureats(Request $request) {
         return view('visual.laureats', [
             'events' => event::voted()->orderBy('date_end', 'desc')->get(),
@@ -45,15 +51,6 @@ class VisualController extends Controller
             'event' => event::whereId(decodeId($hashid))->firstOrFail(),
             'podium' => photo::event($hashid)->hasNote()->orderBy('place')->take(3)->get(),
             'nomineds' => photo::event($hashid)->hasNote()->hasNomination()->get(),
-        ]);
-    }
-
-    public function results(Request $request, $hashid) {
-        return view('event.results', [
-            'event' => event::whereId(decodeId($hashid))->firstOrFail(),
-            'podium' => photo::event($hashid)->hasNote()->orderBy('place')->take(3)->get(),
-            'nomineds' => photo::event($hashid)->hasNote()->hasNomination()->get(),
-            'results' => photo::event($hashid)->hasNote()->orderBy('place')->paginate(5)
         ]);
     }
 }

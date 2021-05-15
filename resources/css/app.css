@@ -182,8 +182,32 @@ html[data-theme="light"]:root {
 	background: var(--s3) url(/assets/loading.svg) no-repeat center;
 }
 
+.visual {
+    position: relative;
+}
 .visual canvas {
+    cursor: pointer;
     border: 1px solid var(--s2);
     height: 300px;
     width: 300px;
+}
+
+.visual.downloaded::before {
+    position: absolute;
+    top:0;
+    height: 100%;
+    width: 100%;
+    background: var(--s2);
+    content:' ';
+    z-index: 3;
+    opacity: 0.8;
+}
+.visual.downloaded::after {
+    z-index: 4;
+    position: absolute;
+    color: var(--p1);
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    content:'Téléchargé';
 }

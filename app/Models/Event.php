@@ -24,7 +24,8 @@ class Event extends BaseModel
         'description',
         'participants',
         'jury',
-        'voted'
+        'voted',
+        'data_thumbnails'
     ];
     static $types = [
         'concours' => 'Concours',

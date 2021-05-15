@@ -8,7 +8,7 @@ $podiumArray = [
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-p1 leading-tight">
-            Visuels: lauréats de l'évènement
+            Liste des types de visuels à télécharger
         </h2>
     </x-slot>
 
@@ -37,7 +37,6 @@ $podiumArray = [
             data-image="{{ $result->photo }}"
             data-author="{{ $result->authorModel->name }}"
             data-event="{{ $event->title }}"
-            data-hashid="{{ $result->hashid }}"
             {{-- data-laureats=["{{ asset('assets/'.$podiumArray[$result->place-1][0].'.svg') }}"] --}}
             data-laureats="{{json_encode([$podiumArray[$result->place-1][1]])}}"
         >
@@ -50,7 +49,6 @@ $podiumArray = [
             data-image="{{ $nomined->photo }}"
             data-author="{{ $nomined->authorModel->name }}"
             data-event="{{ $event->title }}"
-            data-hashid="{{ $nomined->hashid }}"
             {{-- data-laureats="{{ json_encode(array_map(function($nomination) use($nomined) {return asset('assets/'.$nomined->criteres[$nomination][2][1].'.svg');}, json_decode($nomined->nominations)) ) }}" --}}
             data-laureats="{{ json_encode(array_map(function($nomination) use($nomined) {return $nomined->criteres[$nomination][2][0];}, json_decode($nomined->nominations)) ) }}"
         >
@@ -59,6 +57,6 @@ $podiumArray = [
         @endforeach
 
 
+        <script src="{{ asset('js/visual.js') }}"></script>
     </div>
-    <script src="{{ asset('js/visual.js') }}"></script>
 </x-app-layout>

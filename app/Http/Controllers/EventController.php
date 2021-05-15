@@ -79,6 +79,7 @@ class EventController extends Controller
             // 'date_start' => 'required',
             // 'date_end' => 'required',
             'description' => 'nullable',
+            // 'data_thumbnails' => 'required',
         ]);
         if ($validator->fails()) {
             return back()->withInput()->withErrors($validator);
@@ -95,7 +96,9 @@ class EventController extends Controller
             'date_end' => $date_end,
             'description' => request('description'),
             'jury' => json_encode(User::jury()->active()->get()->pluck('hashid')->toArray()),
-            'participants' => '[]'
+            'participants' => '[]',
+            // 'data_thumbnails' => request('data_thumbnails')
+            'data_thumbnails' => '{}'
         ]);
         return redirect()->route('event.index')->with('status', 'success')->with('content', 'Évènement ajouté');
     }
@@ -117,6 +120,7 @@ class EventController extends Controller
             // 'date_start' => 'required',
             // 'date_end' => 'required',
             'description' => 'nullable',
+            // 'data_thumbnails' => 'required',
         ]);
         if ($validator->fails()) {
             return back()->withInput()->withErrors($validator);
@@ -132,6 +136,7 @@ class EventController extends Controller
         $event->date_start = $date_start;
         $event->date_end = $date_end;
         $event->description = request('description');
+        // $event->data_thumbnails = request('data_thumbnails');
         $event->save();
 
         // dd([Carbon::createFromTimestamp($event->date_start)->format('Y-m-d H:m:s')]);
