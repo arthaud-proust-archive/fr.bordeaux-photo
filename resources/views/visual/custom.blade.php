@@ -13,7 +13,7 @@
             <x-form.field type="color" value="#0d0d0e" label="Couleur de fond" name="visual_s1"/>
             <x-form.field type="color" value="#ffffff" label="Couleur du texte" name="visual_p1"/>
             <x-form.field type="input" value="Partage et commente!" label="Texte en bas" name="visual_outerBottom"/>
-            <x-form.field type="input" label="Texte en gauche" name="visual_outerLeft"/>
+            <x-form.field type="input" label="Texte à gauche" name="visual_outerLeft"/>
             <x-form.field type="input" label="Texte à droite" name="visual_outerRight"/>
             
             <x-form.field type="input" label="Titre" name="visual_title"/>
