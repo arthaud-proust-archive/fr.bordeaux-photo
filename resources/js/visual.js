@@ -26,33 +26,29 @@ custom.forEach(visual=>{
 
     (['p1','s1']).forEach(d=>{
         inputs[d] = document.getElementById(`visual_${d}`);
-        inputs[d].addEventListener('change', () => {
-            (['p1','s1']).forEach(inputName=>{
-                colors[inputName] = inputs[inputName].value;
-                updt();
-            })
-        })
+        inputs[d].addEventListener('change', () => updt())
     });
 
     (['left','bottom','right']).forEach(d=>{
         inputs[d] = document.getElementById(`visual_outer${d.capitalize()}`);
-        inputs[d].addEventListener('keyup', () => {
-            (['left','bottom','right']).forEach(inputName=>{
-                outers[inputName] = inputs[inputName].value;
-                updt();
-            })
-        })
+        inputs[d].addEventListener('keyup', () => updt())
     });
 
     
     (['title','content']).forEach(d=>{
         infos[d] = document.getElementById(`visual_${d}`);
-        infos[d].addEventListener('keyup', () => {
-            updt();
-        })
+        infos[d].addEventListener('keyup', () => updt())
     });
 
     const updt = function() {
+        (['p1','s1']).forEach(inputName=>{
+            colors[inputName] = inputs[inputName].value;
+        });
+
+        (['left','bottom','right']).forEach(inputName=>{
+            outers[inputName] = inputs[inputName].value;
+        });
+        
         (['title','content']).forEach(inputName=>{
             infosContent[inputName] = infos[inputName].value;
             setupCanvas(visual, colors, outers, downloadName,  function(visual, canvas, ctx, colors) {
@@ -73,7 +69,8 @@ custom.forEach(visual=>{
         })
     }
 
-    setupCanvas(visual, colors, outers, downloadName)
+    updt();
+    // setupCanvas(visual, colors, outers, downloadName)
 })
 
 laureats.forEach(visual=>{
