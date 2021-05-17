@@ -17,7 +17,7 @@
             <x-form.field type="input" label="Texte à droite" name="visual_outerRight"/>
             
             <x-form.field type="input" label="Titre" name="visual_title"/>
-            <x-form.field type="input" label="Contenu" name="visual_content"/>
+            <x-form.field type="textarea" label="Contenu" name="visual_content"/>
 
         </div>
 
