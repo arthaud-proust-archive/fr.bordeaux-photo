@@ -28,7 +28,11 @@ $podiumArray = [
         <div class="py-2">
             {{ ucFirst($event->readableDates) }}
         </div>
+        
+        <span>Clique sur une image pour la télécharger</span>
     </x-view.section>
+
+
 
     <div class="flex flex-row flex-wrap max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
 

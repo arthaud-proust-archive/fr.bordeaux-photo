@@ -17,5 +17,11 @@
                 <x-view.link route="visual.laureats" text="Voir les visuels"/>
             </div>
         </x-view.section>
+
+        <x-view.section title="Personnalisé" width="3" class="bg-s2">
+            <div class="py-2">
+                <x-view.link route="visual.custom" text="Créer un visuel"/>
+            </div>
+        </x-view.section>
     </div>
 </x-app-layout>

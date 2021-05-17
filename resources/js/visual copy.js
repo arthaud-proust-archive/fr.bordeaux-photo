@@ -29,7 +29,7 @@ custom.forEach(visual=>{
         inputs[d].addEventListener('change', () => {
             (['p1','s1']).forEach(inputName=>{
                 colors[inputName] = inputs[inputName].value;
-                updt();
+                setupCanvas(visual, colors, outers, downloadName)
             })
         })
     });
@@ -39,7 +39,7 @@ custom.forEach(visual=>{
         inputs[d].addEventListener('keyup', () => {
             (['left','bottom','right']).forEach(inputName=>{
                 outers[inputName] = inputs[inputName].value;
-                updt();
+                setupCanvas(visual, colors, outers, downloadName)
             })
         })
     });
@@ -48,30 +48,27 @@ custom.forEach(visual=>{
     (['title','content']).forEach(d=>{
         infos[d] = document.getElementById(`visual_${d}`);
         infos[d].addEventListener('keyup', () => {
-            updt();
+            (['title','content']).forEach(inputName=>{
+                infosContent[inputName] = infos[inputName].value;
+                setupCanvas(visual, colors, outers, downloadName,  function(visual, canvas, ctx, colors) {
+                                
+                    var titleTxt = getWrappedTxt(ctx, infosContent.title,400);
+                    var contentTxt = getWrappedTxt(ctx, infosContent.content, 180);
+                    var txtH = (titleTxt.content.length)*400 + (contentTxt.content.length)*200
+                    var dTop = (SIZE-txtH-500)/2
+                    ctx.font = titleTxt.font
+                    for(let line=0; line<titleTxt.content.length;line++) {
+                        ctx.fillText(titleTxt.content[line], 500, dTop+line*400)
+                    }
+                    ctx.font = contentTxt.font
+                    for(let line=0; line<contentTxt.content.length;line++) {
+                        ctx.fillText(contentTxt.content[line], 500, dTop+(titleTxt.content.length)*400+100+200*line)
+                    }
+                })
+            })
         })
     });
 
-    const updt = function() {
-        (['title','content']).forEach(inputName=>{
-            infosContent[inputName] = infos[inputName].value;
-            setupCanvas(visual, colors, outers, downloadName,  function(visual, canvas, ctx, colors) {
-                            
-                var titleTxt = getWrappedTxt(ctx, infosContent.title,400);
-                var contentTxt = getWrappedTxt(ctx, infosContent.content, 180);
-                var txtH = (titleTxt.content.length)*400 + (contentTxt.content.length)*200
-                var dTop = (SIZE-txtH-300)/2
-                ctx.font = titleTxt.font
-                for(let line=0; line<titleTxt.content.length;line++) {
-                    ctx.fillText(titleTxt.content[line], 500, dTop+line*400)
-                }
-                ctx.font = contentTxt.font
-                for(let line=0; line<contentTxt.content.length;line++) {
-                    ctx.fillText(contentTxt.content[line], 500, dTop+(titleTxt.content.length)*400+100+200*line)
-                }
-            })
-        })
-    }
 
     setupCanvas(visual, colors, outers, downloadName)
 })
@@ -116,11 +113,36 @@ events.forEach(visual=>{
         ctx.fillText(visual.dataset.dates, 500, 1250)
         ctx.fillText('Thème', 500, 2000)
     
-        var themeTxt = getWrappedTxt(ctx, visual.dataset.theme, 400);
-        for(let line=0; line<themeTxt.content.length;line++) {
-            ctx.fillText(themeTxt.content[line], 500, 2100+line*400)
+        var themeTxt = [visual.dataset.theme];
+        var fontSize = 400
+        var textPrinted = false
+        ctx.textBaseline = 'top'
+        while(!textPrinted) {
+            ctx.font = `${fontSize}px sans-serif`
+            for(let line=0; line<themeTxt.length;line++) {
+                w = ctx.measureText(themeTxt[line]).width;
+                if(w+500 > SIZE-500) {
+                    wLetter = w/themeTxt[line].length; // largeur par lettre
+                    // on cherche le dernier espace avant la limite à droite
+                    lMax = Math.floor((SIZE-(500+500))/wLetter);
+                    var iSpace=lMax;
+                    while(themeTxt[line].charAt(iSpace) !== " " && iSpace>0) {
+                        iSpace--;
+                    }
+                    if(iSpace==0) {
+                        fontSize -= 20;
+                        break
+                    }
+                    n = themeTxt.indexOf(themeTxt[line]);
+                    themeTxt = [...themeTxt.slice(0, n), themeTxt[line].slice(0, iSpace), themeTxt[line].slice(iSpace+1), ...themeTxt.slice(n+1) ]
+                    break
+                } else {
+                    console.log(line);
+                    ctx.fillText(themeTxt[line], 500, 2100+line*400)
+                    textPrinted=true;
+                }
+            }
         }
-
     })
         
 })

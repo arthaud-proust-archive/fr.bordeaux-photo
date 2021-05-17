@@ -80,6 +80,7 @@ Route::middleware(['maintenanceCheck'])->group(function () {
         Route::get('/visual/events', [VisualController::class, 'events'])->name('visual.events');
         Route::get('/visual/event/{hashid}', [VisualController::class, 'event'])->name('visual.event');
         Route::get('/visual/laureats', [VisualController::class, 'laureats'])->name('visual.laureats');
+        Route::get('/visual/custom', [VisualController::class, 'custom'])->name('visual.custom');
         Route::get('/visual/laureat/{hashid}', [VisualController::class, 'laureat'])->name('visual.laureat');
     });
 
