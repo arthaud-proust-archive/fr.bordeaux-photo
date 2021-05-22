@@ -174,7 +174,7 @@ class VoteController extends Controller
                 // on calcule la moyenne du jury pour chacun des critères
                 for($k=0; count($final_notes)>$k; $k++) {
                     if($place<=3) {
-                        $final_notes[$k] -=1;
+                        $final_notes[$k] -=2-($place/2);
                     }
                     // on compare avec la plus haute note pour ce critère
                     if(array_key_exists($k, $maxCriteres) && $maxCriteres[$k]['max']< $final_notes[$k]) {
