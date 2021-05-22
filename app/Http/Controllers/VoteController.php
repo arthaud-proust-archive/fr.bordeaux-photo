@@ -174,8 +174,9 @@ class VoteController extends Controller
                 for($k=0; count($final_notes)>$k; $k++) {
                     if($place<=3) {
                         // $final_notes[$k] -=2-($place/2);
-                        $final_notes[$k] -= (2+2*$laureatN)*exp(-0.5*$place);
+                        // $final_notes[$k] -= (2+2*$laureatN)*exp(-0.5*$place);
                         // $final_notes[$k] -= 2*exp(-0.5*$place/$laureatN);
+                        $final_notes[$k] -= 1.7*exp(-0.3*$place);
                     }
                     $final_notes[$k] -= 0.5*$laureatN;
                     // $final_notes[$k] -= 2*exp(-0.5*$place);
