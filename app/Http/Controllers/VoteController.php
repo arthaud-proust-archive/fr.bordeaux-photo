@@ -168,13 +168,14 @@ class VoteController extends Controller
                 // on attribue les lauréats
                 $final_notes = json_decode($photo->final_notes, true);
 
-                $laureatN = 0;
+                $laureatN = 1;
 
                 // on calcule la moyenne du jury pour chacun des critères
                 for($k=0; count($final_notes)>$k; $k++) {
                     if($place<=3) {
                         // $final_notes[$k] -=2-($place/2);
-                        $final_notes[$k] -= (2+$laureatN)*exp(-0.5*$place);
+                        // $final_notes[$k] -= (2+$laureatN)*exp(-0.5*$place);
+                        $final_notes[$k] -= 2*exp(-0.5*$place/$laureatN);
                     }
                     // on compare avec la plus haute note pour ce critère
                     if(array_key_exists($k, $maxCriteres) && $maxCriteres[$k]['max']< $final_notes[$k]) {
