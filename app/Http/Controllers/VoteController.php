@@ -103,7 +103,7 @@ class VoteController extends Controller
         $jures = $event->listJuryComplete();
 
         // si la liste des juré qui ont voté correspond au jury
-        $event->voted = $jures == json_decode($event->jury);
+        // $event->voted = $jures == json_decode($event->jury);
         $event->save();
 
         // si elle n'est pas vide et si y'a des photos
@@ -130,7 +130,8 @@ class VoteController extends Controller
                 $photo_notes = json_decode($photo->notes, true);
                 $final_notes = [];
                 // on calcule la moyenne du jury pour chacun des critères
-                for($k=0; count($photos[0]->criteres)>$k; $k++) {
+                // +1 pour le bonus
+                for($k=0; count($photos[0]->criteres)+1>$k; $k++) {
                     $critere_sum = 0;
                     // la somme des notes de chaque juré pour le critere
                     foreach($jures as $jure) {
