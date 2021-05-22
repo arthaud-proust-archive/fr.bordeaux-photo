@@ -166,16 +166,20 @@ class VoteController extends Controller
 
                 // en dehors du podium,
                 // on attribue les lauréats
-                if($place>3) {
-                    $final_notes = json_decode($photo->final_notes, true);
+                $final_notes = json_decode($photo->final_notes, true);
 
-                    // on calcule la moyenne du jury pour chacun des critères
-                    for($k=0; count($final_notes)>$k; $k++) {
-                        // on compare avec la plus haute note pour ce critère
-                        if(array_key_exists($k, $maxCriteres) && $maxCriteres[$k]['max']< $final_notes[$k]) {
-                            $maxCriteres[$k]['max'] = $final_notes[$k];
-                            $maxCriteres[$k]['photo'] = $photo->hashid;
-                        }
+
+
+
+                // on calcule la moyenne du jury pour chacun des critères
+                for($k=0; count($final_notes)>$k; $k++) {
+                    if($place<=3) {
+                        $final_notes[$k] -=1;
+                    }
+                    // on compare avec la plus haute note pour ce critère
+                    if(array_key_exists($k, $maxCriteres) && $maxCriteres[$k]['max']< $final_notes[$k]) {
+                        $maxCriteres[$k]['max'] = $final_notes[$k];
+                        $maxCriteres[$k]['photo'] = $photo->hashid;
                     }
                 }
 
