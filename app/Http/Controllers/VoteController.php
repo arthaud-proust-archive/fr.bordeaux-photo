@@ -103,7 +103,7 @@ class VoteController extends Controller
         $jures = $event->listJuryComplete();
 
         // si la liste des juré qui ont voté correspond au jury
-        // $event->voted = $jures == json_decode($event->jury);
+        $event->voted = $jures == json_decode($event->jury);
         $event->save();
 
         // si elle n'est pas vide et si y'a des photos
@@ -174,7 +174,8 @@ class VoteController extends Controller
                 // on calcule la moyenne du jury pour chacun des critères
                 for($k=0; count($final_notes)>$k; $k++) {
                     if($place<=3) {
-                        $final_notes[$k] -=2-($place/2);
+                        // $final_notes[$k] -=2-($place/2);
+                        $final_notes[$k] -= 2*exp(-0.5*$place);
                     }
                     // on compare avec la plus haute note pour ce critère
                     if(array_key_exists($k, $maxCriteres) && $maxCriteres[$k]['max']< $final_notes[$k]) {
