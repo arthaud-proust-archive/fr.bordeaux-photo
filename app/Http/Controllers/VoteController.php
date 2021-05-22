@@ -103,7 +103,7 @@ class VoteController extends Controller
         $jures = $event->listJuryComplete();
 
         // si la liste des juré qui ont voté correspond au jury
-        // $event->voted = $jures == json_decode($event->jury);
+        $event->voted = $jures == json_decode($event->jury);
         $event->save();
 
         // si elle n'est pas vide et si y'a des photos
