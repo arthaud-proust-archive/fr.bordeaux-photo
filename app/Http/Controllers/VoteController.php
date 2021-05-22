@@ -103,23 +103,27 @@ class VoteController extends Controller
         $jures = $event->listJuryComplete();
 
         // si la liste des juré qui ont voté correspond au jury
-        $event->voted = $jures == json_decode($event->jury);
+        // $event->voted = $jures == json_decode($event->jury);
         $event->save();
 
         // si elle n'est pas vide et si y'a des photos
-        if($photos->count()>0 && count($jures) > 0) {
+        if( count($jures) > 0 && $photos->count()>0 ) {
 
             // on va calculer la note de chaque photo et ses nominations (la meilleure d'un critère?, ex la plus originale)
 
             // comme on va passer sur les photos, on fait en même temps la comparaison des notes
             $maxCriteres = []; // tableau des critères à nominer
+
+            // création du tableau des critères
+            // pour chaque critère
             for($i=0; count($photos[0]->criteres)>$i; $i++) {
                 if(count($photos[0]->criteres[$i]) > 2) { // si le critère est à nominer
-                    $maxCriteres[$i] = ['max'=>0, 'photo'=>null];
+                    $maxCriteres[$i] = ['max'=>0, 'photo'=>null]; // on l'ajoute au tableau
                 }
             }
             $njure = count($jures);
 
+            // pour chaque photo
             foreach($photos as $photo) {
                 
                 $note = 0;// somme des critères
@@ -136,10 +140,10 @@ class VoteController extends Controller
                     // on divise par le nombre de jurés, pour faire la moyenne
                     $critere_note = $critere_sum/$njure;
                     // on compare avec la plus haute note pour ce critère
-                    if(array_key_exists($k, $maxCriteres) && $maxCriteres[$k]['max']< $critere_note) {
-                        $maxCriteres[$k]['max'] = $critere_note;
-                        $maxCriteres[$k]['photo'] = $photo->hashid;
-                    }
+                    // if(array_key_exists($k, $maxCriteres) && $maxCriteres[$k]['max']< $critere_note) {
+                    //     $maxCriteres[$k]['max'] = $critere_note;
+                    //     $maxCriteres[$k]['photo'] = $photo->hashid;
+                    // }
                     
                     $note+=$critere_note;
                     array_push($final_notes, $critere_note);
@@ -152,6 +156,34 @@ class VoteController extends Controller
                 $photo->save();
             }
 
+
+            // attribution des places en fonction des notes
+            $photos = $photo::event($event_hashid)->hasNote()->orderBy('note', 'desc')->get();
+            $place = 1;
+            foreach($photos as $photo) {
+                $photo->place = $place;
+                $photo->save();
+
+                // en dehors du podium,
+                // on attribue les lauréats
+                if($place>3) {
+                    $final_notes = json_decode($photo->final_notes, true);
+
+                    // on calcule la moyenne du jury pour chacun des critères
+                    for($k=0; count($final_notes)>$k; $k++) {
+                        // on compare avec la plus haute note pour ce critère
+                        if(array_key_exists($k, $maxCriteres) && $maxCriteres[$k]['max']< $final_notes[$k]) {
+                            $maxCriteres[$k]['max'] = $final_notes[$k];
+                            $maxCriteres[$k]['photo'] = $photo->hashid;
+                        }
+                    }
+                }
+
+                $place++;
+
+            }
+
+            // dd($maxCriteres);
             // attribution des nominations aux photos
             foreach($maxCriteres as $j => $maxCritere) {
                 if($maxCritere['max']>0) { // si il y a une nomination
@@ -163,14 +195,7 @@ class VoteController extends Controller
                 }
             }
 
-            // attribution des places en fonction des notes
-            $photos = $photo::event($event_hashid)->hasNote()->orderBy('note', 'desc')->get();
-            $place = 1;
-            foreach($photos as $photo) {
-                $photo->place = $place;
-                $photo->save();
-                $place++;
-            }
+
         } else {
             foreach($photos as $photo) {
                 $photo->note = NULL;
