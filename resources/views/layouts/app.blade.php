@@ -2,7 +2,7 @@
 $sitename = config('app.name', 'Laravel');
 $title = (isset($pagename)?$pagename.' - ':'').$sitename;
 $name = "Rallyes et nocturnes";
-$desc = "Participez à des concours photo au coeur de Bordeaux en parcourant la ville à la recherche de la meilleure photo pour le thème choisi.";
+$desc = "Participez à des concours photo thématiques au coeur de Bordeaux, en vous baladant à la recherche de la meilleure photo.";
 $themeColor = "#101010";
 $siteurl = config('app.produrl');
 @endphp
