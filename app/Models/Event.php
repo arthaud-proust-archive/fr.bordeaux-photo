@@ -106,6 +106,8 @@ class Event extends BaseModel
         return timestampToDate($this->date_start).'  à  '.timestampToDate($this->date_end);
     }
 
+
+
     public function getUserPhotoSentAttribute() {
         return photo::where('event', $this->hashid)->where('author', Auth::user()->hashid)->first();
     }

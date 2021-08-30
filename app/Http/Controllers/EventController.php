@@ -13,14 +13,22 @@ use Carbon\Carbon;
 class EventController extends Controller
 {
     public function index() {
+        $recents = event::recent()->orderBy('date_end', 'desc')->paginate(10);
+        if($recents->count() == 0) {
+            return view('event.olds', [
+                'onlyOlds'=>true,
+                'events' => event::old()->orderBy('date_end', 'desc')->paginate(10)
+            ]);
+        }
         return view('event.index', [
-            'events' => event::recent()->orderBy('date_end', 'desc')->paginate(10),
+            'events' => $recents,
             'oldEvents' => event::old()->count() > 0
         ]);
     }
 
     public function indexOlds() {
         return view('event.olds', [
+            'onlyOlds'=>false,
             'events' => event::old()->orderBy('date_end', 'desc')->paginate(10)
         ]);
     }

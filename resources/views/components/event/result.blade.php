@@ -3,7 +3,7 @@
         <span class="text-xl text-p1">#{{ $result->place }}</span>
         <span class="text-sm">
             {{ $result->title }} 
-            @if(Auth::user()->hashid == $result->author)
+            @if(Auth::user() && Auth::user()->hashid == $result->author)
                 Votre photo 
                 @if($result->final_notes !== "[]")
                     <x-view.link muted :href="route('photo.show', $result->hashid)" text="Commentaires et notes" />

@@ -11,24 +11,23 @@
     </x-view.section>
     @endauthRole
 
-    <div class="mx-auto sm:px-6 lg:px-8 max-w-7xl justify-center flex flex-row flex-wrap">
-    @foreach($infos as $info) 
-<div class="flex-grow flex-shrink max-w-xl">
+    <div class="mx-auto sm:px-6 lg:px-8 max-w-7xl justify-center grid grid-cols-1 md:grid-cols-2">
+        @foreach($infos as $info) 
+            <div class="flex-grow flex-shrink max-w-xl">
+                <x-view.section class="bg-s2">
+                    <x-slot name="title">
+                        {{$info->title}}
+                        @authRole('admin')
+                            <x-view.link muted :href="route('info.edit', $info->hashid)" text="Éditer" />
+                        @endauthRole
+                    </x-slot>
+                    <div class="mt-2 quillContent">
+                        @bindPagesRoute($info->content)
+                        {{-- @quillContent($info->content) --}}
+                    </div>
 
-    <x-view.section class="bg-s1">
-        <x-slot name="title">
-            {{ $info->title}}
-            @authRole('admin')
-            <x-view.link muted :href="route('info.edit', $info->hashid)" text="Éditer" />
-            @endauthRole
-        </x-slot>
-        <div class="mt-2 quillContent">
-            @bindPagesRoute($info->content)
-            {{-- @quillContent($info->content) --}}
-        </div>
-
-    </x-view.section>
-    </div>
-    @endforeach
+                </x-view.section>
+            </div>
+        @endforeach
     </div>
 </x-app-layout>

@@ -246,18 +246,56 @@ const initPage = function() {
     });
 
     window.quills = [];
-    document.querySelectorAll('.quillContent').forEach(div=>{
-        let content = div.innerHTML.trim();
+    document.querySelectorAll('.quillContent').forEach(contentDiv=>{
+        let content = contentDiv.innerHTML.trim();
         try {
-            let quill = new Quill(div, {
+            const params = {
                 modules: {
                     toolbar: false
                 },
                 readOnly: true,
                 theme: 'snow'  // or 'bubble'
-            });
+            };
+            const maxLength = 100;
+            const showBtnClasses = 'm-2 px-3 py-1 bg-s3 rounded-md';
+
+            let quill = new Quill(contentDiv, params);
+
             quill.setContents(JSON.parse(content));
-            
+            if(quill.getLength() > maxLength) {
+
+                let introDiv = document.createElement('div');
+                introDiv.setAttribute('class', contentDiv.getAttribute('class').replace('quillContent','quillIntro'));
+                introDiv.innerText = quill.root.innerText.replace(/\n{3,}/gm, '\n').slice(0, maxLength) +'...';
+                contentDiv.before(introDiv)
+                
+                contentDiv.classList.add('hidden')
+
+                let showMore = document.createElement('button');
+                showMore.innerText="En voir plus"
+                showMore.setAttribute('class', showBtnClasses);
+                showMore.addEventListener('click', function() {
+                    introDiv.classList.add('hidden');
+                    showMore.classList.add('hidden');
+                    contentDiv.classList.remove('hidden');
+                    showLess.classList.remove('hidden');
+                });
+                // contentDiv.before(showMore)
+                introDiv.append(showMore)
+
+                let showLess = document.createElement('button');
+                showLess.innerText="En voir moins"
+                showLess.setAttribute('class', showBtnClasses + ' hidden');
+                showLess.addEventListener('click', function() {
+                    introDiv.classList.remove('hidden');
+                    showMore.classList.remove('hidden');
+                    contentDiv.classList.add('hidden');
+                    showLess.classList.add('hidden');
+                });
+                contentDiv.after(showLess)
+
+                // console.log(quill.root.innerText.replace(/\n\n/gm, ''));
+            }
         } catch(e) {console.warn(e)}
     });
 

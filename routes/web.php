@@ -97,9 +97,10 @@ Route::middleware(['maintenanceCheck'])->group(function () {
         Route::post('/profil/edit', [ProfilController::class, 'update'])->name('profil.update');
         Route::post('/profil/delete', [ProfilController::class, 'delete'])->name('profil.delete');
         Route::get('/profil/{hashid?}', [ProfilController::class, 'show'])->name('profil.show');
-        Route::get('/event/{hashid}/results', [EventController::class, 'results'])->name('event.results');
         Route::get('/event/{hashid}/jury', [EventController::class, 'jury'])->name('event.jury');
     });
+
+    Route::get('/event/{hashid}/results', [EventController::class, 'results'])->name('event.results');
 
     Route::get('/a-propos', [UserController::class, 'equipe'])->name('user.equipe');
     Route::get('/events', [EventController::class, 'index'])->name('event.index');

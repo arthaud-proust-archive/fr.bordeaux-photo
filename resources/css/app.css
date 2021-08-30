@@ -120,7 +120,7 @@ html[data-theme="light"]:root {
 .ql-disabled {
     border: none !important;
 }
-.quillContent .ql-editor {
+.quillIntro .ql-editor, .quillContent .ql-editor {
     padding:0 !important;
 }
 

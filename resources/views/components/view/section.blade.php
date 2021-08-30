@@ -1,5 +1,8 @@
-<div class="py-8">
-    <div class="max-w-{{ $width ?? 7 }}xl mx-auto px-3 sm:px-6 lg:px-8">
+@php 
+$haveTitle = isset($title) && !empty($title->toHtml());
+@endphp 
+<div class="py-2 md:py-6">
+    <div class="max-w-{{ $width ?? 7 }}xl mx-auto px-3 sm:px-4 lg:px-4">
         <div class="">
         <!-- <div class="overflow-hidden sm:rounded-2xl"> -->
             @if($href??null)<a href="{{ $href }}">@endif            
@@ -7,10 +10,10 @@
             {{-- border-b border-p3 --}}
             >
                 
-                @if($title??null)
+                @if($haveTitle)
                     <h1 class="text-3xl pb-3 pt-1 flex flex-wrap flex-row items-center justify-between">{{ $title }}</h1>
                 @endif
-                <div>
+                <div class="section-content">
                     {{ $slot }}
                 </div>
 

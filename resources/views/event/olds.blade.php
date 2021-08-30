@@ -1,12 +1,20 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-p1 leading-tight">
+        <h1 class="mt-4 ml-4 text-5xl text-p1 leading-tight">
             Anciens évènements
-        </h2>
+        </h1>
+        @if($onlyOlds)
+            <span class="mt-2 ml-4 text-p1 text-xl">
+                Actuellement aucun évènement n'est annoncé. Nous en prévoyons pour bientôt!
+            </span>
+        @endif
     </x-slot>
 
     <x-view.links>
-        <x-view.link :href="route('event.index')" text="Voir les évènements récents" color="p2" bg="s2" hover="s3" />
+        @if(!$onlyOlds)
+            <x-view.link :href="route('event.index')" text="Voir les évènements récents" color="p2" bg="s2" hover="s3" />
+        @endif
+        
         @authRole('admin')
         <x-view.link :href="route('event.create')" text="Ajouter un évènement" />
         @endauthRole
