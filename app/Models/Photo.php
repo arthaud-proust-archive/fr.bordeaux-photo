@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\BaseModel;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Event;
+use App\Models\User;
 
 class Photo extends BaseModel
 {
@@ -103,6 +104,6 @@ class Photo extends BaseModel
     }
 
     public function getAuthorModelAttribute() {
-        return user::whereId(decodeId($this->author))->firstOrFail();
+        return User::whereId(decodeId($this->author))->firstOrFail();
     }
 }
