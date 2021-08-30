@@ -1,5 +1,5 @@
 @php 
-$haveTitle = isset($title) && !empty($title->toHtml());
+$haveTitle = isset($title) && !empty(is_string($title)?$title:$title->toHtml());
 @endphp 
 <div class="py-2 md:py-6">
     <div class="max-w-{{ $width ?? 7 }}xl mx-auto px-3 sm:px-4 lg:px-4">
