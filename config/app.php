@@ -17,6 +17,7 @@ return [
 
     'maintenance' => env('APP_MAINTENANCE', false),
     'maintenance_token' => env('APP_MAINTENANCE_TOKEN'),
+    'console_token' => env('APP_CONSOLE_TOKEN'),
 
     /*
     |--------------------------------------------------------------------------
