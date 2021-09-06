@@ -4,7 +4,7 @@
 @else
     <span
 @endif
-    class="mr-1 bg-{{$bg??'s3'}} bg-opacity-50 px-4 py-2 rounded-full text-base text-{{$color??'p3'}}">
+    class="m-1 my-1 bg-{{$bg??'s3'}} bg-opacity-50 px-4 py-2 rounded-full text-base text-{{$color??'p3'}}">
 
         {{ $slot }}
 

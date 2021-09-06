@@ -34,7 +34,7 @@
         </x-slot>
 
         <x-event.data :event="$event"/>
-        <div class="py-2 flex flex-row flex-wrap space-y-1">
+        <div class="py-2 flex flex-row flex-wrap">
             @if($event->isVoting)
                 <x-pill bg="s3">Vote en cours</x-pill>
             @endif
