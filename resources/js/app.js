@@ -256,7 +256,7 @@ const initPage = function() {
                 readOnly: true,
                 theme: 'snow'  // or 'bubble'
             };
-            const maxLength = 100;
+            const maxLength = 200;
             const showBtnClasses = 'm-2 px-3 py-1 bg-s3 rounded-md';
 
             let quill = new Quill(contentDiv, params);
@@ -266,7 +266,7 @@ const initPage = function() {
 
                 let introDiv = document.createElement('div');
                 introDiv.setAttribute('class', contentDiv.getAttribute('class').replace('quillContent','quillIntro'));
-                introDiv.innerText = quill.root.innerText.replace(/\n{3,}/gm, '\n').slice(0, maxLength) +'...';
+                introDiv.innerText = quill.root.innerText.replace(/\n{2,}/gm, '\n').slice(0, maxLength) +'...';
                 contentDiv.before(introDiv)
                 
                 contentDiv.classList.add('hidden')
