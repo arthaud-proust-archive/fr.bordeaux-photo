@@ -1,4 +1,9 @@
-Header set Access-Control-Allow-Origin "*"
+
+<FilesMatch \.php$>
+    SetHandler application/x-httpd-php74
+</FilesMatch>
+AddHandler application/x-httpd-php74 .php
+suPHP_ConfigPath /home/nxot8532/bordeaux-photo.fr
 
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
@@ -40,7 +45,8 @@ Header set Access-Control-Allow-Origin "*"
 
 
 <Ifmodule mod_headers.c>
-
+    Header set Access-Control-Allow-Origin "*"
+    
     <FilesMatch "\\.(ico|jpe?g|png|gif|swf|svg)$">
         Header set Cache-Control "max-age=2592000, public"
     </FilesMatch>
