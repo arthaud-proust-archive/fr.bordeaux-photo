@@ -1,10 +1,3 @@
-
-<FilesMatch \.php$>
-    SetHandler application/x-httpd-php74
-</FilesMatch>
-AddHandler application/x-httpd-php74 .php
-suPHP_ConfigPath /home/nxot8532/bordeaux-photo.fr
-
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
