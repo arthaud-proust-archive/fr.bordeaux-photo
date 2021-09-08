@@ -256,7 +256,7 @@ const initPage = function() {
                 readOnly: true,
                 theme: 'snow'  // or 'bubble'
             };
-            const maxLength = 200;
+            const maxLength = 300;
             const showBtnClasses = 'm-2 px-3 py-1 bg-s3 rounded-md';
 
             let quill = new Quill(contentDiv, params);

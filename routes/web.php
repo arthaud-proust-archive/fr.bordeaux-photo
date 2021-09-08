@@ -114,4 +114,9 @@ Route::middleware(['maintenanceCheck'])->group(function () {
 require __DIR__.'/auth.php';
 Route::redirect('/', 'events');
 Route::get('/informations', [InfoController::class, 'home'])->name('home');
+
+Route::get('/test', function() {
+    dd(config('cache'));
+});
+
 Route::get('/{url}', [PageController::class, 'show'])->name('page.show');
