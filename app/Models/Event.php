@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Photo;
 use App\Models\User;
+use App\Models\Team;
 
 class Event extends BaseModel
 {
@@ -25,7 +26,9 @@ class Event extends BaseModel
         'participants',
         'jury',
         'voted',
-        'data_thumbnails'
+        'data_thumbnails',
+        'team',
+        'img'
     ];
     static $types = [
         'concours' => 'Concours',
@@ -35,8 +38,14 @@ class Event extends BaseModel
         'concept' => 'Concept',
     ];
 
+
     public function types() {
         return Event::$types;
+    }
+
+    public function team()
+    {
+        return Team::firstWhere('name', $this->team);
     }
 
     public function scopeVoted($query)
@@ -128,50 +137,4 @@ class Event extends BaseModel
                 == photo::event($this->hashid)->count(); 
         });
     }
-
-    /*
-    public function getShortDescriptionAttribute() {
-
-        $noSplit = ["[","{",":",'"',"}","]"];
-        $canSplitLeft = -1;
-        $canSplitRight = -1;
-        $toSearch = '"insert":"';
-        $foundAtLeft = 0;
-        $foundAtRight = 0;
-        // recherche du delta contenant le caractère max vers la gauche
-        for ($i=$this->maxChar-1; isset($this->description[$i]); $i--) {
-            if($canSplitLeft==-1 && !in_array($this->description[$i], $noSplit)) {
-                $canSplitLeft = $i;
-            }
-            if(substr($this->description, $i, strlen($toSearch)) == $toSearch) {
-                $foundAtLeft = $i;
-                break;
-            }
-        }
-        for ($i=$this->maxChar; isset($this->description[$i]); $i++) {
-            if($canSplitRight==-1 && !in_array($this->description[$i], $noSplit)) {
-                $canSplitRight = $i;
-            }
-            if(substr($this->description, $i, strlen($toSearch)) == $toSearch) {
-                $foundAtRight = $i;
-                break;
-            }
-        }
-
-        $mostNearFound = $foundAtLeft>$foundAtRight?$foundAtRight:$foundAtLeft;
-        // $safePlace = [$foundAtLeft+strlen($toSearch), $foundAtRight-1];
-        if($mostNearFound < $this->sensi) {
-            $cuttedDesc = substr($this->description, 0, $this->maxChar).'"},{"attributes":{"readmore":true},"insert":"... Plus"}]}';
-        } else {
-            $cuttedDesc = substr($this->description, 0, $mostNearFound).'"attributes":{"readmore":true},"insert":"... Plus"}]}';
-        }
-
-        // dd([$foundAtLeft, $foundAtRight]);
-
-        // dd($i);
-        // return $this->description;
-        return $cuttedDesc;
-        return '{"ops":[{"insert":"'.$nBracketOpen.' '.$nBracketClosed.' `'.$this->description[$i-2].'`"}]}';
-    } */
-
 }

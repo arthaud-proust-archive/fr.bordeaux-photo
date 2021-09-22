@@ -24,7 +24,8 @@ class User extends Authenticatable
         'password',
         'img',
         'bio',
-        'level'
+        'level',
+        'teams'
     ];
 
     /**
@@ -50,10 +51,15 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'teams' => 'array'
     ];
 
     public function roles() {
         return User::$roles;
+    }
+
+    public function isInTeam($team) {
+        return in_array($team, $this->teams);
     }
 
     public function getHashidAttribute() {

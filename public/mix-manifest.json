@@ -1,6 +1,6 @@
 {
-    "/js/app.js": "/js/app.js?id=92f64c805ef3aa418785",
-    "/js/visual.js": "/js/visual.js?id=8a3ff663948511951bc2",
-    "/css/quill.css": "/css/quill.css?id=8ce34521fa3601c6334a",
-    "/css/app.css": "/css/app.css?id=439e39a043db3df219f7"
+    "/js/app.js": "/js/app.js",
+    "/js/visual.js": "/js/visual.js",
+    "/css/app.css": "/css/app.css",
+    "/css/quill.css": "/css/quill.css"
 }

@@ -16,7 +16,9 @@
 
     <div class="mx-auto sm:px-6 lg:px-8 max-w-7xl justify-center sm:justify-start flex flex-row flex-wrap">
     @foreach($events as $event)
-        <x-event.display links :event="$event"/>
+        @can('participate', $event)
+            <x-event.display links :event="$event"/>
+        @endcan
     @endforeach
     </div>
 

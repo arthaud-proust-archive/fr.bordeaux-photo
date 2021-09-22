@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\Photo;
 use App\Models\User;
+use App\Models\Team;
 use Validator;
 use Response;
 use Carbon\Carbon;
@@ -76,7 +77,9 @@ class EventController extends Controller
     
 
     public function create() {
-        return view('event.create');
+        return view('event.create', [
+            'teamTeams' => team::pluck('title', 'name')->all()
+        ]);
     }
 
     public function store(Request $request) {
@@ -87,6 +90,8 @@ class EventController extends Controller
             // 'date_start' => 'required',
             // 'date_end' => 'required',
             'description' => 'nullable',
+            'team' => 'nullable',
+            'img' => 'nullable',
             // 'data_thumbnails' => 'required',
         ]);
         if ($validator->fails()) {
@@ -106,7 +111,9 @@ class EventController extends Controller
             'jury' => json_encode(User::jury()->active()->get()->pluck('hashid')->toArray()),
             'participants' => '[]',
             // 'data_thumbnails' => request('data_thumbnails')
-            'data_thumbnails' => '{}'
+            'data_thumbnails' => '{}',
+            'team' => request('team', 'none'),
+            'img' => request('img'),
         ]);
         return redirect()->route('event.index')->with('status', 'success')->with('content', 'Évènement ajouté');
     }
@@ -128,6 +135,8 @@ class EventController extends Controller
             // 'date_start' => 'required',
             // 'date_end' => 'required',
             'description' => 'nullable',
+            'team' => 'nullable',
+            'img' => 'nullable',
             // 'data_thumbnails' => 'required',
         ]);
         if ($validator->fails()) {
@@ -144,6 +153,9 @@ class EventController extends Controller
         $event->date_start = $date_start;
         $event->date_end = $date_end;
         $event->description = request('description');
+        $event->team = request('team', 'none');
+        $event->img = request('img');
+
         // $event->data_thumbnails = request('data_thumbnails');
         $event->save();
 

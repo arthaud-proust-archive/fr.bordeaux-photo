@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\File;
 
 class PhotoController extends Controller
 {
-    
+     
     public function show(Request $request, $hashid) {
         $photo = photo::whereId(decodeId($hashid))->firstOrFail();
         if(Auth::user()->hashid !== $photo->author) abort(403);
@@ -45,6 +45,7 @@ class PhotoController extends Controller
             'photo' => 'required|image|mimes:jpeg,png,jpg,gif',
             'event' => 'required|string|max:255',
             'title' => 'nullable|string|max:20',
+            'taked_at_bdx' => 'required',
         ]);
 
         if ($validator->fails()) {

@@ -4,6 +4,9 @@
 /* @import './customVar.css'; */
 /* @import './quill.css'; */
 
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Monoton&display=swap');
+
 body {
     background: var(--w1) !important;
 }
