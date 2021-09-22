@@ -13,6 +13,7 @@ class CreateEventsTable extends Migration
      */
     public function up()
     {
+        if (!Schema::hasTable('events')) {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->string('title');
@@ -29,6 +30,7 @@ class CreateEventsTable extends Migration
             $table->boolean('voted')->default(false);
             $table->text('data_thumbnails');
         });
+    }
     }
 
     /**

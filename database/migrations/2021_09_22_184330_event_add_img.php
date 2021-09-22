@@ -13,9 +13,12 @@ class EventAddImg extends Migration
      */
     public function up()
     {
-        Schema::table('events', function (Blueprint $table) {
-            $table->string('img')->nullable();
-        });
+        if (!Schema::hasColumn('events','img')) {
+
+            Schema::table('events', function (Blueprint $table) {
+                $table->string('img')->nullable();
+            });
+        }
     }
 
     /**

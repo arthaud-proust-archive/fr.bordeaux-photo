@@ -13,6 +13,7 @@ class CreatePhotosTable extends Migration
      */
     public function up()
     {
+        if (!Schema::hasTable('photos')) {
         Schema::create('photos', function (Blueprint $table) {
             $table->id();
             $table->string('event');
@@ -25,6 +26,7 @@ class CreatePhotosTable extends Migration
             $table->text('nominations');
             $table->text('comments');
         });
+    }
     }
 
     /**

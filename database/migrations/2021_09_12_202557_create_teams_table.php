@@ -13,12 +13,14 @@ class CreateTeamsTable extends Migration
      */
     public function up()
     {
-        Schema::create('teams', function (Blueprint $table) {
-            $table->id();
-            $table->string('name')->unique();
-            $table->string('title');
-            $table->text('autoteam')->default('false'); // conditions
-        });
+        if (!Schema::hasTable('teams')) {
+            Schema::create('teams', function (Blueprint $table) {
+                $table->id();
+                $table->string('name')->unique();
+                $table->string('title');
+                $table->text('autoteam')->default('false'); // conditions
+            });
+        }
     }
 
     /**

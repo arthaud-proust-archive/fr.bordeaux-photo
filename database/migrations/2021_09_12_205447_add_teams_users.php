@@ -13,9 +13,12 @@ class AddTeamsUsers extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('teams', 255)->default('[]');
-        });
+        if (!Schema::hasColumn('users','teams')) {
+
+            Schema::table('users', function (Blueprint $table) {
+                $table->string('teams', 255)->default('[]');
+            });
+        }
     }
 
     /**

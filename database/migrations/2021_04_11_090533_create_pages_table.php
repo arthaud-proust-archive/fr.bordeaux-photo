@@ -13,11 +13,13 @@ class CreatePagesTable extends Migration
      */
     public function up()
     {
+        if (!Schema::hasTable('pages')) {
         Schema::create('pages', function (Blueprint $table) {
             $table->string('url')->index();
             $table->string('title');
             $table->text('description')->nullable();
         });
+    }
     }
 
     /**

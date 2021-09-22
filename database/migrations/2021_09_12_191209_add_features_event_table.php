@@ -13,9 +13,12 @@ class AddFeaturesEventTable extends Migration
      */
     public function up()
     {
-        Schema::table('events', function (Blueprint $table) {
-            $table->string('team')->default("none");
-        });
+        if (!Schema::hasColumn('events','team')) {
+
+            Schema::table('events', function (Blueprint $table) {
+                $table->string('team')->default("none");
+            });
+        }
     }
 
     /**

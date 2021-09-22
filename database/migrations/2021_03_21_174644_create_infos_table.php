@@ -13,11 +13,13 @@ class CreateInfosTable extends Migration
      */
     public function up()
     {
+        if (!Schema::hasTable('infos')) {
         Schema::create('infos', function (Blueprint $table) {
             $table->id();
             $table->string('title')->nullable();
             $table->mediumText('content');
         });
+    }
     }
 
     /**
