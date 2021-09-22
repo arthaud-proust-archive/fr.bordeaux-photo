@@ -53,11 +53,16 @@ class Event extends BaseModel
         return $query->where('voted',1);
     }
 
+    public function scopeCanParticipate($query)
+    {
+        return $query->whereIn('team', Auth::user()->teams);
+    }
+
     public function scopeOpen($query)
     {
         return $query
             ->where('date_start', '<', Carbon::now()->timestamp)
-            ->where('date_end', '>', Carbon::now()->timestamp);
+            ->where('date_end', '>', Carbon::now()->subDay()->timestamp);
     }
 
     public function scopeRecent($query)

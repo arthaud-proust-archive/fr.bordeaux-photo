@@ -33,6 +33,7 @@ class PhotoController extends Controller
         return view('photo.create', [
             'event' => $event_hashid,
             'events' => event::select('id','title')->open()->get()->append('hashid')->toArray()
+            // 'events' => event::select('id','title')->canParticipate()->open()->get()->append('hashid')->toArray()
             // 'events' => event::open()->append('hashid')->pluck('id')->toArray()
         ]);
 
