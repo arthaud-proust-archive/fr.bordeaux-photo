@@ -96,6 +96,8 @@ const themeColors = {
 
         '--red0': 'rgb(143,76,76)',
         '--red1': 'rgb(254,202,202)',
+
+        '--shade': 'rgb(12,12,12)',
     },
     light:{
         '--p1': 'rgb(12,12,15)',
@@ -119,6 +121,8 @@ const themeColors = {
 
         '--red0': 'rgb(243,156,156)',
         '--red1': 'rgb(149,74,74)',
+
+        '--shade': 'rgb(255,255,255)',
     },
 }
 

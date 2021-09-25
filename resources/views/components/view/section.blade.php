@@ -8,8 +8,16 @@ $haveTitle = isset($title) && !empty(is_string($title)?$title:$title->toHtml());
             @if($href??null)<a href="{{ $href }}">@endif        
                 
                 @if($img??null)
-                    <div class="overflow-hidden h-38">
-                        <img src="{{$img}}">
+                    <div class="relative overflow-hidden h-38">
+                        @if($onImg??null)
+                            <img src="{{$img}}">
+                            <div class="absolute h-full w-full top-0 bg-shade" style="opacity: 0.36;"></div>
+                            <div class="absolute bottom-0 pl-6 pb-6">
+                                {{ $onImg }}
+                            </div>
+                        @else
+                            <img src="{{$img}}">                        
+                        @endif
                     </div>
                 @endif
                 <div class="p-6">

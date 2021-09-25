@@ -78,7 +78,7 @@ class EventController extends Controller
 
     public function create() {
         return view('event.create', [
-            'teamTeams' => team::pluck('title', 'name')->all()
+            'teams' => team::pluck('title', 'name')->all()
         ]);
     }
 
@@ -114,6 +114,7 @@ class EventController extends Controller
             'data_thumbnails' => '{}',
             'team' => request('team', 'none'),
             'img' => request('img'),
+            'public' => $request->has('public'),
         ]);
         return redirect()->route('event.index')->with('status', 'success')->with('content', 'Évènement ajouté');
     }
@@ -122,7 +123,8 @@ class EventController extends Controller
 
     public function edit(Request $request, $hashid) {
         return view('event.edit', [
-            'event' => event::whereId(decodeId($hashid))->firstOrFail()
+            'event' => event::whereId(decodeId($hashid))->firstOrFail(),
+            'teams' => team::pluck('title', 'name')->all()
         ]);
     }
 
@@ -155,6 +157,7 @@ class EventController extends Controller
         $event->description = request('description');
         $event->team = request('team', 'none');
         $event->img = request('img');
+        $event->public = $request->has('public');
 
         // $event->data_thumbnails = request('data_thumbnails');
         $event->save();

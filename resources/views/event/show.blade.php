@@ -22,8 +22,14 @@
             @endif
             <x-pill :href="page('types-evenement')">{{ ucFirst($event->type) }} <x-event.typeicon :type="$event->type" /></x-pill>
         </div>
-        <div class="py-2">
-            {{ ucFirst($event->readableDates) }}
+        @if($event->team!=="none")   
+        <div class="pt-4 flex flex-col w-full font-bold">
+            Bordeaux Photo X {{$event->team()->title}}
+        </div>
+        @endif
+
+        <div class="py-4">
+            {{ ucFirst($event->readableDates) }}. @if($event->isOpen)<b>{{ $event->closeIn}}</b>@endif
         </div>
         <div class="pt-2 quillContent">
             @bindPagesRoute($event->description)

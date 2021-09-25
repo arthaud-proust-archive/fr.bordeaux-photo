@@ -18,7 +18,7 @@ class EventPolicy
      */
     public function participate(?User $user, Event $event)
     {
-        if($event->team==="none") {
+        if($event->team==="none" || $event->public===true) {
             return true;
         } else {
             return optional($user)->isInTeam($event->team);

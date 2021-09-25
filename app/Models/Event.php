@@ -28,8 +28,14 @@ class Event extends BaseModel
         'voted',
         'data_thumbnails',
         'team',
-        'img'
+        'img',
+        'public'
     ];
+
+    protected $casts = [
+        'public' => 'boolean'
+    ];
+
     static $types = [
         'concours' => 'Concours',
         'rallye' => 'Rallye',
@@ -55,7 +61,7 @@ class Event extends BaseModel
 
     public function scopeCanParticipate($query)
     {
-        return $query->whereIn('team', Auth::user()->teams);
+        return $query->whereIn('team', Auth::user()->teams)->orWhere('public', true);
     }
 
     public function scopeOpen($query)

@@ -1,10 +1,15 @@
 <div class="flex-grow max-w-xl async-card" data-type="event" data-hashid="{{ $event->hashid }}">
     <x-view.section class="bg-s2" :img="$event->img">
+        @if($event->team!=="none")   
+        <x-slot name="onImg">
+            <span class="flex flex-col w-full font-wide text-4xl lg:text-5xl">
+                <span>Bordeaux Photo</span>
+                <span>X</span>
+                <span>{{$event->team()->title}}</span>
+            </span>
+        </x-slot>
+        @endif
         <x-slot name="title">
-            @if($event->team!=="none")
-                <span class="block w-full pb-6 font-wide text-4xl">Avec {{$event->team()->title}}</span>
-            @endif
-
             {{$event->theme}}
             <div class="text-base inline py-3">
             @authRole('admin')
@@ -66,12 +71,20 @@
             <x-pill :href="page('types-evenement')">{{ ucFirst($event->type) }} <x-event.typeicon :type="$event->type" /></x-pill>
         </div>
 
+        @if($event->team!=="none")   
+        <div class="pt-4 flex flex-col w-full font-bold">
+            Bordeaux Photo X {{$event->team()->title}}
+        </div>
+        @endif
+
         <div class="py-4">
             {{ ucFirst($event->readableDates) }}. @if($event->isOpen)<b>{{ $event->closeIn}}</b>@endif
         </div>
 
             <!-- {"ops":[{"attributes":{"readmore":true},"insert":"Plus"}]} -->
         {{-- <div class="quillContentAsync"></div> --}}
+
+
         <div class="quillContent">
             @bindPagesRoute($event->description)
         </div>
