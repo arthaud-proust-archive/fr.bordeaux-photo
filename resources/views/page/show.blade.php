@@ -12,7 +12,7 @@
     </x-view.links>
     @endauthRole
 
-    <div class="mx-2 sm:mx-auto sm:px-6 lg:px-8 max-w-7xl items-start grid grid grid-adaptive gap-4 grid-cols-1 md:grid-cols-2">
+    <div class="mx-2 sm:mx-auto sm:px-6 lg:px-8 max-w-7xl items-start grid grid grid-adaptive gap-4 grid-cols-1 md:grid-cols-10">
     @foreach($infos as $info) 
         <x-view.gridSection class="max-w-xl bg-s2" data-type="info" data-hashid="{{ $info->hashid }}">
             <x-slot name="title">

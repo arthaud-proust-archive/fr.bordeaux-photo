@@ -11,7 +11,7 @@
     </x-view.section>
     @endauthRole
 
-    <div class="mx-2 sm:mx-auto sm:px-6 lg:px-8 max-w-7xl items-start grid grid-adaptive grid-cols-1 md:grid-cols-2 auto-rows-auto gap-4">
+    <div class="mx-2 sm:mx-auto sm:px-6 lg:px-8 max-w-7xl items-start grid grid-adaptive grid-cols-1 md:grid-cols-2 auto-rows-auto gap-10">
         @foreach($infos as $info) 
                 <x-view.gridSection class="max-w-xl bg-s2">
                     <x-slot name="title">
