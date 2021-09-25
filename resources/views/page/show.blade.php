@@ -12,10 +12,9 @@
     </x-view.links>
     @endauthRole
 
-    <div class="mx-auto sm:px-6 lg:px-8 max-w-7xl justify-center grid grid-cols-1 md:grid-cols-2">
+    <div class="mx-2 sm:mx-auto sm:px-6 lg:px-8 max-w-7xl items-start grid grid grid-adaptive gap-4 grid-cols-1 md:grid-cols-2">
     @foreach($infos as $info) 
-    <div class="flex-grow flex-shrink max-w-xl async-card" data-type="info" data-hashid="{{ $info->hashid }}">
-        <x-view.section class="bg-s2">
+        <x-view.gridSection class="max-w-xl bg-s2" data-type="info" data-hashid="{{ $info->hashid }}">
             <x-slot name="title">
                 {{ $info->title}}
                 @authRole('admin')
@@ -25,8 +24,7 @@
             <div class="mt-2 quillContent">
                 @bindPagesRoute($info->content)
             </div>
-        </x-view.section>
-    </div>
+        </x-view.gridSection>
     @endforeach
     </div>
     @if($infos->count()==0) 

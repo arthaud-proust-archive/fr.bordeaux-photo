@@ -20,7 +20,7 @@
         @endauthRole
     </x-view.links>
     
-    <div class="mx-auto sm:px-6 lg:px-8 max-w-7xl justify-center sm:justify-start flex flex-row flex-wrap">
+    <div class="mx-2 sm:mx-auto sm:px-6 lg:px-8 max-w-7xl items-start grid grid-adaptive grid-cols-1 lg:grid-cols-2 auto-rows-auto gap-4">
     @foreach($events as $event)
         <x-event.display links :event="$event"/>
     @endforeach

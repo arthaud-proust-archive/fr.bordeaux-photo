@@ -1,7 +1,7 @@
 require('./bootstrap');
 // require('alpinejs');
 require('lazysizes');
-require('./grid');
+handleGrid = require('./grid');
 const Theme = require('./theme');
 const Quill = require('quill');
 const navManager = require('./nav');
@@ -147,6 +147,8 @@ const initPage = function() {
 
     appTheme.updateToggler();
 
+    handleGrid();
+
     document.querySelectorAll('.url-input').forEach(input=> {
         input.addEventListener('keyup', function() {
             this.value = removeDiacritics(this.value);
@@ -284,6 +286,7 @@ const initPage = function() {
                     showMore.classList.add('hidden');
                     contentDiv.classList.remove('hidden');
                     showLess.classList.remove('hidden');
+                    handleGrid();
                 });
                 // contentDiv.before(showMore)
                 introDiv.append(showMore)
@@ -296,9 +299,11 @@ const initPage = function() {
                     showMore.classList.remove('hidden');
                     contentDiv.classList.add('hidden');
                     showLess.classList.add('hidden');
+                    handleGrid();
                 });
                 contentDiv.after(showLess)
 
+                handleGrid();
                 // console.log(quill.root.innerText.replace(/\n\n/gm, ''));
             }
         } catch(e) {console.warn(e)}

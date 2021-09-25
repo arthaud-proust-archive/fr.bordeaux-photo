@@ -11,10 +11,9 @@
     </x-view.section>
     @endauthRole
 
-    <div class="mx-auto sm:px-6 lg:px-8 max-w-7xl justify-center grid grid-cols-1 md:grid-cols-2">
+    <div class="mx-2 sm:mx-auto sm:px-6 lg:px-8 max-w-7xl items-start grid grid-adaptive grid-cols-1 md:grid-cols-2 auto-rows-auto gap-4">
         @foreach($infos as $info) 
-            <div class="flex-grow flex-shrink max-w-xl">
-                <x-view.section class="bg-s2">
+                <x-view.gridSection class="max-w-xl bg-s2">
                     <x-slot name="title">
                         {{$info->title}}
                         @authRole('admin')
@@ -26,8 +25,7 @@
                         {{-- @quillContent($info->content) --}}
                     </div>
 
-                </x-view.section>
-            </div>
+                </x-view.gridSection>
         @endforeach
     </div>
 </x-app-layout>
