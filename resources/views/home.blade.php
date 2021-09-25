@@ -11,7 +11,7 @@
     </x-view.section>
     @endauthRole
 
-    <div class="mx-auto sm:px-6 lg:px-8 max-w-7xl justify-center grid grid-cols-1 md:grid-cols-2 testCommit">
+    <div class="mx-auto sm:px-6 lg:px-8 max-w-7xl justify-center grid grid-cols-1 md:grid-cols-2">
         @foreach($infos as $info) 
             <div class="flex-grow flex-shrink max-w-xl">
                 <x-view.section class="bg-s2">

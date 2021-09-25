@@ -11,8 +11,8 @@ $haveTitle = isset($title) && !empty(is_string($title)?$title:$title->toHtml());
                     <div class="relative overflow-hidden h-38">
                         @if($onImg??null)
                             <img src="{{$img}}">
-                            <div class="absolute h-full w-full top-0 bg-shade" style="opacity: 0.36;"></div>
-                            <div class="absolute bottom-0 pl-6 pb-6">
+                            <div class="absolute h-full w-full top-0 bg-shade" style="opacity: 0.45;"></div>
+                            <div class="absolute h-full w-full bottom-0 p-6">
                                 {{ $onImg }}
                             </div>
                         @else

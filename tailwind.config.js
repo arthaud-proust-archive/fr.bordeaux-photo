@@ -28,7 +28,11 @@ module.exports = {
         extend: {
             fontFamily: {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
-                'wide': ['Monoton',]
+                'wide': ['Monoton'],
+                // 'bebas': ['Bebas Neue'],
+                // 'frede': ['Fredericka the Great'],
+                // 'megrim': ['Megrim'],
+                // 'barcode': ['"Libre Barcode 39 Text"']
             },
         },
     },

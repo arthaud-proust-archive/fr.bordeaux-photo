@@ -2,10 +2,11 @@
     <x-view.section class="bg-s2" :img="$event->img">
         @if($event->team!=="none")   
         <x-slot name="onImg">
-            <span class="flex flex-col w-full font-wide text-4xl lg:text-5xl">
-                <span>Bordeaux Photo</span>
-                <span>X</span>
-                <span>{{$event->team()->title}}</span>
+            <span class="select-none flex flex-col items-start justify-end h-full w-full tracking-wider font-wide text-4xl lg:text-4xl text-p2">
+                <span class="">Bordeaux Photo</span>
+                <span class="my-2">Avec</span>
+                <!-- <x-svg.x color="p2" class="h-10 my-4" /> -->
+                <span class="">{{$event->team()->title}}</span>
             </span>
         </x-slot>
         @endif
@@ -73,7 +74,7 @@
 
         @if($event->team!=="none")   
         <div class="pt-4 flex flex-col w-full font-bold">
-            Bordeaux Photo X {{$event->team()->title}}
+            Bordeaux Photo & {{$event->team()->title}}
         </div>
         @endif
 

@@ -1,6 +1,7 @@
 require('./bootstrap');
 // require('alpinejs');
 require('lazysizes');
+require('./grid');
 const Theme = require('./theme');
 const Quill = require('quill');
 const navManager = require('./nav');
