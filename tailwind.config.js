@@ -10,7 +10,7 @@ module.exports = {
     //     './**/*.blade.php'
     // ],
     purge: {
-        layers: ['components', 'utilities'],
+        // layers: ['components', 'utilities'],
         content: [
             './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
             './storage/framework/views/*.php',
