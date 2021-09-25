@@ -9,7 +9,7 @@
         <x-form.base :action="route('info.store')" method="POST" submitColor="green">
             <x-form.field type="input" label="Titre" name="title"/>
             <x-form.field type="quill" label="Contenu" name="content"/>
-            @infoPagesRoute
+            {{-- @infoPagesRoute --}}
             <div>
                 <label class="block text-sm font-medium text-p1">Pages</label>
                 @foreach($pages as $page)
