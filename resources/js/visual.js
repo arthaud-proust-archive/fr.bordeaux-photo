@@ -138,7 +138,7 @@ function getWrappedTxt(ctx, baseText='', defaultFontSize=400) {
                 // on cherche le dernier espace avant la limite à droite
                 lMax = Math.floor((SIZE-(500+500))/wLetter);
                 var iSpace=lMax;
-                while(linesTxt[line].charAt(iSpace) !== " " && iSpace>0) {
+                while( (linesTxt[line].charAt(iSpace) !== " " || linesTxt[line].charAt(iSpace) !== "\n")  && iSpace>0) { // recherche commence par la fin
                     iSpace--;
                 }
                 if(iSpace==0) {

@@ -11,7 +11,7 @@
     @endif
     <x-slot name="title">
         {{$event->theme}}
-        <div class="text-base inline py-3">
+        <div class="text-base flex flex-row flex-wrap -ml-2 py-3">
         @authRole('admin')
         <x-view.link :href="route('event.edit', $event->hashid)" text="Éditer" />
         @endauthRole
