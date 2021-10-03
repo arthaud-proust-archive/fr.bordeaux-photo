@@ -1,11 +1,10 @@
 <x-view.gridSection class="max-w-xl bg-s2" :img="$event->img" data-type="event" data-hashid="{{ $event->hashid }}">
     @if($event->team!=="none")   
     <x-slot name="onImg">
-        <span class="select-none flex flex-col items-start justify-end h-full w-full tracking-wider font-wide text-3xl md:text-4xl text-p2">
-            <span class="">Bordeaux Photo</span>
-            <span class="my-2">Avec</span>
-            <!-- <x-svg.x color="p2" class="h-10 my-4" /> -->
-            <span class="">{{$event->team()->title}}</span>
+        <span class="select-none flex flex-col items-start justify-end h-full w-full  text-p2">
+            <span class="text-xl">Bordeaux Photo avec</span>
+            <!-- <span class="my-2">Avec</span> -->
+            <span class="text-4xl md:text-5xl font-wide tracking-wider">{{$event->team()->title}}</span>
         </span>
     </x-slot>
     @endif
